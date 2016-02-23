@@ -1,2 +1,3 @@
 Alexandria.podspec linguist-vendored
 Alexandria/Alexandria.h linguist-vendored
+Support/* linguist-vendored
