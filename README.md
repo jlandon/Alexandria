@@ -10,14 +10,15 @@
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 [![Twitter](https://img.shields.io/badge/twitter-@OvenBitsMobile-blue.svg?style=social)](http://twitter.com/OvenBitsMobile)
 
-A library of iOS Swift extensions that Oven Bits' iOS developers have found useful, and hopefully you will too.
+A library of Swift extensions to turbocharge your iOS development.
 
 ## Background
 
-As [Oven Bits'](http://ovenbits.com) iOS developers worked on their projects and explored the Swift language, we would find or come up with useful snippets. These snippets weren't enough to create a whole cohesive framework, such as [ModelRocket](https://github.com/ovenbits/ModelRocket), Oven Bits' iOS framework for creating JSON-based models, but the snippets were still useful. So we created a sort of "junk drawer" for all the little things we found useful and reusable.
+Here at [Oven Bits](http://ovenbits.com), we love Swift. We started using it when it was first released in 2014, and have been building large portions (or all) of our iOS applications in it since then.
 
-Alexandria (as in the [Library of Alexandria](https://en.wikipedia.org/wiki/Library_of_Alexandria)) represents the `extension`s of that "junk drawer" of snippets. We find them useful, and hopefully you will too.
+One of our favorite features in Swift are [extensions](https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Extensions.html), and we've been using them heavily to add conveniences to UIKit & Foundation, and help "make it our own".
 
+_Alexandria_ (as in the [Library of Alexandria](https://en.wikipedia.org/wiki/Library_of_Alexandria)) is the result of that work. We use it as our "standard library" when starting iOS applications, and find it greatly speeds up our development time, and helps us get our applications off the ground quicker. Hopefully you will too!
 
 ## Requirements
 
@@ -28,10 +29,9 @@ Alexandria (as in the [Library of Alexandria](https://en.wikipedia.org/wiki/Libr
 
 ## Documentation
 
-The Alexandria code is extensively documented.
+Documentation is  [available online](https://ovenbits.github.io/Alexandria).
 
-A browsable version of the documentation can be found at [https://ovenbits.github.io/Alexandria](https://ovenbits.github.io/Alexandria)
-
+> [https://ovenbits.github.io/alexandria](https://ovenbits.github.io/Alexandria)
 
 ## Installation
 
@@ -78,16 +78,18 @@ $ git submodule update
 
 Then, add the files manually to your Xcode project/workspace.
 
-
-
 ## Credits
 
-Alexandria is created and maintained by the iOS developer team at [Oven Bits LLC](https://ovenbits.com), a software design and development agency based in Dallas, Texas. We concept and craft delightful solutions across mobile, tablets, desktop, and wearables.
+Alexandria is maintained by the team at [Oven Bits](https://ovenbits.com), a software design and development agency based in Dallas, Texas.
+
+> P.S. [We're hiring!](http://ovenbits.com/jobs).
 
 Find us online:
 
 - [Oven Bits Engineering Website](https://engineering.ovenbits.com/)
 - [Twitter (@OvenBitsMobile)](https://twitter.com/OvenBitsMobile)
+
+<img alt="Baked with love by Oven Bits, a software design and development agency based in Dallas, Texas." width="150" height="150" src="https://cloud.githubusercontent.com/assets/896486/13259258/3cb10ac0-da1c-11e5-9db8-828357f5a2b3.png" />
 
 
 ## License
