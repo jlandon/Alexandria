@@ -2,9 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:/Volumes/DevProg/HsoiEnterprises/customers/OvenBits/JunkDrawer-iOS/Alexandria.playground">
+      location = "group:Alexandria.playground">
    </FileRef>
    <FileRef
-      location = "container:/Volumes/DevProg/HsoiEnterprises/customers/OvenBits/JunkDrawer-iOS/Alexandria.xcodeproj">
+      location = "group:Alexandria.xcodeproj">
    </FileRef>
 </Workspace>
