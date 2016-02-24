@@ -39,9 +39,13 @@ extension NSDate {
      - `HourMinuteSecondPeriod` (e.g. "07:41:30 PM")
      */
     public enum TimeFormat {
+        /// Military time with hours and minutes (e.g. "19:41")
         case HourMinuteMilitary
+        /// Standard time with hours and minutes (e.g. "07:41 PM")
         case HourMinutePeriod
+        /// Military time with hours, minutes, and seconds (e.g. "19:41:30")
         case HourMinuteSecondMilitary
+        /// Standard time with hours, minutes, and seconds (e.g. "07:41:30 PM")
         case HourMinuteSecondPeriod
         
         /// Time period (i.e. `AM` and `PM`)
@@ -323,10 +327,12 @@ extension NSDate {
 
 extension NSDate: Comparable {}
 
+/// Returns true if both dates are equal to each other.
 public func ==(lhs: NSDate, rhs: NSDate) -> Bool {
     return lhs === rhs || lhs.compare(rhs) == .OrderedSame
 }
 
+/// Returns true if the first date is less than the second date.
 public func <(lhs: NSDate, rhs: NSDate) -> Bool {
     return lhs.compare(rhs) == .OrderedAscending
 }
