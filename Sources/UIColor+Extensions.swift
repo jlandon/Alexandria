@@ -57,6 +57,20 @@ extension UIColor {
         self.init(hex: hexEquivalent)
     }
     
+    /**
+     Returns a UIColor initialized with color components divided by 255.0.
+     - parameter red: Integer representation of the red component in range of 0-255
+     - parameter green: Integer representation of the green component in range of 0-255
+     - parameter blue: Integer representation of the blue component in range of 0-255
+     - parameter alpha: CGFloat representation of the alpha component in range of 0-1
+    */
+    @nonobjc
+    public convenience init(red: UInt8, green: UInt8, blue: UInt8, alpha: CGFloat = 1.0) {
+        assert(alpha >= 0 && alpha <= 1, "The alpha component must be between 0 and 1")
+        
+        self.init(red: CGFloat(red)/255.0, green: CGFloat(green)/255.0, blue: CGFloat(blue)/255.0, alpha: alpha)
+    }
+    
     /// Returns a random UIColor with hue, saturation, and brightness ranging from 0.5 to 1.0.
     public static func randomColor() -> UIColor {
         let component = { CGFloat(arc4random() % 128)/256.0 + 0.5 }
