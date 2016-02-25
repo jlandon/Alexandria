@@ -65,7 +65,9 @@ extension UIColor {
      - parameter alpha: CGFloat representation of the alpha component in range of 0-1
     */
     @nonobjc
-    public convenience init(red: Int, green: Int, blue: Int, alpha: CGFloat = 1.0) {
+    public convenience init(red: UInt8, green: UInt8, blue: UInt8, alpha: CGFloat = 1.0) {
+        assert(alpha >= 0 && alpha <= 1, "The alpha component must be between 0 and 1")
+        
         self.init(red: CGFloat(red)/255.0, green: CGFloat(green)/255.0, blue: CGFloat(blue)/255.0, alpha: alpha)
     }
     
