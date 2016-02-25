@@ -32,12 +32,11 @@
 
 import Foundation
 
-
 extension UIGestureRecognizer {
     private class GestureAction {
-        var action: UIGestureRecognizer -> Void
+        var action: (UIGestureRecognizer) -> Void
         
-        init(action: UIGestureRecognizer -> Void) {
+        init(action: (UIGestureRecognizer) -> Void) {
             self.action = action
         }
     }
@@ -59,13 +58,13 @@ extension UIGestureRecognizer {
      
      - returns: The UIGestureRecognizer.
      */
-    public convenience init(action: UIGestureRecognizer -> Void) {
+    public convenience init(action: (UIGestureRecognizer) -> Void) {
         self.init()
         gestureAction = GestureAction(action: action)
         addTarget(self, action: "handleAction:")
     }
     
-    final public func handleAction(recognizer: UIGestureRecognizer) {
+    dynamic private func handleAction(recognizer: UIGestureRecognizer) {
         gestureAction?.action(recognizer)
     }
 }
