@@ -50,16 +50,16 @@ Pod::Spec.new do |s|
   s.frameworks          = *%w(Foundation UIKit)
 
   s.subspec "Core" do |sp|
-    sp.source_files  = *%w(Extensions/*.{swift,h,m})
+    sp.source_files  = *%w(Sources/*.{swift,h,m})
   end
 
   s.subspec "StoreKit" do |sp|
-    sp.source_files = "Extensions/StoreKit"
+    sp.source_files = "Sources/StoreKit"
     sp.weak_framework = 'StoreKit'
   end
 
   s.subspec "ImageEffects" do |sp|
-    sp.source_files = "Extensions/ImageEffects"
+    sp.source_files = "Sources/ImageEffects"
     sp.weak_framework = 'Accelerate'
   end
 
