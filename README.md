@@ -3,7 +3,7 @@
 
 # Alexandria
 
-[![Build Status](https://magnum.travis-ci.com/ovenbits/Alexandria.svg?token=7uGjTDmXCtxxrk7sC9oT)](https://travis-ci.com/ovenbits/Alexandria)
+[![Build Status](https://api.travis-ci.org/ovenbits/Alexandria.svg)](https://travis-ci.org/ovenbits/Alexandria)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 ![CocoaPods Compatible](https://img.shields.io/cocoapods/v/Alexandria.svg?style=flat)
 ![Platform](https://img.shields.io/cocoapods/p/Alexandria.svg?style=flat)
