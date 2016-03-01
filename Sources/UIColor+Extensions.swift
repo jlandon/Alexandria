@@ -63,7 +63,6 @@ extension UIColor {
      - parameter green: Integer representation of the green component in range of 0-255
      - parameter blue: Integer representation of the blue component in range of 0-255
     */
-    @nonobjc
     public convenience init(red: UInt8, green: UInt8, blue: UInt8) {
         self.init(red: CGFloat(red)/255.0, green: CGFloat(green)/255.0, blue: CGFloat(blue)/255.0, alpha: 1.0)
     }
