@@ -32,7 +32,6 @@ extension Array {
      Returns an Array containing the results of mapping transform over self. The transform provides not only
      each element of the array but also the index of tha item in the array.
      
-     
      ```
      let items: [SomeObject] = existingArray.mapWithIndex { index, response in
          return SomeObject(index: index, description: response.body)
@@ -44,7 +43,7 @@ extension Array {
      - returns: The array created by applying the transform to this array.
      */
     public func mapWithIndex<T> (f: (Int, Element) -> T) -> [T] {
-        return zip((self.startIndex ..< self.endIndex), self).map(f)
+        return zip((startIndex ..< endIndex), self).map(f)
     }
 
     /**
@@ -52,13 +51,19 @@ extension Array {
      
      This is useful for infinitely scrolling visuals, but where the data backing those visuals is finite.
      
+     ```
+     let mapped: [Int] = array.mapWithIndex { index, element in
+         return (index % 2 == 1) ? element * 2 : element
+     }
+     ```
+     
      - parameter shift: The number of indices by which the array should be shifted. Positive shifts right, negative shifts left.
      
      - returns: Returns the rotated array.
      */
     public func rotate(shift: Int) -> Array {
         var array = Array()
-        if self.count > 0 {
+        if count > 0 {
             array = self
             if shift > 0 {
                 for _ in 1...shift {

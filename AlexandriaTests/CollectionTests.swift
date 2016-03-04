@@ -55,9 +55,14 @@ class CollectionTests: XCTestCase {
     
     func testRotateArray() {
         var array = [1, 2, 3, 4, 5]
-        
+
+        XCTAssertEqual(array.rotate(array.count), array, "Array should have been rotated right")
+        XCTAssertEqual(array.rotate(1), [2, 3, 4, 5, 1], "Array should have been rotated right")
         XCTAssertEqual(array.rotate(2), [3, 4, 5, 1, 2], "Array should have been rotated right")
+        XCTAssertEqual(array.rotate(0), array, "Array should not have been rotated")
         XCTAssertEqual(array.rotate(-2), [4, 5, 1, 2, 3], "Array should have been rotated left")
+        XCTAssertEqual(array.rotate(-1), [5, 1, 2, 3, 4], "Array should have been rotated left")
+        XCTAssertEqual(array.rotate(-1 * array.count), array, "Array should have been rotated left")
         
         array = []
         XCTAssertEqual(array.rotate(2), [], "Empty array cannot be rotated")
