@@ -77,6 +77,11 @@ extension Array {
         }
         return array
     }
+    
+    /// Rotates self in-place.
+    public mutating func rotateInPlace(shift: Int) {
+        self = rotate(shift)
+    }
 }
 
 extension Array where Element: Equatable {

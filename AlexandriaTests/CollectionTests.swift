@@ -68,6 +68,27 @@ class CollectionTests: XCTestCase {
         XCTAssertEqual(array.rotate(2), [], "Empty array cannot be rotated")
     }
     
+    func testRotateInPlace() {
+        var array = [1, 2, 3, 4, 5]
+        array.rotateInPlace(1)
+        XCTAssertEqual([2, 3, 4, 5, 1], array, "Array should have been rotated right")
+        array = [1, 2, 3, 4, 5]
+        array.rotateInPlace(2)
+        XCTAssertEqual([3, 4, 5, 1, 2], array, "Array should have been rotated right")
+        array = [1, 2, 3, 4, 5]
+        array.rotateInPlace(0)
+        XCTAssertEqual(array, array, "Array should not have been rotated")
+        array = [1, 2, 3, 4, 5]
+        array.rotateInPlace(-2)
+        XCTAssertEqual([4, 5, 1, 2, 3], array, "Array should have been rotated left")
+        array = [1, 2, 3, 4, 5]
+        array.rotateInPlace(-1)
+        XCTAssertEqual([5, 1, 2, 3, 4], array, "Array should have been rotated left")
+        array = []
+        array.rotateInPlace(2)
+        XCTAssertEqual(array, array, "Empty array cannot be rotated")
+    }
+    
     func testMapWithIndex() {
         let array = [1, 2, 3, 4, 5]
         
