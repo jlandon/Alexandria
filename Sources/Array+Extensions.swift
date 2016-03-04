@@ -52,9 +52,10 @@ extension Array {
      This is useful for infinitely scrolling visuals, but where the data backing those visuals is finite.
      
      ```
-     let mapped: [Int] = array.mapWithIndex { index, element in
-         return (index % 2 == 1) ? element * 2 : element
-     }
+     var array = [1, 2, 3, 4, 5]
+     
+     let x = array.rotate(2)   // x should be [3, 4, 5, 1, 2]
+     let y = array.rotate(-2)  // y should be [4, 5, 1, 2, 3]
      ```
      
      - parameter shift: The number of indices by which the array should be shifted. Positive shifts right, negative shifts left.
@@ -62,17 +63,16 @@ extension Array {
      - returns: Returns the rotated array.
      */
     public func rotate(shift: Int) -> Array {
-        var array = Array()
-        if count > 0 {
-            array = self
-            if shift > 0 {
-                for _ in 1...shift {
-                    array.append(array.removeAtIndex(0))
-                }
-            } else if shift < 0 {
-                for _ in 1...abs(shift) {
-                    array.insert(array.removeAtIndex(array.count - 1), atIndex: 0)
-                }
+        guard !isEmpty else { return [] }
+        
+        var array = self
+        if shift > 0 {
+            for _ in 1...shift {
+                array.append(array.removeFirst())
+            }
+        } else if shift < 0 {
+            for _ in 1...abs(shift) {
+                array.insert(array.removeLast(), atIndex: 0)
             }
         }
         return array
