@@ -27,6 +27,53 @@
 
 import Foundation
 
+extension Array {
+    /**
+     Returns an Array containing the results of mapping transform over self. The transform provides not only
+     each element of the array but also the index of tha item in the array.
+     
+     
+     ```
+     let items: [SomeObject] = existingArray.mapWithIndex { index, response in
+         return SomeObject(index: index, description: response.body)
+     }
+     ```
+     
+     - parameter f: The transform that given an element of the array and an index returns an element of type T
+     
+     - returns: The array created by applying the transform to this array.
+     */
+    public func mapWithIndex<T> (f: (Int, Element) -> T) -> [T] {
+        return zip((self.startIndex ..< self.endIndex), self).map(f)
+    }
+
+    /**
+     Rotates an array by the number of places indicated by `shift`.
+     
+     This is useful for infinitely scrolling visuals, but where the data backing those visuals is finite.
+     
+     - parameter shift: The number of indices by which the array should be shifted. Positive shifts right, negative shifts left.
+     
+     - returns: Returns the rotated array.
+     */
+    public func rotate(shift: Int) -> Array {
+        var array = Array()
+        if self.count > 0 {
+            array = self
+            if shift > 0 {
+                for _ in 1...shift {
+                    array.append(array.removeAtIndex(0))
+                }
+            } else if shift < 0 {
+                for _ in 1...abs(shift) {
+                    array.insert(array.removeAtIndex(array.count - 1), atIndex: 0)
+                }
+            }
+        }
+        return array
+    }
+}
+
 extension Array where Element: Equatable {
     /**
      Removes and returns the specified element from the array
