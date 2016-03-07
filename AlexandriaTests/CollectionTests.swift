@@ -53,6 +53,52 @@ class CollectionTests: XCTestCase {
         XCTAssertEqual(array.unique(), [1, 2, 4, 3, 5], "Unique arrays are not equal")
     }
     
+    func testRotateArray() {
+        var array = [1, 2, 3, 4, 5]
+
+        XCTAssertEqual(array.rotate(array.count), array, "Array should have been rotated right")
+        XCTAssertEqual(array.rotate(1), [2, 3, 4, 5, 1], "Array should have been rotated right")
+        XCTAssertEqual(array.rotate(2), [3, 4, 5, 1, 2], "Array should have been rotated right")
+        XCTAssertEqual(array.rotate(0), array, "Array should not have been rotated")
+        XCTAssertEqual(array.rotate(-2), [4, 5, 1, 2, 3], "Array should have been rotated left")
+        XCTAssertEqual(array.rotate(-1), [5, 1, 2, 3, 4], "Array should have been rotated left")
+        XCTAssertEqual(array.rotate(-1 * array.count), array, "Array should have been rotated left")
+        
+        array = []
+        XCTAssertEqual(array.rotate(2), [], "Empty array cannot be rotated")
+    }
+    
+    func testRotateInPlace() {
+        var array = [1, 2, 3, 4, 5]
+        array.rotateInPlace(1)
+        XCTAssertEqual([2, 3, 4, 5, 1], array, "Array should have been rotated right")
+        array = [1, 2, 3, 4, 5]
+        array.rotateInPlace(2)
+        XCTAssertEqual([3, 4, 5, 1, 2], array, "Array should have been rotated right")
+        array = [1, 2, 3, 4, 5]
+        array.rotateInPlace(0)
+        XCTAssertEqual(array, array, "Array should not have been rotated")
+        array = [1, 2, 3, 4, 5]
+        array.rotateInPlace(-2)
+        XCTAssertEqual([4, 5, 1, 2, 3], array, "Array should have been rotated left")
+        array = [1, 2, 3, 4, 5]
+        array.rotateInPlace(-1)
+        XCTAssertEqual([5, 1, 2, 3, 4], array, "Array should have been rotated left")
+        array = []
+        array.rotateInPlace(2)
+        XCTAssertEqual(array, array, "Empty array cannot be rotated")
+    }
+    
+    func testMapWithIndex() {
+        let array = [1, 2, 3, 4, 5]
+        
+        let mapped: [Int] = array.mapWithIndex { index, element in
+            return (index % 2 == 1) ? element * 2 : element
+        }
+        
+        XCTAssertEqual(mapped, [1, 4, 3, 8, 5], "Mapping failed")
+    }
+    
     func testDictionaryUnion() {
         let dictionary1 = ["key1" : 1, "key2" : 2]
         let dictionary2 = ["key3" : 3]
