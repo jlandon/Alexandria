@@ -27,6 +27,63 @@
 
 import Foundation
 
+extension Array {
+    /**
+     Returns an Array containing the results of mapping transform over self. The transform provides not only
+     each element of the array but also the index of tha item in the array.
+     
+     ```
+     let items: [SomeObject] = existingArray.mapWithIndex { index, response in
+         return SomeObject(index: index, description: response.body)
+     }
+     ```
+     
+     - parameter f: The transform that given an element of the array and an index returns an element of type T
+     
+     - returns: The array created by applying the transform to this array.
+     */
+    public func mapWithIndex<T> (f: (Int, Element) -> T) -> [T] {
+        return zip((startIndex ..< endIndex), self).map(f)
+    }
+
+    /**
+     Rotates an array by the number of places indicated by `shift`.
+     
+     This is useful for infinitely scrolling visuals, but where the data backing those visuals is finite.
+     
+     ```
+     var array = [1, 2, 3, 4, 5]
+     
+     let x = array.rotate(2)   // x should be [3, 4, 5, 1, 2]
+     let y = array.rotate(-2)  // y should be [4, 5, 1, 2, 3]
+     ```
+     
+     - parameter shift: The number of indices by which the array should be shifted. Positive shifts right, negative shifts left.
+     
+     - returns: Returns the rotated array.
+     */
+    public func rotate(shift: Int) -> Array {
+        guard !isEmpty else { return [] }
+        
+        var array = self
+        if shift > 0 {
+            for _ in 1...shift {
+                array.append(array.removeFirst())
+            }
+        } else if shift < 0 {
+            for _ in 1...abs(shift) {
+                array.insert(array.removeLast(), atIndex: 0)
+            }
+        }
+        return array
+    }
+    
+    /// Rotates self in-place.
+    public mutating func rotateInPlace(shift: Int) {
+        self = rotate(shift)
+    }
+}
+
 extension Array where Element: Equatable {
     /**
      Removes and returns the specified element from the array
