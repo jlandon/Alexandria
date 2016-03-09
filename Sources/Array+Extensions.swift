@@ -95,6 +95,53 @@ extension Array where Element: Equatable {
         guard let index = indexOf(element) else { return nil }
         return removeAtIndex(index)
     }
+    
+    
+    /**
+     Returns the element before the specified element.
+     
+     ```
+     let foo = [1,2,3]
+     let two = foo.before(3)
+     let one = foo.before(2)
+     let nope = foo.before(1)
+     ```
+     
+     - parameter element: The element to index against.
+     - returns: The element before the index element, or nil if there isn't one.
+    */
+    public func before(element: Element) -> Element? {
+        guard !isEmpty else { return nil }
+
+        if let index = indexOf(element) {
+            return self[safe: index.predecessor()]
+        }
+        return nil
+    }
+    
+    
+    /**
+     Returns the element after the specified element.
+     
+     ```
+     let foo = [1,2,3]
+     let twp = foo.after(1)
+     let three = foo.after(2)
+     let nope = foo.after(3)
+     ```
+
+     - parameter element: The element to index against.
+     - returns: The element after the index element, or nil if there isn't one.
+     */
+    public func after(element: Element) -> Element? {
+        guard !isEmpty else { return nil }
+        
+        if let index = indexOf(element) {
+            return self[safe: index.successor()]
+        }
+        return nil
+    }
+
 }
 
 extension Array where Element: Hashable {

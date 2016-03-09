@@ -99,6 +99,79 @@ class CollectionTests: XCTestCase {
         XCTAssertEqual(mapped, [1, 4, 3, 8, 5], "Mapping failed")
     }
     
+    
+    func testBefore() {
+        let emptyArray = [Int]()
+        
+        XCTAssertNil(emptyArray.before(42))
+        
+        let oneArray = [1]
+        XCTAssertNil(oneArray.before(1))
+        XCTAssertNil(oneArray.before(42))
+        
+        let twoArray = [1,2]
+        XCTAssertNil(twoArray.before(1))
+        XCTAssertEqual(twoArray.before(2), 1)
+        XCTAssertNil(twoArray.before(3))
+        
+        let threeArray = [1,2,3]
+        XCTAssertNil(threeArray.before(1))
+        XCTAssertEqual(threeArray.before(2), 1)
+        XCTAssertEqual(threeArray.before(3), 2)
+        XCTAssertNil(threeArray.before(4))
+        
+        let tensArray = [10, 30, 50, 70, 90, 20, 40, 60, 80, 100]
+        XCTAssertNil(tensArray.before(10))
+        XCTAssertEqual(tensArray.before(20), 90)
+        XCTAssertEqual(tensArray.before(30), 10)
+        XCTAssertEqual(tensArray.before(40), 20)
+        XCTAssertEqual(tensArray.before(50), 30)
+        XCTAssertEqual(tensArray.before(60), 40)
+        XCTAssertEqual(tensArray.before(70), 50)
+        XCTAssertEqual(tensArray.before(80), 60)
+        XCTAssertEqual(tensArray.before(90), 70)
+        XCTAssertEqual(tensArray.before(100), 80)
+        XCTAssertNil(tensArray.before(110))
+    }
+
+    
+    func testAfter() {
+        let emptyArray = [Int]()
+        
+        XCTAssertNil(emptyArray.after(42))
+        
+        let oneArray = [1]
+        XCTAssertNil(oneArray.after(0))
+        XCTAssertNil(oneArray.after(1))
+        
+        let twoArray = [1,2]
+        XCTAssertNil(twoArray.after(0))
+        XCTAssertEqual(twoArray.after(1), 2)
+        XCTAssertNil(twoArray.after(2))
+        XCTAssertNil(twoArray.after(3))
+        
+        let threeArray = [1,2,3]
+        XCTAssertNil(threeArray.after(0))
+        XCTAssertEqual(threeArray.after(1), 2)
+        XCTAssertEqual(threeArray.after(2), 3)
+        XCTAssertNil(threeArray.after(3))
+        XCTAssertNil(threeArray.after(4))
+        
+        let tensArray = [10, 30, 50, 70, 90, 20, 40, 60, 80, 100]
+        XCTAssertNil(tensArray.after(0))
+        XCTAssertEqual(tensArray.after(10), 30)
+        XCTAssertEqual(tensArray.after(20), 40)
+        XCTAssertEqual(tensArray.after(30), 50)
+        XCTAssertEqual(tensArray.after(40), 60)
+        XCTAssertEqual(tensArray.after(50), 70)
+        XCTAssertEqual(tensArray.after(60), 80)
+        XCTAssertEqual(tensArray.after(70), 90)
+        XCTAssertEqual(tensArray.after(80), 100)
+        XCTAssertEqual(tensArray.after(90), 20)
+        XCTAssertNil(tensArray.after(100))
+    }
+
+    
     func testDictionaryUnion() {
         let dictionary1 = ["key1" : 1, "key2" : 2]
         let dictionary2 = ["key3" : 3]
