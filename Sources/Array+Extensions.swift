@@ -102,15 +102,15 @@ extension Array where Element: Equatable {
      
      ```
      let foo = [1,2,3]
-     let two = foo.previous(3)
-     let one = foo.previous(2)
-     let nope = foo.previous(1)
+     let two = foo.before(3)
+     let one = foo.before(2)
+     let nope = foo.before(1)
      ```
      
      - parameter element: The element to index against.
      - returns: The element before the index element, or nil if there isn't one.
     */
-    public func previous(element: Element) -> Element? {
+    public func before(element: Element) -> Element? {
         guard !isEmpty else { return nil }
 
         if let index = indexOf(element) {
@@ -125,15 +125,15 @@ extension Array where Element: Equatable {
      
      ```
      let foo = [1,2,3]
-     let twp = foo.next(1)
-     let three = foo.next(2)
-     let nope = foo.next(3)
+     let twp = foo.after(1)
+     let three = foo.after(2)
+     let nope = foo.after(3)
      ```
 
      - parameter element: The element to index against.
      - returns: The element after the index element, or nil if there isn't one.
      */
-    public func next(element: Element) -> Element? {
+    public func after(element: Element) -> Element? {
         guard !isEmpty else { return nil }
         
         if let index = indexOf(element) {

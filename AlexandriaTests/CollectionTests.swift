@@ -100,75 +100,75 @@ class CollectionTests: XCTestCase {
     }
     
     
-    func testPrevious() {
+    func testBefore() {
         let emptyArray = [Int]()
         
-        XCTAssertNil(emptyArray.previous(42))
+        XCTAssertNil(emptyArray.before(42))
         
         let oneArray = [1]
-        XCTAssertNil(oneArray.previous(1))
-        XCTAssertNil(oneArray.previous(42))
+        XCTAssertNil(oneArray.before(1))
+        XCTAssertNil(oneArray.before(42))
         
         let twoArray = [1,2]
-        XCTAssertNil(twoArray.previous(1))
-        XCTAssertEqual(twoArray.previous(2), 1)
-        XCTAssertNil(twoArray.previous(3))
+        XCTAssertNil(twoArray.before(1))
+        XCTAssertEqual(twoArray.before(2), 1)
+        XCTAssertNil(twoArray.before(3))
         
         let threeArray = [1,2,3]
-        XCTAssertNil(threeArray.previous(1))
-        XCTAssertEqual(threeArray.previous(2), 1)
-        XCTAssertEqual(threeArray.previous(3), 2)
-        XCTAssertNil(threeArray.previous(4))
+        XCTAssertNil(threeArray.before(1))
+        XCTAssertEqual(threeArray.before(2), 1)
+        XCTAssertEqual(threeArray.before(3), 2)
+        XCTAssertNil(threeArray.before(4))
         
-        let tensArray = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
-        XCTAssertNil(tensArray.previous(10))
-        XCTAssertEqual(tensArray.previous(20), 10)
-        XCTAssertEqual(tensArray.previous(30), 20)
-        XCTAssertEqual(tensArray.previous(40), 30)
-        XCTAssertEqual(tensArray.previous(50), 40)
-        XCTAssertEqual(tensArray.previous(60), 50)
-        XCTAssertEqual(tensArray.previous(70), 60)
-        XCTAssertEqual(tensArray.previous(80), 70)
-        XCTAssertEqual(tensArray.previous(90), 80)
-        XCTAssertEqual(tensArray.previous(100), 90)
-        XCTAssertNil(tensArray.previous(110))
+        let tensArray = [10, 30, 50, 70, 90, 20, 40, 60, 80, 100]
+        XCTAssertNil(tensArray.before(10))
+        XCTAssertEqual(tensArray.before(20), 90)
+        XCTAssertEqual(tensArray.before(30), 10)
+        XCTAssertEqual(tensArray.before(40), 20)
+        XCTAssertEqual(tensArray.before(50), 30)
+        XCTAssertEqual(tensArray.before(60), 40)
+        XCTAssertEqual(tensArray.before(70), 50)
+        XCTAssertEqual(tensArray.before(80), 60)
+        XCTAssertEqual(tensArray.before(90), 70)
+        XCTAssertEqual(tensArray.before(100), 80)
+        XCTAssertNil(tensArray.before(110))
     }
 
     
-    func testNext() {
+    func testAfter() {
         let emptyArray = [Int]()
         
-        XCTAssertNil(emptyArray.next(42))
+        XCTAssertNil(emptyArray.after(42))
         
         let oneArray = [1]
-        XCTAssertNil(oneArray.next(0))
-        XCTAssertNil(oneArray.next(1))
+        XCTAssertNil(oneArray.after(0))
+        XCTAssertNil(oneArray.after(1))
         
         let twoArray = [1,2]
-        XCTAssertNil(twoArray.next(0))
-        XCTAssertEqual(twoArray.next(1), 2)
-        XCTAssertNil(twoArray.next(2))
-        XCTAssertNil(twoArray.next(3))
+        XCTAssertNil(twoArray.after(0))
+        XCTAssertEqual(twoArray.after(1), 2)
+        XCTAssertNil(twoArray.after(2))
+        XCTAssertNil(twoArray.after(3))
         
         let threeArray = [1,2,3]
-        XCTAssertNil(threeArray.next(0))
-        XCTAssertEqual(threeArray.next(1), 2)
-        XCTAssertEqual(threeArray.next(2), 3)
-        XCTAssertNil(threeArray.next(3))
-        XCTAssertNil(threeArray.next(4))
+        XCTAssertNil(threeArray.after(0))
+        XCTAssertEqual(threeArray.after(1), 2)
+        XCTAssertEqual(threeArray.after(2), 3)
+        XCTAssertNil(threeArray.after(3))
+        XCTAssertNil(threeArray.after(4))
         
-        let tensArray = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
-        XCTAssertNil(tensArray.next(0))
-        XCTAssertEqual(tensArray.next(10), 20)
-        XCTAssertEqual(tensArray.next(20), 30)
-        XCTAssertEqual(tensArray.next(30), 40)
-        XCTAssertEqual(tensArray.next(40), 50)
-        XCTAssertEqual(tensArray.next(50), 60)
-        XCTAssertEqual(tensArray.next(60), 70)
-        XCTAssertEqual(tensArray.next(70), 80)
-        XCTAssertEqual(tensArray.next(80), 90)
-        XCTAssertEqual(tensArray.next(90), 100)
-        XCTAssertNil(tensArray.next(100))
+        let tensArray = [10, 30, 50, 70, 90, 20, 40, 60, 80, 100]
+        XCTAssertNil(tensArray.after(0))
+        XCTAssertEqual(tensArray.after(10), 30)
+        XCTAssertEqual(tensArray.after(20), 40)
+        XCTAssertEqual(tensArray.after(30), 50)
+        XCTAssertEqual(tensArray.after(40), 60)
+        XCTAssertEqual(tensArray.after(50), 70)
+        XCTAssertEqual(tensArray.after(60), 80)
+        XCTAssertEqual(tensArray.after(70), 90)
+        XCTAssertEqual(tensArray.after(80), 100)
+        XCTAssertEqual(tensArray.after(90), 20)
+        XCTAssertNil(tensArray.after(100))
     }
 
     
