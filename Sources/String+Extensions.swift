@@ -254,7 +254,7 @@ extension String {
     /**
      - returns: Returns true if every character within the string is a numeric character.
     */
-    func isNumeric() -> Bool {
+    public func isNumeric() -> Bool {
         return self.characters.reduce(true) {
             $0 && String($1).rangeOfCharacterFromSet(NSCharacterSet.decimalDigitCharacterSet().invertedSet) == nil
         }
