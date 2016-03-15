@@ -250,4 +250,13 @@ extension String {
         }
         return self.rangeOfString(string, options: [.CaseInsensitiveSearch, .DiacriticInsensitiveSearch], locale: NSLocale.currentLocale()) != nil
     }
+    
+    /**
+     - returns: Returns true if every character within the string is a numeric character.
+    */
+    func isNumeric() -> Bool {
+        return self.characters.reduce(true) {
+            $0 && String($1).rangeOfCharacterFromSet(NSCharacterSet.decimalDigitCharacterSet().invertedSet) == nil
+        }
+    }
 }
