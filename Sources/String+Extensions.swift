@@ -77,6 +77,15 @@ extension String {
         let base64Decoded = NSData(base64EncodedString: self, options: []).flatMap({ String(data: $0, encoding: NSUTF8StringEncoding) })
         return base64Decoded
     }
+    
+    /**
+     Returns true if every character within the string is a numeric character. Empty strings are
+     considered non-numeric.
+    */
+    public var isNumeric: Bool {
+        guard !isEmpty else { return false }
+        return stringByTrimmingCharactersInSet(.decimalDigitCharacterSet()).isEmpty
+    }
 
     /**
      Replaces all occurences of the pattern on self in-place.
