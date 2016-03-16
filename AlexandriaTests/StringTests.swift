@@ -73,10 +73,12 @@ class StringTests: XCTestCase {
     }
     
     func testNumeric() {
-        XCTAssert("".isNumeric(), "Empty string is numeric")
-        XCTAssert("12345678901234567890".isNumeric(), "Long string of integers is numeric")
-        XCTAssertFalse("12.34".isNumeric(), "String containing decimal point is not numeric")
-        XCTAssertFalse("a".isNumeric(), "String containing only letters is not numeric")
-        XCTAssertFalse("1A1".isNumeric(), "String containing letters and number is not numeric")
+        XCTAssert("1".isNumeric, "Simple string of one digit is numberic")
+        XCTAssert("12345678901234567890".isNumeric, "String of many digits is numeric")
+        XCTAssertFalse("".isNumeric, "Empty string is not numeric")
+        XCTAssertFalse("12.34".isNumeric, "String containing decimal point is not numeric")
+        XCTAssertFalse("a".isNumeric, "String containing only letters is not numeric")
+        XCTAssertFalse("1a1".isNumeric, "String containing letters and digits is not numeric")
+        XCTAssertFalse("a1a".isNumeric, "String containing letters and digits is not numeric")
     }
 }
