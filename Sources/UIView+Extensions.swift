@@ -494,13 +494,13 @@ extension UIView {
     `let snapshot = canvas.addSnapshotOfView(view, afterUpdates: false)`
     
     - parameter view:         The view to snapshot
-    - parameter afterUpdates: A Boolean value that specifies whether the snapshot should be taken after recent changes have been incorporated. Pass the value false to capture the screen in its current state, which might not include recent changes.
+    - parameter afterUpdates: A Boolean value (default: false) that specifies whether the snapshot should be taken after recent changes have been incorporated. Pass the value false to capture the screen in its current state, which might not include recent changes.
     
     - returns: The snapshotted view (already added to the caller).
     
     - author: Richard Turton http://commandshift.co.uk/blog/2016/03/13/better-snapshots/
     */
-    public func addSnapshotOfView(view: UIView, afterUpdates: Bool) -> UIView {
+    public func addSnapshotOfView(view: UIView, afterUpdates: Bool = false) -> UIView {
         let snapshot = view.snapshotViewAfterScreenUpdates(afterUpdates)
         self.addSubview(snapshot)
         snapshot.frame = convertRect(view.bounds, fromView: view)
@@ -512,13 +512,13 @@ extension UIView {
      Convenience for calling `addSnapshotOfView(_:afterUpdates:)` over an array of views.
      
      - parameter views:        The views to snapshot.
-     - parameter afterUpdates: A Boolean value that specifies whether the snapshot should be taken after recent changes have been incorporated. Pass the value false to capture the screen in its current state, which might not include recent changes.
+     - parameter afterUpdates: A Boolean value (default: false) that specifies whether the snapshot should be taken after recent changes have been incorporated. Pass the value false to capture the screen in its current state, which might not include recent changes.
      
      - returns: The snapshotted views.
      
      - author: Richard Turton http://commandshift.co.uk/blog/2016/03/13/better-snapshots/
      */
-    public func addSnapshotOfViews(views: [UIView], afterUpdates: Bool) -> [UIView] {
+    public func addSnapshotOfViews(views: [UIView], afterUpdates: Bool = false) -> [UIView] {
         return views.map { addSnapshotOfView($0, afterUpdates: afterUpdates) }
     }
 
