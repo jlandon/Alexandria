@@ -469,15 +469,15 @@ extension UIView {
         For transitions, what is usually required is for the snapshot to be added to the canvas view, at the 
         same position on the screen. This is done with an extension on UIView:
     
-            > see `snapshotView(_:afterUpdates:)` below
+            > see `addSnapshotOfView(_:afterUpdates:)` below
     
         You call the function like this:
     
-            `let snapshot = canvas.snapshotView(view, afterUpdates: false)`
+            `let snapshot = canvas.addSnapshotOfView(view, afterUpdates: false)`
     
         For an array of views, another method in the extension:
         
-            > see `snapshotViews(_:afterUpdates:)` below
+            > see `addSnapshotOfView(_:afterUpdates:)` below
     
         Snapshotting is so common and so useful when doing transitions, and these extension methods make 
         your transition code much more readable and obvious.
@@ -491,7 +491,7 @@ extension UIView {
     Take a snapshot of the given view, adding it to `self` which is treated as the canvas-view. Will place the
     snapshot view within self (canvas view) at the snapshotted view's same position on screen.
     
-    `let snapshot = canvas.snapshotView(view, afterUpdates: false)`
+    `let snapshot = canvas.addSnapshotOfView(view, afterUpdates: false)`
     
     - parameter view:         The view to snapshot
     - parameter afterUpdates: A Boolean value that specifies whether the snapshot should be taken after recent changes have been incorporated. Pass the value false to capture the screen in its current state, which might not include recent changes.
@@ -500,7 +500,7 @@ extension UIView {
     
     - author: Richard Turton http://commandshift.co.uk/blog/2016/03/13/better-snapshots/
     */
-    public func snapshotView(view: UIView, afterUpdates: Bool) -> UIView {
+    public func addSnapshotOfView(view: UIView, afterUpdates: Bool) -> UIView {
         let snapshot = view.snapshotViewAfterScreenUpdates(afterUpdates)
         self.addSubview(snapshot)
         snapshot.frame = convertRect(view.bounds, fromView: view)
@@ -509,7 +509,7 @@ extension UIView {
     
     
     /**
-     Convenience for calling `snapshotView(_:afterUpdates:)` over an array of views.
+     Convenience for calling `addSnapshotOfView(_:afterUpdates:)` over an array of views.
      
      - parameter views:        The views to snapshot.
      - parameter afterUpdates: A Boolean value that specifies whether the snapshot should be taken after recent changes have been incorporated. Pass the value false to capture the screen in its current state, which might not include recent changes.
@@ -518,8 +518,8 @@ extension UIView {
      
      - author: Richard Turton http://commandshift.co.uk/blog/2016/03/13/better-snapshots/
      */
-    public func snapshotViews(views: [UIView], afterUpdates: Bool) -> [UIView] {
-        return views.map { snapshotView($0, afterUpdates: afterUpdates) }
+    public func addSnapshotOfViews(views: [UIView], afterUpdates: Bool) -> [UIView] {
+        return views.map { addSnapshotOfView($0, afterUpdates: afterUpdates) }
     }
 
 
