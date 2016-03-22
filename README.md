@@ -23,8 +23,8 @@ _Alexandria_ (as in the [Library of Alexandria](https://en.wikipedia.org/wiki/Li
 ## Requirements
 
 - iOS 8+
-- Xcode 7.2+
-- Swift 2.1
+- Xcode 7.3+
+- Swift 2.2
 
 
 ## Documentation
