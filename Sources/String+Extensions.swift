@@ -164,8 +164,8 @@ extension String {
 
                 let startIndex = self.startIndex.advancedBy(resultRange.location)
                 let endIndex = self.startIndex.advancedBy(resultRange.location + resultRange.length)
-                let replacementRange = Range<String.Index>(start: startIndex, end: endIndex)
-
+                let replacementRange = startIndex..<endIndex
+                
                 let match = expression.replacementStringForResult(result, inString: self, offset: startOffset, template: "$\(i)")
                 let replacement = matches(match)
 
@@ -203,7 +203,7 @@ extension String {
 
     /// Range for substring
     public func range(substring: String) -> Range<String.Index>? {
-        let range = Range<String.Index>(start: self.startIndex, end: self.startIndex.advancedBy(self.characters.count))
+        let range = self.startIndex..<self.startIndex.advancedBy(self.characters.count)
         return self.rangeOfString(substring, options: [], range: range, locale: nil)
     }
 
@@ -214,7 +214,7 @@ extension String {
 
     /// Substring for range
     public subscript(r: Range<Int>) -> String {
-        return substringWithRange(Range(start: startIndex.advancedBy(r.startIndex), end: startIndex.advancedBy(r.endIndex)))
+        return substringWithRange(startIndex.advancedBy(r.startIndex)..<startIndex.advancedBy(r.endIndex))
     }
     
     /**

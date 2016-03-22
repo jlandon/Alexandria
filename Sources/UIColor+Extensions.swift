@@ -46,11 +46,12 @@ extension UIColor {
      - parameter hexString: The hex color string, e.g.: "#9443FB" or "9443FB". The leading "#" is recommended but optional.
      - returns: A UIColor initialized with the color specified by the hexString. In the event of an invalid hexString, including nil, it will attempt to return some sort of valid UIColor (perhaps black) but may return nil; all depends on the particulars of the given string.
      */
-    public convenience init(var hexString: String) {
-        if hexString.hasPrefix("#") {
-            hexString = hexString.substringFromIndex(hexString.startIndex.advancedBy(1))
+    public convenience init(hexString: String) {
+        var mutableHexString = hexString
+        if mutableHexString.hasPrefix("#") {
+            mutableHexString = hexString.substringFromIndex(mutableHexString.startIndex.advancedBy(1))
         }
-        let scanner = NSScanner(string: hexString)
+        let scanner = NSScanner(string: mutableHexString)
         var hexEquivalent: UInt32 = 0
         scanner.scanHexInt(&hexEquivalent)
         
