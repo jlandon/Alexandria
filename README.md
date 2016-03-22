@@ -16,7 +16,7 @@ A library of Swift extensions to turbocharge your iOS development.
 
 Here at [Oven Bits](http://ovenbits.com), we love Swift. We started using it when it was first released in 2014, and have been building large portions (or all) of our iOS applications in it since then.
 
-One of our favorite features in Swift are [extensions](https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Extensions.html), and we've been using them heavily to add conveniences to UIKit & Foundation, and help "make it our own".
+One of our favorite features in Swift is [extensions](https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Extensions.html), and we've been using them heavily to add conveniences to UIKit & Foundation, and help "make it our own".
 
 _Alexandria_ (as in the [Library of Alexandria](https://en.wikipedia.org/wiki/Library_of_Alexandria)) is the result of that work. We use it as our "standard library" when starting iOS applications, and find it greatly speeds up our development time, and helps us get our applications off the ground quicker. Hopefully you will too!
 
