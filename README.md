@@ -23,8 +23,8 @@ _Alexandria_ (as in the [Library of Alexandria](https://en.wikipedia.org/wiki/Li
 ## Requirements
 
 - iOS 8+
-- Xcode 7.2+
-- Swift 2.1
+- Xcode 7.3+
+- Swift 2.2
 
 
 ## Documentation
@@ -86,7 +86,6 @@ Alexandria is maintained by the team at [Oven Bits](https://ovenbits.com), a sof
 
 Find us online:
 
-- [Oven Bits Engineering Website](https://engineering.ovenbits.com/)
 - [Twitter (@OvenBitsMobile)](https://twitter.com/OvenBitsMobile)
 
 <img alt="Baked with love by Oven Bits, a software design and development agency based in Dallas, Texas." width="150" height="150" src="https://cloud.githubusercontent.com/assets/896486/13259258/3cb10ac0-da1c-11e5-9db8-828357f5a2b3.png" />
