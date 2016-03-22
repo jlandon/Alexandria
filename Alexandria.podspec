@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name                = "Alexandria"
-  s.version             = "1.0.0"
+  s.version             = "1.1.0"
   s.summary             = "Oven Bits' library of useful iOS Swift extensions."
   s.description         = <<-DESC
     The Oven Bits open source library, Alexandria, is one of the new Wonders of the iOS World.
