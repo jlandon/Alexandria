@@ -71,4 +71,14 @@ class StringTests: XCTestCase {
         XCTAssertEqual("hello there".truncate(5), "hello", "Truncated strings are not equal")
         XCTAssertEqual("hello there".truncate(5, trailing: "..."), "hello...", "Truncated strings are not equal")
     }
+    
+    func testNumeric() {
+        XCTAssert("1".isNumeric, "Simple string of one digit is numberic")
+        XCTAssert("12345678901234567890".isNumeric, "String of many digits is numeric")
+        XCTAssertFalse("".isNumeric, "Empty string is not numeric")
+        XCTAssertFalse("12.34".isNumeric, "String containing decimal point is not numeric")
+        XCTAssertFalse("a".isNumeric, "String containing only letters is not numeric")
+        XCTAssertFalse("1a1".isNumeric, "String containing letters and digits is not numeric")
+        XCTAssertFalse("a1a".isNumeric, "String containing letters and digits is not numeric")
+    }
 }

@@ -56,7 +56,7 @@ extension UIButton {
     public convenience init(action: UIButton -> Void) {
         self.init()
         buttonAction = ButtonAction(action: action)
-        addTarget(self, action: "handleAction:", forControlEvents: .TouchUpInside)
+        addTarget(self, action: #selector(UIButton.handleAction(_:)), forControlEvents: .TouchUpInside)
     }
     
     
@@ -71,7 +71,7 @@ extension UIButton {
     public convenience init(frame: CGRect, action: UIButton -> Void) {
         self.init(frame: frame)
         buttonAction = ButtonAction(action: action)
-        addTarget(self, action: "handleAction:", forControlEvents: .TouchUpInside)
+        addTarget(self, action: #selector(UIButton.handleAction(_:)), forControlEvents: .TouchUpInside)
     }
     
     
@@ -83,7 +83,7 @@ extension UIButton {
      */
     public func addTarget(controlEvents controlEvents: UIControlEvents, action: UIButton -> Void) {
         buttonAction = ButtonAction(action: action)
-        addTarget(self, action: "handleAction:", forControlEvents: controlEvents)
+        addTarget(self, action: #selector(UIButton.handleAction(_:)), forControlEvents: controlEvents)
     }
     
     dynamic private func handleAction(button: UIButton) {

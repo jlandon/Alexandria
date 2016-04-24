@@ -36,6 +36,7 @@ extension CGContext {
     }
 }
 
+@available(iOS 9.0, *)
 extension CGColorSpace {
     
     /// CGColorSpace for the generic CMYK color space.
@@ -49,10 +50,6 @@ extension CGColorSpace {
     
     /// CGColorSpace for the generic gray color space with a gamma value of 2.2.
     public static let GenericGrayGamma2_2 = CGColorSpaceCreateWithName(kCGColorSpaceGenericGrayGamma2_2)
-}
-
-@available(iOS 9.0, *)
-extension CGColorSpace {
     
     /// CGColorSpace for the generic gray color space.
     public static let GenericGray = CGColorSpaceCreateWithName(kCGColorSpaceGenericGray)

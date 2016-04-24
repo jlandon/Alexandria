@@ -277,7 +277,7 @@ extension UICollectionView {
         }
     }
     
-    private func assertIsValidIndexPath(indexPath: NSIndexPath, file: StaticString = __FILE__, line: UInt = __LINE__) {
+    private func assertIsValidIndexPath(indexPath: NSIndexPath, file: StaticString = #file, line: UInt = #line) {
         let maxPath = maximumIndexPath
         assert(indexPath.section <= maxPath.section && indexPath.section >= 0,
             "Index path \(indexPath) is outside the bounds set by the minimum (\(minimumIndexPath)) and maximum (\(maxPath)) index path", file: file, line: line)

@@ -61,7 +61,7 @@ extension UIGestureRecognizer {
     public convenience init(action: (UIGestureRecognizer) -> Void) {
         self.init()
         gestureAction = GestureAction(action: action)
-        addTarget(self, action: "handleAction:")
+        addTarget(self, action: #selector(UIGestureRecognizer.handleAction(_:)))
     }
     
     dynamic private func handleAction(recognizer: UIGestureRecognizer) {
