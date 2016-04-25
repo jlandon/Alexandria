@@ -259,4 +259,50 @@ extension String {
         }
         return self.rangeOfString(string, options: [.CaseInsensitiveSearch, .DiacriticInsensitiveSearch], locale: NSLocale.currentLocale()) != nil
     }
+    
+    /**
+     Convert an NSRange to a Range. There is still a mismatch between the regular expression libraries
+     and NSString/String. This makes it easier to convert between the two. Using this allows complex
+     strings (including emoji, regonial indicattors, etc.) to be manipulated without having to resort
+     to NSString instances.
+     
+     Note that it may not always be possible to convert from an NSRange as they are not exactly the same.
+     
+     Taken from:
+     http://stackoverflow.com/questions/25138339/nsrange-to-rangestring-index
+     
+     - parameter nsRange: The NSRange instance to covert to a Range.
+     
+     - returns: The Range, if it was possible to convert. Otherwise nil.
+     */
+    public func rangeFromNSRange(nsRange : NSRange) -> Range<String.Index>? {
+        let from16 = utf16.startIndex.advancedBy(nsRange.location, limit: utf16.endIndex)
+        let to16 = from16.advancedBy(nsRange.length, limit: utf16.endIndex)
+        if let from = String.Index(from16, within: self),
+            let to = String.Index(to16, within: self) {
+            return from ..< to
+        }
+        return nil
+    }
+    
+    /**
+     Convert a Range to an NSRange. There is still a mismatch between the regular expression libraries
+     and NSString/String. This makes it easier to convert between the two. Using this allows complex
+     strings (including emoji, regonial indicattors, etc.) to be manipulated without having to resort
+     to NSString instances.
+     
+     Taken from:
+     http://stackoverflow.com/questions/25138339/nsrange-to-rangestring-index
+     
+     - parameter range: The Range instance to conver to an NSRange.
+     
+     - returns: The NSRange converted from the input. This will always succeed.
+     */
+    public func NSRangeFromRange(range : Range<String.Index>) -> NSRange {
+        let utf16view = self.utf16
+        let from = String.UTF16View.Index(range.startIndex, within: utf16view)
+        let to = String.UTF16View.Index(range.endIndex, within: utf16view)
+        return NSMakeRange(utf16view.startIndex.distanceTo(from), from.distanceTo(to))
+    }
+
 }

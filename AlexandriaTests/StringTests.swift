@@ -81,4 +81,32 @@ class StringTests: XCTestCase {
         XCTAssertFalse("1a1".isNumeric, "String containing letters and digits is not numeric")
         XCTAssertFalse("a1a".isNumeric, "String containing letters and digits is not numeric")
     }
+    
+    func testExtendedStringRangeConversions() {
+        let uk = "🇬🇧"
+        let str = "a😜b🇬🇧c"
+        let r1 = str.rangeOfString(uk)!
+        
+        let n1 = str.NSRangeFromRange(r1)
+        XCTAssertEqual((str as NSString).substringWithRange(n1), uk, "Range should have found the UK flag")
+        
+        let r2 = str.rangeFromNSRange(n1)!
+        XCTAssertEqual(str.substringWithRange(r2), uk, "Range should have found the UK flag")
+    }
+    
+    func testRepeatedRangeConversion() {
+        var content: String = "This library was created by <link id=\"ovenbits\" type=\"ahref\"/> and can be found on <link id=\"github\" type=\"ahref\"/>"
+        let regexStr = "<link id=\"(.*?)\" type=\"ahref\"/>"
+        do {
+            let regex = try NSRegularExpression(pattern: regexStr, options: .CaseInsensitive)
+            for match in regex.matchesInString(content, options: NSMatchingOptions(), range: NSMakeRange(0, content.characters.count)).reverse() {
+                let reference = content.substringWithRange(content.rangeFromNSRange(match.rangeAtIndex(1))!)
+                content = content.stringByReplacingCharactersInRange(content.rangeFromNSRange(match.range)!, withString: "<a class=\"link\" href=\"http://www.\(reference).com\">\(reference)</a>")
+            }
+            XCTAssertEqual(content, "This library was created by <a class=\"link\" href=\"http://www.ovenbits.com\">ovenbits</a> and can be found on <a class=\"link\" href=\"http://www.github.com\">github</a>", "Repeated regex should have been handled")
+        } catch {
+            XCTFail("Regular expression creation issue")
+        }
+    }
+    
 }
