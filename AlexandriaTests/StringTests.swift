@@ -87,7 +87,7 @@ class StringTests: XCTestCase {
         let str = "a😜b🇬🇧c"
         let r1 = str.rangeOfString(uk)!
         
-        let n1 = str.nSRangeFromRange(r1)
+        let n1 = str.NSRangeFromRange(r1)
         XCTAssertEqual((str as NSString).substringWithRange(n1), uk, "Range should have found the UK flag")
         
         let r2 = str.rangeFromNSRange(n1)!

@@ -298,7 +298,7 @@ extension String {
      
      - returns: The NSRange converted from the input. This will always succeed.
      */
-    public func nSRangeFromRange(range : Range<String.Index>) -> NSRange {
+    public func NSRangeFromRange(range : Range<String.Index>) -> NSRange {
         let utf16view = self.utf16
         let from = String.UTF16View.Index(range.startIndex, within: utf16view)
         let to = String.UTF16View.Index(range.endIndex, within: utf16view)
