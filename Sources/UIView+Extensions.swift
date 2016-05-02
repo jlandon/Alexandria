@@ -385,22 +385,22 @@ extension UIView {
      Constrain the edges of self its superview, with optional insets.
      
      - parameter top: The top insets (optional, defaults to 0).
-     - parameter left: The left insets (optional, defaults to 0).
+     - parameter leading: The leading insets (optional, defaults to 0).
      - parameter bottom: The bottom insets (optional, defaults to 0).
-     - parameter right: The right insets (optional, defaults to 0).
+     - parameter trailing: The trailing insets (optional, defaults to 0).
      
-     - returns: All four created constraints (top, left, bottom, and right edges) for self.
+     - returns: All four created constraints (top, leading, bottom, and trailing edges) for self.
      */
-    public func constrainEdgesToSuperview(top top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0) -> (top: NSLayoutConstraint, left: NSLayoutConstraint, bottom: NSLayoutConstraint, right: NSLayoutConstraint) {
+    public func constrainEdgesToSuperview(top top: CGFloat = 0, leading: CGFloat = 0, bottom: CGFloat = 0, trailing: CGFloat = 0) -> (top: NSLayoutConstraint, leading: NSLayoutConstraint, bottom: NSLayoutConstraint, trailing: NSLayoutConstraint) {
         
         guard let superview = superview else { fatalError("Unable to add constraints, because the view has no superview") }
         
         let topConstraint    = constrain(.Top, to: superview, .Top, plus: top)
-        let leftConstraint   = constrain(.Left, to: superview, .Left, plus: left)
+        let leadingConstraint   = constrain(.Leading, to: superview, .Leading, plus: leading)
         let bottomConstraint = constrain(.Bottom, to: superview, .Bottom, plus: -bottom)
-        let rightConstraint  = constrain(.Right, to: superview, .Right, plus: -right)
+        let trailingConstraint  = constrain(.Trailing, to: superview, .Trailing, plus: -trailing)
         
-        return (topConstraint, leftConstraint, bottomConstraint, rightConstraint)
+        return (topConstraint, leadingConstraint, bottomConstraint, trailingConstraint)
     }
     
     /**
