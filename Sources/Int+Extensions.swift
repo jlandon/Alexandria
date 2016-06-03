@@ -161,7 +161,7 @@ extension Int {
      
      - author: http://stackoverflow.com/a/35504720/1737738
      */
-    func toAbbreviatedString () -> String {
+    public var toAbbreviatedString: String {
         let numFormatter = NSNumberFormatter()
         
         typealias Abbrevation = (threshold:Double, divisor:Double, suffix:String)
