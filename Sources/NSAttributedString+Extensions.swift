@@ -44,6 +44,64 @@ extension NSAttributedString {
     }
 }
 
+
+extension NSAttributedString {
+    
+    /**
+     Returns a copy of `self` with the given font applied.
+     
+     - parameter font: The font to apply.
+     
+     - returns: A copy of `self`, with the font applied.
+     */
+    public func addFont(font: UIFont) -> NSAttributedString {
+        let mutableString = NSMutableAttributedString(attributedString: self)
+        mutableString.addFontInPlace(font)
+        return NSAttributedString(attributedString: mutableString)
+    }
+    
+    
+    /**
+     Returns a copy of `self` with the given text alignment applied.
+     
+     - parameter alignment: The text alignment to apply.
+     
+     - returns: A copy of `self`, with the text alignment applied.
+     */
+    public func addAlignment(alignment: NSTextAlignment) -> NSAttributedString {
+        let mutableString = NSMutableAttributedString(attributedString: self)
+        mutableString.addAlignmentInPlace(alignment)
+        return NSAttributedString(attributedString: mutableString)
+    }
+    
+    
+    /**
+     Returns a copy of `self` with the given color applied as foreground color.
+     
+     - parameter color: The color to apply.
+     
+     - returns: A copy of `self`, with the color applied.
+     */
+    public func addForeColor(color: UIColor) -> NSAttributedString {
+        let mutableString = NSMutableAttributedString(attributedString: self)
+        mutableString.addForeColorInPlace(color)
+        return NSAttributedString(attributedString: mutableString)
+    }
+    
+    /**
+     Returns a copy of `self` with a single underline applied.
+     
+     - returns: A copy of `self`, underlined.
+     */
+    public func addUnderline() -> NSAttributedString {
+        let mutableString = NSMutableAttributedString(attributedString: self)
+        mutableString.addUnderlineInPlace()
+        return NSAttributedString(attributedString: mutableString)
+    }
+}
+
+
+
 extension NSMutableAttributedString {
     /**
     Modifies this instance of the string to remove characters from a given character set from
@@ -70,4 +128,49 @@ extension NSMutableAttributedString {
             range = (string as NSString).rangeOfCharacterFromSet(charSet, options: .BackwardsSearch)
         }
     }
+
+}
+
+
+extension NSMutableAttributedString {
+    
+    /**
+     Applies the given font over the whole string.
+     
+     - parameter font: The font to apply.
+     */
+    public func addFontInPlace(font: UIFont) {
+        self.addAttribute(NSFontAttributeName, value: font, range: NSMakeRange(0, self.length))
+    }
+    
+    
+    /**
+     Applies the given text alignment over the whole string.
+     
+     - parameter alignment: The alignment to apply.
+     */
+    public func addAlignmentInPlace(alignment: NSTextAlignment) {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = alignment
+        self.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSMakeRange(0, self.length))
+    }
+    
+    
+    /**
+     Applies the given color over the whole string, as the foreground color.
+     
+     - parameter color: The color to apply.
+     */
+    public func addForeColorInPlace(color: UIColor) {
+        self.addAttribute(NSForegroundColorAttributeName, value: color, range: NSMakeRange(0, self.length))
+    }
+    
+    
+    /**
+     Applies a single underline under the whole string.
+     */
+    public func addUnderlineInPlace() {
+        self.addAttribute(NSUnderlineStyleAttributeName, value: NSUnderlineStyle.StyleSingle.rawValue, range: NSMakeRange(0, self.length))
+    }
+
 }
