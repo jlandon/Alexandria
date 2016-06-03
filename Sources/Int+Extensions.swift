@@ -138,6 +138,63 @@ extension Int {
         return String(self)
     }
     
+    
+    /**
+     Convert self to an abbreviated String.
+     
+     Examples:
+     ```
+     Value : 598 -> 598
+     Value : -999 -> -999
+     Value : 1000 -> 1K
+     Value : -1284 -> -1.3K
+     Value : 9940 -> 9.9K
+     Value : 9980 -> 10K
+     Value : 39900 -> 39.9K
+     Value : 99880 -> 99.9K
+     Value : 399880 -> 0.4M
+     Value : 999898 -> 1M
+     Value : 999999 -> 1M
+     Value : 1456384 -> 1.5M
+     Value : 12383474 -> 12.4M
+     ```
+     
+     - author: http://stackoverflow.com/a/35504720/1737738
+     */
+    func toAbbreviatedString () -> String {
+        let numFormatter = NSNumberFormatter()
+        
+        typealias Abbrevation = (threshold:Double, divisor:Double, suffix:String)
+        let abbreviations:[Abbrevation] = [(0, 1, ""),
+                                           (1000.0, 1000.0, "K"),
+                                           (100_000.0, 1_000_000.0, "M"),
+                                           (100_000_000.0, 1_000_000_000.0, "B")]
+        // you can add more !
+        
+        let startValue = Double (abs(self))
+        let abbreviation:Abbrevation = {
+            var prevAbbreviation = abbreviations[0]
+            for tmpAbbreviation in abbreviations {
+                if (startValue < tmpAbbreviation.threshold) {
+                    break
+                }
+                prevAbbreviation = tmpAbbreviation
+            }
+            return prevAbbreviation
+        } ()
+        
+        let value = Double(self) / abbreviation.divisor
+        numFormatter.positiveSuffix = abbreviation.suffix
+        numFormatter.negativeSuffix = abbreviation.suffix
+        numFormatter.allowsFloats = true
+        numFormatter.minimumIntegerDigits = 1
+        numFormatter.minimumFractionDigits = 0
+        numFormatter.maximumFractionDigits = 1
+        
+        return numFormatter.stringFromNumber(NSNumber (double:value))!
+    }
+
+    
     /**
      Repeat a block `self` times.
      
