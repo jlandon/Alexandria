@@ -162,27 +162,23 @@ extension Int {
      - author: http://stackoverflow.com/a/35504720/1737738
      */
     public var toAbbreviatedString: String {
-        let numFormatter = NSNumberFormatter()
-        
-        typealias Abbrevation = (threshold:Double, divisor:Double, suffix:String)
-        let abbreviations:[Abbrevation] = [(0, 1, ""),
-                                           (1000.0, 1000.0, "K"),
-                                           (100_000.0, 1_000_000.0, "M"),
-                                           (100_000_000.0, 1_000_000_000.0, "B")]
+        typealias Abbreviation = (threshold: Double, divisor: Double, suffix: String)
+        let abbreviations: [Abbreviation] = [(0, 1, ""),
+                                            (1000.0, 1000.0, "K"),
+                                            (100_000.0, 1_000_000.0, "M"),
+                                            (100_000_000.0, 1_000_000_000.0, "B")]
         // you can add more !
         
-        let startValue = Double (abs(self))
-        let abbreviation:Abbrevation = {
+        let startValue = Double(abs(self))
+        let abbreviation: Abbreviation = {
             var prevAbbreviation = abbreviations[0]
-            for tmpAbbreviation in abbreviations {
-                if (startValue < tmpAbbreviation.threshold) {
-                    break
-                }
+            for tmpAbbreviation in abbreviations where tmpAbbreviation.threshold <= startValue {
                 prevAbbreviation = tmpAbbreviation
             }
             return prevAbbreviation
-        } ()
+        }()
         
+        let numFormatter = NSNumberFormatter()
         let value = Double(self) / abbreviation.divisor
         numFormatter.positiveSuffix = abbreviation.suffix
         numFormatter.negativeSuffix = abbreviation.suffix
@@ -191,7 +187,7 @@ extension Int {
         numFormatter.minimumFractionDigits = 0
         numFormatter.maximumFractionDigits = 1
         
-        return numFormatter.stringFromNumber(NSNumber (double:value))!
+        return numFormatter.stringFromNumber(NSNumber(double: value)) ?? "\(self)"
     }
 
     
