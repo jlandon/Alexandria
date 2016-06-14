@@ -82,9 +82,9 @@ extension NSAttributedString {
      
      - returns: A copy of `self`, with the color applied.
      */
-    public func addForeColor(color: UIColor) -> NSAttributedString {
+    public func addForegroundColor(color: UIColor) -> NSAttributedString {
         let mutableString = NSMutableAttributedString(attributedString: self)
-        mutableString.addForeColorInPlace(color)
+        mutableString.addForegroundColorInPlace(color)
         return NSAttributedString(attributedString: mutableString)
     }
     
@@ -161,7 +161,7 @@ extension NSMutableAttributedString {
      
      - parameter color: The color to apply.
      */
-    public func addForeColorInPlace(color: UIColor) {
+    public func addForegroundColorInPlace(color: UIColor) {
         self.addAttribute(NSForegroundColorAttributeName, value: color, range: NSMakeRange(0, self.length))
     }
     
