@@ -111,9 +111,11 @@ extension NSMutableAttributedString {
     
     /**
      Applies a single underline under the whole string.
+     
+     - parameter style: The `NSUnderlineStyle` to apply. Defaults to `.StyleSingle`.
      */
-    public func addUnderlineInPlace() {
-        self.addAttribute(NSUnderlineStyleAttributeName, value: NSUnderlineStyle.StyleSingle.rawValue, range: NSMakeRange(0, self.length))
+    public func addUnderlineInPlace(style: NSUnderlineStyle = .StyleSingle) {
+        self.addAttribute(NSUnderlineStyleAttributeName, value: style.rawValue, range: NSMakeRange(0, self.length))
     }
 
 }
