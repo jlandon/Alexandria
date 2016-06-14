@@ -12,6 +12,7 @@
 		796510A11C6F4F2F00E01F89 /* CollectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81253BDD1C69A1D00054D52C /* CollectionTests.swift */; };
 		796510A21C6F4F2F00E01F89 /* ColorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81253BDF1C69A9720054D52C /* ColorTests.swift */; };
 		796510A31C6F4F2F00E01F89 /* DateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81253BE11C69B2A20054D52C /* DateTests.swift */; };
+		79B1524A1D01C5FC009E850E /* IntTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B152491D01C5FC009E850E /* IntTests.swift */; };
 		79B92E3A1C73369C0050D55B /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B92E171C73369C0050D55B /* Array+Extensions.swift */; };
 		79B92E3B1C73369C0050D55B /* CALayer+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B92E181C73369C0050D55B /* CALayer+Extensions.swift */; };
 		79B92E3C1C73369C0050D55B /* CAMediaTimingFunction+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B92E191C73369C0050D55B /* CAMediaTimingFunction+Extensions.swift */; };
@@ -60,6 +61,7 @@
 
 /* Begin PBXFileReference section */
 		796510941C6F4E5C00E01F89 /* AlexandriaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AlexandriaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		79B152491D01C5FC009E850E /* IntTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntTests.swift; sourceTree = "<group>"; };
 		79B92E171C73369C0050D55B /* Array+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
 		79B92E181C73369C0050D55B /* CALayer+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CALayer+Extensions.swift"; sourceTree = "<group>"; };
 		79B92E191C73369C0050D55B /* CAMediaTimingFunction+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CAMediaTimingFunction+Extensions.swift"; sourceTree = "<group>"; };
@@ -223,6 +225,7 @@
 				81253BDD1C69A1D00054D52C /* CollectionTests.swift */,
 				81253BDF1C69A9720054D52C /* ColorTests.swift */,
 				81253BE11C69B2A20054D52C /* DateTests.swift */,
+				79B152491D01C5FC009E850E /* IntTests.swift */,
 				814C72041B69DD0900BB4DBD /* Supporting Files */,
 			);
 			path = AlexandriaTests;
@@ -343,6 +346,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				79B1524A1D01C5FC009E850E /* IntTests.swift in Sources */,
 				796510A31C6F4F2F00E01F89 /* DateTests.swift in Sources */,
 				796510A01C6F4F2F00E01F89 /* StringTests.swift in Sources */,
 				796510A21C6F4F2F00E01F89 /* ColorTests.swift in Sources */,

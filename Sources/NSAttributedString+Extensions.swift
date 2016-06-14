@@ -44,6 +44,7 @@ extension NSAttributedString {
     }
 }
 
+
 extension NSMutableAttributedString {
     /**
     Modifies this instance of the string to remove characters from a given character set from
@@ -70,4 +71,51 @@ extension NSMutableAttributedString {
             range = (string as NSString).rangeOfCharacterFromSet(charSet, options: .BackwardsSearch)
         }
     }
+
+}
+
+
+extension NSMutableAttributedString {
+    
+    /**
+     Applies the given font over the whole string.
+     
+     - parameter font: The font to apply.
+     */
+    public func addFont(font: UIFont) {
+        self.addAttribute(NSFontAttributeName, value: font, range: NSMakeRange(0, self.length))
+    }
+    
+    
+    /**
+     Applies the given text alignment over the whole string.
+     
+     - parameter alignment: The alignment to apply.
+     */
+    public func addAlignment(alignment: NSTextAlignment) {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = alignment
+        self.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSMakeRange(0, self.length))
+    }
+    
+    
+    /**
+     Applies the given color over the whole string, as the foreground color.
+     
+     - parameter color: The color to apply.
+     */
+    public func addForegroundColor(color: UIColor) {
+        self.addAttribute(NSForegroundColorAttributeName, value: color, range: NSMakeRange(0, self.length))
+    }
+    
+    
+    /**
+     Applies a single underline under the whole string.
+     
+     - parameter style: The `NSUnderlineStyle` to apply. Defaults to `.StyleSingle`.
+     */
+    public func addUnderline(style: NSUnderlineStyle = .StyleSingle) {
+        self.addAttribute(NSUnderlineStyleAttributeName, value: style.rawValue, range: NSMakeRange(0, self.length))
+    }
+
 }
