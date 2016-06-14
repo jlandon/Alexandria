@@ -45,63 +45,6 @@ extension NSAttributedString {
 }
 
 
-extension NSAttributedString {
-    
-    /**
-     Returns a copy of `self` with the given font applied.
-     
-     - parameter font: The font to apply.
-     
-     - returns: A copy of `self`, with the font applied.
-     */
-    public func addFont(font: UIFont) -> NSAttributedString {
-        let mutableString = NSMutableAttributedString(attributedString: self)
-        mutableString.addFontInPlace(font)
-        return NSAttributedString(attributedString: mutableString)
-    }
-    
-    
-    /**
-     Returns a copy of `self` with the given text alignment applied.
-     
-     - parameter alignment: The text alignment to apply.
-     
-     - returns: A copy of `self`, with the text alignment applied.
-     */
-    public func addAlignment(alignment: NSTextAlignment) -> NSAttributedString {
-        let mutableString = NSMutableAttributedString(attributedString: self)
-        mutableString.addAlignmentInPlace(alignment)
-        return NSAttributedString(attributedString: mutableString)
-    }
-    
-    
-    /**
-     Returns a copy of `self` with the given color applied as foreground color.
-     
-     - parameter color: The color to apply.
-     
-     - returns: A copy of `self`, with the color applied.
-     */
-    public func addForegroundColor(color: UIColor) -> NSAttributedString {
-        let mutableString = NSMutableAttributedString(attributedString: self)
-        mutableString.addForegroundColorInPlace(color)
-        return NSAttributedString(attributedString: mutableString)
-    }
-    
-    /**
-     Returns a copy of `self` with a single underline applied.
-     
-     - returns: A copy of `self`, underlined.
-     */
-    public func addUnderline() -> NSAttributedString {
-        let mutableString = NSMutableAttributedString(attributedString: self)
-        mutableString.addUnderlineInPlace()
-        return NSAttributedString(attributedString: mutableString)
-    }
-}
-
-
-
 extension NSMutableAttributedString {
     /**
     Modifies this instance of the string to remove characters from a given character set from
