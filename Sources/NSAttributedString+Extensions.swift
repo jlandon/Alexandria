@@ -82,7 +82,7 @@ extension NSMutableAttributedString {
      
      - parameter font: The font to apply.
      */
-    public func addFontInPlace(font: UIFont) {
+    public func addFont(font: UIFont) {
         self.addAttribute(NSFontAttributeName, value: font, range: NSMakeRange(0, self.length))
     }
     
@@ -92,7 +92,7 @@ extension NSMutableAttributedString {
      
      - parameter alignment: The alignment to apply.
      */
-    public func addAlignmentInPlace(alignment: NSTextAlignment) {
+    public func addAlignment(alignment: NSTextAlignment) {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = alignment
         self.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSMakeRange(0, self.length))
@@ -104,7 +104,7 @@ extension NSMutableAttributedString {
      
      - parameter color: The color to apply.
      */
-    public func addForegroundColorInPlace(color: UIColor) {
+    public func addForegroundColor(color: UIColor) {
         self.addAttribute(NSForegroundColorAttributeName, value: color, range: NSMakeRange(0, self.length))
     }
     
@@ -114,7 +114,7 @@ extension NSMutableAttributedString {
      
      - parameter style: The `NSUnderlineStyle` to apply. Defaults to `.StyleSingle`.
      */
-    public func addUnderlineInPlace(style: NSUnderlineStyle = .StyleSingle) {
+    public func addUnderline(style: NSUnderlineStyle = .StyleSingle) {
         self.addAttribute(NSUnderlineStyleAttributeName, value: style.rawValue, range: NSMakeRange(0, self.length))
     }
 
