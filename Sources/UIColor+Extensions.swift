@@ -188,3 +188,262 @@ extension UIColor {
         return UIColor(hex: hex)
     }
 }
+
+// MARK: - Model
+
+extension UIColor {
+
+    /**
+     Model is an enum for describing and converting color models.
+     
+     Given an hour, minute, and second, the time will be formatted in one of four formats.
+     - `rgb`: Red, Green, Blue color representation
+     - `hsl`: Hue, Saturation, Lightness color representation
+     - `hsb`: Hue, Saturation, Brightness color representation
+     - `cmyk`: Cyan, Magenta, Yellow, Key (Black) color representation
+     - `hex`: UInt32 (hex) color representation
+     */
+    public enum Model {
+        /// Red, Green, Blue
+        case rgb(CGFloat, CGFloat, CGFloat)
+        /// Hue, Saturation, Lightness
+        case hsl(CGFloat, CGFloat, CGFloat)
+        /// Hue, Saturation, Brightness
+        case hsb(CGFloat, CGFloat, CGFloat)
+        /// Cyan, Magenta, Yellow, Key (Black)
+        case cmyk(CGFloat, CGFloat, CGFloat, CGFloat)
+        /// UInt32 (hex)
+        case hex(UInt32)
+        
+        /// Returns the model as an RGB tuple
+        public var rgb: (r: CGFloat, g: CGFloat, b: CGFloat) {
+            switch self {
+            case .rgb(let rgb):
+                return rgb
+            case .hsl(let h, let s, let l):
+                return convert(hsl: h, s, l)
+            case .hsb(let h, let s, let b):
+                return convert(hsb: h, s, b)
+            case .cmyk(let c, let m, let y, let k):
+                return convert(cmyk: c, m, y, k)
+            case .hex(let hex):
+                return convert(hex: hex)
+            }
+        }
+        
+        /// Returns the model as an HSL tuple
+        public var hsl: (h: CGFloat, s: CGFloat, l: CGFloat) {
+            switch self {
+            case .rgb(let r, let g, let b):
+                return convert(rgb: r, g, b)
+            case .hsl(let hsl):
+                return hsl
+            case .hsb, .cmyk, .hex:
+                let (r, g, b) = self.rgb
+                return convert(rgb: r, g, b)
+            }
+        }
+        
+        /// Returns the model as an HSB tuple
+        public var hsb: (h: CGFloat, s: CGFloat, b: CGFloat) {
+            switch self {
+            case .rgb(let r, let g, let b):
+                return convert(rgb: r, g, b)
+            case .hsl, .cmyk, .hex:
+                let (r, g, b) = self.rgb
+                return convert(rgb: r, g, b)
+            case .hsb(let hsb):
+                return hsb
+            }
+        }
+        
+        /// Returns the model as a CMYK tuple
+        public var cmyk: (c: CGFloat, m: CGFloat, y: CGFloat, k: CGFloat) {
+            switch self {
+            case .rgb(let r, let g, let b):
+                return convert(rgb: r, g, b)
+            case .hsl, .hsb, .hex:
+                let (r, g, b) = self.rgb
+                return convert(rgb: r, g, b)
+            case .cmyk(let cmyk):
+                return cmyk
+            }
+        }
+        
+        /// Returns the model as a UInt32 (hex) value
+        public var hex: UInt32 {
+            switch self {
+            case .rgb(let r, let g, let b):
+                return convert(rgb: r, g, b)
+            case .hsl, .hsb, .cmyk:
+                let (r, g, b) = self.rgb
+                return convert(rgb: r, g, b)
+            case .hex(let hex):
+                return hex
+            }
+        }
+    }
+}
+    
+// MARK: - Private color model conversions
+
+/// Converts RGB to HSL (https://en.wikipedia.org/wiki/HSL_and_HSV)
+private func convert(rgb r: CGFloat, _ g: CGFloat, _ b: CGFloat) -> (h: CGFloat, s: CGFloat, l: CGFloat) {
+    
+    let r = r / 255
+    let g = g / 255
+    let b = b / 255
+    
+    let max = Swift.max(r, g, b)
+    let min = Swift.min(r, g, b)
+    
+    var h, s: CGFloat
+    let l = (max + min) / 2
+    
+    if max == min {
+        h = 0
+        s = 0
+    }
+    else {
+        let d = max - min
+        s = (l > 0.5) ? d / (2 - max - min) : d / (max + min)
+        
+        switch max {
+        case r:  h = (g - b) / d + (g < b ? 6 : 0)
+        case g:  h = (b - r) / d + 2
+        case b:  h = (r - g) / d + 4
+        default: h = 0
+        }
+        
+        h /= 6;
+    }
+    
+    return (h, s, l)
+}
+
+/// Converts HSL to RGB (https://en.wikipedia.org/wiki/HSL_and_HSV)
+private func convert(hsl h: CGFloat, _ s: CGFloat, _ l: CGFloat) -> (r: CGFloat, g: CGFloat, b: CGFloat) {
+    
+    let r, g, b: CGFloat
+    
+    if s == 0 {
+        r = l
+        g = l
+        b = l
+    }
+    else {
+        let c = (1 - abs(2 * l - 1)) * s
+        let x = c * (1 - abs(h * 6 % 2 - 1))
+        let m = l - c/2
+        
+        switch h * 6 {
+        case 0..<1: (r, g, b) = (c, x, 0) + m
+        case 1..<2: (r, g, b) = (x, c, 0) + m
+        case 2..<3: (r, g, b) = (0, c, x) + m
+        case 3..<4: (r, g, b) = (0, x, c) + m
+        case 4..<5: (r, g, b) = (x, 0, c) + m
+        case 5..<6: (r, g, b) = (c, 0, x) + m
+        default:    (r, g, b) = (0, 0, 0) + m
+        }
+    }
+    
+    return (round(r * 255), round(g * 255), round(b * 255))
+}
+
+/// Converts RGB to HSB (https://en.wikipedia.org/wiki/HSL_and_HSV)
+private func convert(rgb r: CGFloat, _ g: CGFloat, _ b: CGFloat) -> (h: CGFloat, s: CGFloat, b: CGFloat) {
+    var h, s, v: CGFloat
+    
+    let r = r / 255
+    let g = g / 255
+    let b = b / 255
+    
+    let max = Swift.max(r, g, b)
+    let min = Swift.min(r, g, b)
+    let d = max - min
+    
+    if d == 0 {
+        h = 0
+        s = 0
+    }
+    else {
+        s = (max == 0) ? 0 : d / max
+        
+        switch max {
+        case r:  h = ((g - b) / d) + (g < b ? 6 : 0)
+        case g:  h = ((b - r) / d) + 2
+        case b:  h = ((r - g) / d) + 4
+        default: h = 0
+        }
+        
+        h /= 6;
+    }
+    
+    v = max
+    
+    return (h, s, v)
+}
+
+/// Converts HSB to RGB (https://en.wikipedia.org/wiki/HSL_and_HSV)
+private func convert(hsb h: CGFloat, _ s: CGFloat, _ b: CGFloat) -> (r: CGFloat, g: CGFloat, b: CGFloat) {
+    
+    let c = b * s
+    let x = c * (1 - abs((h * 6) % 2 - 1))
+    let m = b - c
+    
+    var r, g, b: CGFloat
+    
+    switch h * 6 {
+    case 0..<1: (r, g, b) = (c, x, 0) + m
+    case 1..<2: (r, g, b) = (x, c, 0) + m
+    case 2..<3: (r, g, b) = (0, c, x) + m
+    case 3..<4: (r, g, b) = (0, x, c) + m
+    case 4..<5: (r, g, b) = (x, 0, c) + m
+    case 5..<6: (r, g, b) = (c, 0, x) + m
+    default:    (r, g, b) = (0, 0, 0) + m
+    }
+    
+    return (round(r * 255), round(g * 255), round(b * 255))
+}
+
+/// Converts UInt32 to RGB
+private func convert(hex hex: UInt32) -> (r: CGFloat, g: CGFloat, b: CGFloat) {
+    let r = CGFloat((hex >> 16) & 0xFF)
+    let g = CGFloat((hex >> 8) & 0xFF)
+    let b = CGFloat(hex & 0xFF)
+    
+    return (r, g, b)
+}
+
+/// Converts RGB to UInt32
+private func convert(rgb r: CGFloat, _ g: CGFloat, _ b: CGFloat) -> UInt32 {
+    return (UInt32(r) << 16) | (UInt32(g) << 8) | UInt32(b)
+}
+
+/// Converts RGB to CMYK (http://www.rapidtables.com/convert/color/rgb-to-cmyk.htm)
+private func convert(rgb r: CGFloat, _ g: CGFloat, _ b: CGFloat) -> (c: CGFloat, m: CGFloat, y: CGFloat, k: CGFloat) {
+    let r = r / 255
+    let g = g / 255
+    let b = b / 255
+    
+    let k = 1 - max(r, g, b)
+    let c = (k == 1) ? 0 : (1 - r - k) / (1 - k)
+    let m = (k == 1) ? 0 : (1 - g - k) / (1 - k)
+    let y = (k == 1) ? 0 : (1 - b - k) / (1 - k)
+    
+    return (c, m, y, k)
+}
+
+/// Converts CMYK to RGB (http://www.rapidtables.com/convert/color/cmyk-to-rgb.htm)
+private func convert(cmyk c: CGFloat, _ m: CGFloat, _ y: CGFloat, _ k: CGFloat) -> (r: CGFloat, g: CGFloat, b: CGFloat) {
+    let r = 255 * (1 - c) * (1 - k)
+    let g = 255 * (1 - m) * (1 - k)
+    let b = 255 * (1 - y) * (1 - k)
+    
+    return (round(r), round(g), round(b))
+}
+
+/// Private operator for HSL and HSB conversion
+private func +(lhs: (CGFloat, CGFloat, CGFloat), rhs: CGFloat) -> (CGFloat, CGFloat, CGFloat) {
+    return (lhs.0 + rhs, lhs.1 + rhs, lhs.2 + rhs)
+}
