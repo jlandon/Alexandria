@@ -37,4 +37,23 @@ extension CGFloat {
     public static func random(min min: CGFloat, max: CGFloat) -> CGFloat {
         return random(min...max)
     }
+    
+    /**
+     Round self to a specified number of decimal places.
+     
+     - parameter places: The number of decimal places by which to round self.
+     - returns: A CGFloat value, rounded to the specified number of decimal places.
+     
+     Examples:
+     ```
+     let val: CGFloat = 12.345678
+     
+     val.rounded(places: 2) // 12.35
+     val.rounded(places: 3) // 12.346
+     ```
+     */
+    public func rounded(places places: UInt) -> CGFloat {
+        let multiplier = pow(10, CGFloat(places))
+        return CoreGraphics.round(self * multiplier) / multiplier
+    }
 }
