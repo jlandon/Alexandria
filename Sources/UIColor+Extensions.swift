@@ -76,35 +76,28 @@ extension UIColor {
     
     /**
      Lightens the given color by the given percentage.
-     - parameter amount: The percentage to lighten the color by. Valid values are from 0.0 to 1.0.
+     - parameter amount: The percentage by which to lighten the color. Valid values are from `0.0` to `1.0`, or for a more readable format `0%` to `100%`.
      - returns: The lightened color.
      */
-    public final func lighterColorByPercentage(amount: CGFloat) -> UIColor {
-        var hue: CGFloat = 1.0
-        var saturation: CGFloat = 1.0
-        var brightness: CGFloat = 1.0
-        var alpha: CGFloat = 1.0
+    public final func lighten(by amount: CGFloat) -> UIColor {
+        assert(amount >= 0 && amount <= 1, "Percentage must be in range 0-100%")
         
-        self.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
-        
-        return UIColor(hue: hue, saturation: saturation, brightness: min(brightness * (1 + amount), 1.0), alpha: alpha)
+        let (h, s, l) = hsl
+        return UIColor(hue: h, saturation: s, lightness: l * (1 + amount), alpha: rgba.a)
     }
     
     /**
      Darkens the given color by the given percentage.
-     - parameter amount: The percentage to darken the color by. Valid values are from 0.0 to 1.0.
+     - parameter amount: The percentage by which to darken the color. Valid values are from `0.0` to `1.0`, or for a more readable format `0%` to `100%`.
      - returns: The darkened color.
      */
-    public final func darkerColorByPercentage(amount: CGFloat) -> UIColor {
-        var hue: CGFloat = 1.0
-        var saturation: CGFloat = 1.0
-        var brightness: CGFloat = 1.0
-        var alpha: CGFloat = 1.0
+    public final func darken(by amount: CGFloat) -> UIColor {
+        assert(amount >= 0 && amount <= 1, "Percentage must be in range 0-100%")
         
-        self.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
-        
-        return UIColor(hue: hue, saturation: saturation, brightness: brightness * (1 - amount), alpha: alpha)
+        let (h, s, l) = hsl
+        return UIColor(hue: h, saturation: s, lightness: l * (1 - amount), alpha: rgba.a)
     }
+
     
     /**
      Returns the color represenation as a hexadecimal string, prefixed with '#'.
