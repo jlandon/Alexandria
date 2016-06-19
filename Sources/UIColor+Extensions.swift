@@ -112,20 +112,15 @@ extension UIColor {
      - returns: A UInt32 that represents the hexadecimal color.
      */
     public final var hex: UInt32 {
-        let rgba = RGBAComponents
-        
-        let red   = (UInt32)(rgba.r * 255) << 16
-        let green = (UInt32)(rgba.g * 255) << 8
-        let blue  = (UInt32)(rgba.b * 255)
-        
-        return red | green | blue
+        let (r, g, b, _) = self.rgba
+        return Model.rgb(r * 255, g * 255, b * 255).hex
     }
     
     /**
      Returns the RGBA (red, green, blue, alpha) components.
      - returns: The RGBA components as a tuple (r, g, b, a).
      */
-    public final var RGBAComponents: (r: CGFloat, g: CGFloat, b: CGFloat, a: CGFloat) {
+    public final var rgba: (r: CGFloat, g: CGFloat, b: CGFloat, a: CGFloat) {
         var (r, g, b, a): (CGFloat, CGFloat, CGFloat, CGFloat) = (0, 0, 0, 0)
         getRed(&r, green: &g, blue: &b, alpha: &a)
             
@@ -133,35 +128,30 @@ extension UIColor {
     }
     
     /**
-     Returns the red component.
-     - returns: The red component as a CGFloat.
+     Returns the HSL (hue, saturation, lightness) components.
+     - returns: The HSL components as a tuple (h, s, l).
      */
-    public final var redComponent: CGFloat {
-        return RGBAComponents.r
+    public final var hsl: (h: CGFloat, s: CGFloat, l: CGFloat) {
+        let (r, g, b, _) = rgba
+        return Model.rgb(r * 255, g * 255, b * 255).hsl
     }
     
     /**
-     Returns the green component.
-     - returns: The green component as a CGFloat.
+     Returns the HSB (hue, saturation, brightness) components.
+     - returns: The HSB components as a tuple (h, s, b).
      */
-    public final var greenComponent: CGFloat {
-        return RGBAComponents.g
+    public final var hsb: (h: CGFloat, s: CGFloat, b: CGFloat) {
+        let (r, g, b, _) = rgba
+        return Model.rgb(r * 255, g * 255, b * 255).hsb
     }
     
     /**
-     Returns the blue component.
-     - returns: The blue component as a CGFloat.
+     Returns the CMYK (cyan, magenta, yellow, key) components.
+     - returns: The CMYK components as a tuple (c, m, y, k).
      */
-    public final var blueComponent: CGFloat {
-        return RGBAComponents.b
-    }
-    
-    /**
-     Returns the alpha component.
-     - returns: The alpha component as a CGFloat.
-     */
-    public final var alphaComponent: CGFloat {
-        return RGBAComponents.a
+    public final var cmyk: (c: CGFloat, m: CGFloat, y: CGFloat, k: CGFloat) {
+        let (r, g, b, _) = rgba
+        return Model.rgb(r * 255, g * 255, b * 255).cmyk
     }
     
     /**
