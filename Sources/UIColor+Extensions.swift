@@ -31,14 +31,40 @@ extension UIColor {
     
     /**
      Returns a UIColor from the given hexidecimal integer.
-     - parameter hex: The color value.
+     - parameter hex: The hex component of the color object, specified as a value from 0x000000 to 0xFFFFFF.
+     - parameter alpha: The opacity component of the color object, specified as a value from 0.0 to 1.0 (optional).
      - returns: A UIColor initialized with the given color value.
      */
-    public convenience init(hex: UInt32) {
-        let r = (hex >> 16) & 0xFF
-        let g = (hex >> 8) & 0xFF
-        let b = hex & 0xFF
-        self.init(red: CGFloat(r)/255.0, green: CGFloat(g)/255.0, blue: CGFloat(b)/255.0, alpha: 1.0)
+    public convenience init(hex: UInt32, alpha: CGFloat = 1) {
+        let (r, g, b) = Model.hex(hex).rgb
+        self.init(red: r/255, green: g/255, blue: b/255, alpha: alpha)
+    }
+    
+    /**
+     Returns a UIColor from a hue-saturation-lightness (HSL) set.
+     - parameter hue: The hue component of the color object, specified as a value from 0.0 to 1.0.
+     - parameter saturation: The saturation component of the color object, specified as a value from 0.0 to 1.0.
+     - parameter lightness: The lightness component of the color object, specified as a value from 0.0 to 1.0.
+     - parameter alpha: The opacity component of the color object, specified as a value from 0.0 to 1.0 (optional).
+     - returns: A UIColor initialized with the given color value.
+     */
+    public convenience init(hue: CGFloat, saturation: CGFloat, lightness: CGFloat, alpha: CGFloat = 1) {
+        let (r, g, b) = Model.hsl(hue, saturation, lightness).rgb
+        self.init(red: r/255, green: g/255, blue: b/255, alpha: alpha)
+    }
+    
+    /**
+     Returns a UIColor from a cyan-magenta-yellow-key (CMYK) set.
+     - parameter cyan: The cyan component of the color object, specified as a value from 0.0 to 1.0.
+     - parameter magenta: The magenta component of the color object, specified as a value from 0.0 to 1.0.
+     - parameter yellow: The yellow component of the color object, specified as a value from 0.0 to 1.0.
+     - parameter key: The key (black) component of the color object, specified as a value from 0.0 to 1.0.
+     - parameter alpha: The opacity component of the color object, specified as a value from 0.0 to 1.0 (optional).
+     - returns: A UIColor initialized with the given color value.
+     */
+    public convenience init(cyan: CGFloat, magenta: CGFloat, yellow: CGFloat, key: CGFloat, alpha: CGFloat = 1) {
+        let (r, g, b) = Model.cmyk(cyan, magenta, yellow, key).rgb
+        self.init(red: r/255, green: g/255, blue: b/255, alpha: alpha)
     }
     
     /**
@@ -46,16 +72,16 @@ extension UIColor {
      - parameter hexString: The hex color string, e.g.: "#9443FB" or "9443FB". The leading "#" is recommended but optional.
      - returns: A UIColor initialized with the color specified by the hexString. In the event of an invalid hexString, including nil, it will attempt to return some sort of valid UIColor (perhaps black) but may return nil; all depends on the particulars of the given string.
      */
-    public convenience init(hexString: String) {
-        var mutableHexString = hexString
-        if mutableHexString.hasPrefix("#") {
-            mutableHexString = hexString.substringFromIndex(mutableHexString.startIndex.advancedBy(1))
+    public convenience init(hexString: String, alpha: CGFloat = 1) {
+        var hexString = hexString
+        if hexString.hasPrefix("#") {
+            hexString = hexString.substringFromIndex(hexString.startIndex.advancedBy(1))
         }
-        let scanner = NSScanner(string: mutableHexString)
+        let scanner = NSScanner(string: hexString)
         var hexEquivalent: UInt32 = 0
         scanner.scanHexInt(&hexEquivalent)
         
-        self.init(hex: hexEquivalent)
+        self.init(hex: hexEquivalent, alpha: alpha)
     }
     
     /**
@@ -167,8 +193,8 @@ extension UIColor {
      - parameter hex: The color value.
      - returns: A UIColor initialized with the given hex value.
      */
-    public static func hex(hex: UInt32) -> UIColor {
-        return UIColor(hex: hex)
+    public static func hex(hex: UInt32, alpha: CGFloat = 1) -> UIColor {
+        return UIColor(hex: hex, alpha: alpha)
     }
 }
 
