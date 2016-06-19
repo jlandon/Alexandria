@@ -470,3 +470,86 @@ private func convert(cmyk c: CGFloat, _ m: CGFloat, _ y: CGFloat, _ k: CGFloat) 
 private func +(lhs: (CGFloat, CGFloat, CGFloat), rhs: CGFloat) -> (CGFloat, CGFloat, CGFloat) {
     return (lhs.0 + rhs, lhs.1 + rhs, lhs.2 + rhs)
 }
+
+// MARK: - Deprecated
+
+extension UIColor {
+    /**
+     Lightens the given color by the given percentage.
+     - parameter amount: The percentage to lighten the color by. Valid values are from 0.0 to 1.0.
+     - returns: The lightened color.
+     */
+    @available(*, deprecated=1.0.0, message="use 'lighten(by:)'")
+    public final func lighterColorByPercentage(amount: CGFloat) -> UIColor {
+        var hue: CGFloat = 1.0
+        var saturation: CGFloat = 1.0
+        var brightness: CGFloat = 1.0
+        var alpha: CGFloat = 1.0
+        
+        self.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
+        
+        return UIColor(hue: hue, saturation: saturation, brightness: min(brightness * (1 + amount), 1.0), alpha: alpha)
+    }
+    
+    /**
+     Darkens the given color by the given percentage.
+     - parameter amount: The percentage to darken the color by. Valid values are from 0.0 to 1.0.
+     - returns: The darkened color.
+     */
+    @available(*, deprecated=1.0.0, message="use 'darken(by:)'")
+    public final func darkerColorByPercentage(amount: CGFloat) -> UIColor {
+        var hue: CGFloat = 1.0
+        var saturation: CGFloat = 1.0
+        var brightness: CGFloat = 1.0
+        var alpha: CGFloat = 1.0
+        
+        self.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
+        
+        return UIColor(hue: hue, saturation: saturation, brightness: brightness * (1 - amount), alpha: alpha)
+    }
+    
+    /**
+     Returns the RGBA (red, green, blue, alpha) components.
+     - returns: The RGBA components as a tuple (r, g, b, a).
+     */
+    @available(*, unavailable, renamed="rgba")
+    public final var RGBAComponents: (r: CGFloat, g: CGFloat, b: CGFloat, a: CGFloat) {
+        return rgba
+    }
+    
+    /**
+     Returns the red component.
+     - returns: The red component as a CGFloat.
+     */
+    @available(*, deprecated=1.0.0, message="use 'rgba.r'")
+    public final var redComponent: CGFloat {
+        return rgba.r
+    }
+    
+    /**
+     Returns the green component.
+     - returns: The green component as a CGFloat.
+     */
+    @available(*, deprecated=1.0.0, message="use 'rgba.g'")
+    public final var greenComponent: CGFloat {
+        return rgba.g
+    }
+    
+    /**
+     Returns the blue component.
+     - returns: The blue component as a CGFloat.
+     */
+    @available(*, deprecated=1.0.0, message="use 'rgba.b'")
+    public final var blueComponent: CGFloat {
+        return rgba.b
+    }
+    
+    /**
+     Returns the alpha component.
+     - returns: The alpha component as a CGFloat.
+     */
+    @available(*, deprecated=1.0.0, message="use 'rgba.a'")
+    public final var alphaComponent: CGFloat {
+        return rgba.a
+    }
+}   
