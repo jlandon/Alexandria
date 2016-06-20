@@ -408,8 +408,31 @@ extension UIView {
      
      - parameter superview: The superview in which to add self.
      */
+    @available(*, deprecated=1.2.0, message="use 'add(toSuperview:)'")
     public func addToSuperview(superview: UIView) -> Self {
         superview.addSubview(self)
+        return self
+    }
+    
+    /**
+     Add self to a superview.
+     
+     - parameter toSuperview: The superview in which to add self.
+     */
+    @nonobjc
+    public func add(toSuperview superview: UIView) -> Self {
+        superview.addSubview(self)
+        return self
+    }
+    
+    /**
+     Add self as an arranged subview of a UIStackView.
+     
+     - parameter toStackview: The stackview in which to add self as an arranged subview.
+     */
+    @available(iOS 9.0, *)
+    public func add(toStackview stackview: UIStackView) -> Self {
+        stackview.addArrangedSubview(self)
         return self
     }
     
