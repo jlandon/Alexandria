@@ -1,7 +1,7 @@
 //
-//  CGFloat+Extensions.swift
+//  Operators.swift
 //
-//  Created by Jonathan Landon on 2/9/16.
+//  Created by Jonathan Landon on 6/20/16.
 //
 // The MIT License (MIT)
 //
@@ -25,35 +25,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import Foundation
+postfix operator % {}
 
-extension CGFloat {
-    /// Generate a random CGFloat bounded by a closed interval range.
-    public static func random(range: ClosedInterval<CGFloat>) -> CGFloat {
-        return CGFloat(arc4random()) / CGFloat(UInt64(UINT32_MAX)) * (range.end - range.start) + range.start
-    }
-    
-    /// Generate a random CGFloat bounded by a range from min to max.
-    public static func random(min min: CGFloat, max: CGFloat) -> CGFloat {
-        return random(min...max)
-    }
-    
-    /**
-     Round self to a specified number of decimal places.
-     
-     - parameter places: The number of decimal places by which to round self.
-     - returns: A CGFloat value, rounded to the specified number of decimal places.
-     
-     Examples:
-     ```
-     let val: CGFloat = 12.345678
-     
-     val.rounded(places: 2) // 12.35
-     val.rounded(places: 3) // 12.346
-     ```
-     */
-    public func rounded(places places: UInt) -> CGFloat {
-        let multiplier = pow(10, CGFloat(places))
-        return round(self * multiplier) / multiplier
-    }
+public postfix func %(value: CGFloat) -> CGFloat {
+    return value / 100
+}
+
+public postfix func %(value: Float) -> Float {
+    return value / 100
+}
+
+public postfix func %(value: Double) -> Double {
+    return value / 100
 }
