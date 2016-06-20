@@ -273,7 +273,7 @@ extension UIView {
      - parameter otherView: The other view to be constrained to.
      - parameter otherAttribute: The layout attribute for the other view.
      - parameter multiplier: The multiplier to use for the constraint (optional, defaults to 1).
-     - parameter priority: The priority for the constraint (optional, defaults to UILayoutPriorityRequired).
+     - parameter priority: The priority for the constraint (optional, defaults to `UILayoutPriorityRequired`).
      - parameter identifier: The identifier for the constraint (optional).
      
      - returns: The created constraint for self.
@@ -313,7 +313,7 @@ extension UIView {
      - parameter support: The support to be constrained to.
      - parameter otherAttribute: The layout attribute for the support.
      - parameter multiplier: The multiplier to use for the constraint (optional, defaults to 1).
-     - parameter priority: The priority for the constraint (optional, defaults to UILayoutPriorityRequired).
+     - parameter priority: The priority for the constraint (optional, defaults to `UILayoutPriorityRequired`).
      - parameter identifier: The identifier for the constraint (optional).
      
      - returns: The created constraint for self.
@@ -351,7 +351,7 @@ extension UIView {
      - parameter attribute: The layout attribute of self to constrain.
      - parameter relation: The layout relation of self (optional, defaults to .Equal).
      - parameter constant: The constant to use for the constraint (optional, defaults to 0).
-     - parameter priority: The priority for the constraint (optional, defaults to UILayoutPriorityRequired).
+     - parameter priority: The priority for the constraint (optional, defaults to `UILayoutPriorityRequired`).
      - parameter identifier: The identifier for the constraint (optional).
      
      - returns: The created constraint for self.
@@ -401,6 +401,287 @@ extension UIView {
         let trailingConstraint  = constrain(.Trailing, to: superview, .Trailing, plus: -trailing)
         
         return (topConstraint, leadingConstraint, bottomConstraint, trailingConstraint)
+    }
+    
+    /**
+     Constrain the width of the current view.
+     
+     - parameter value: The width value.
+     - parameter relation: The layout relation of self (optional, defaults to .Equal).
+     - parameter constant: The constant to use for the constraint (optional, defaults to 0).
+     - parameter priority: The priority for the constraint (optional, defaults to `UILayoutPriorityRequired`).
+     
+     - returns: self
+     */
+    public func constrainWidth(to value: CGFloat,
+                             _ relation: NSLayoutRelation = .Equal,
+                       times multiplier: CGFloat = 1,
+                    atPriority priority: UILayoutPriority = UILayoutPriorityRequired) -> Self
+    {
+        constrain(.Width, relation, to: value, times: multiplier, atPriority: priority)
+        return self
+    }
+    
+    /**
+     Constrain the height of the current view.
+     
+     - parameter value: The height value.
+     - parameter relation: The layout relation of self (optional, defaults to .Equal).
+     - parameter constant: The constant to use for the constraint (optional, defaults to 0).
+     - parameter priority: The priority for the constraint (optional, defaults to `UILayoutPriorityRequired`).
+     
+     - returns: self
+     */
+    public func constrainHeight(to value: CGFloat,
+                              _ relation: NSLayoutRelation = .Equal,
+                        times multiplier: CGFloat = 1,
+                     atPriority priority: UILayoutPriority = UILayoutPriorityRequired) -> Self
+    {
+        constrain(.Height, relation, to: value, times: multiplier, atPriority: priority)
+        return self
+    }
+    
+    /**
+     Constrain the width of the current view to another view.
+     
+     - parameter view: The view by which to constrain self
+     - parameter attribute: The layout attribute of self to constrain (optional, defaults to .Width).
+     - parameter relation: The layout relation of self (optional, defaults to .Equal).
+     - parameter multiplier: The constraint multiplier (optional, defaults to 1).
+     - parameter constant: The constant to use for the constraint (optional, defaults to 0).
+     - parameter priority: The priority for the constraint (optional, defaults to `UILayoutPriorityRequired`).
+     
+     - returns: self
+     */
+    public func constrainWidth(to view: UIView,
+                           _ attribute: NSLayoutAttribute = .Width,
+                              relation: NSLayoutRelation = .Equal,
+                      times multiplier: CGFloat = 1,
+                         plus constant: CGFloat = 0,
+                   atPriority priority: UILayoutPriority = UILayoutPriorityRequired) -> Self
+    {
+        constrain(.Width, relation, to: view, attribute, times: multiplier, plus: constant, atPriority: priority)
+        return self
+    }
+    
+    /**
+     Constrain the height of the current view to another view.
+     
+     - parameter view: The view by which to constrain self
+     - parameter attribute: The layout attribute of self to constrain (optional, defaults to .Height).
+     - parameter relation: The layout relation of self (optional, defaults to .Equal).
+     - parameter multiplier: The constraint multiplier (optional, defaults to 1).
+     - parameter constant: The constant to use for the constraint (optional, defaults to 0).
+     - parameter priority: The priority for the constraint (optional, defaults to `UILayoutPriorityRequired`).
+     
+     - returns: self
+     */
+    public func constrainHeight(to view: UIView,
+                            _ attribute: NSLayoutAttribute = .Height,
+                               relation: NSLayoutRelation = .Equal,
+                       times multiplier: CGFloat = 1,
+                          plus constant: CGFloat = 0,
+                    atPriority priority: UILayoutPriority = UILayoutPriorityRequired) -> Self
+    {
+        constrain(.Height, relation, to: view, attribute, times: multiplier, plus: constant, atPriority: priority)
+        return self
+    }
+    
+    /**
+     Constrain the left constraint of the current view.
+     
+     - parameter view: The view by which to constrain self.
+     - parameter attribute: The layout attribute of self to constrain (optional, defaults to .Left).
+     - parameter relation: The layout relation of self (optional, defaults to .Equal).
+     - parameter multiplier: The constraint multiplier (optional, defaults to 1).
+     - parameter constant: The constant to use for the constraint (optional, defaults to 0).
+     - parameter priority: The priority for the constraint (optional, defaults to `UILayoutPriorityRequired`).
+     
+     - returns: self
+     */
+    public func pinLeft(to view: UIView,
+                    _ attribute: NSLayoutAttribute = .Left,
+                       relation: NSLayoutRelation = .Equal,
+               times multiplier: CGFloat = 1,
+                  plus constant: CGFloat = 0,
+            atPriority priority: UILayoutPriority = UILayoutPriorityRequired) -> Self
+    {
+        constrain(.Left, relation, to: view, attribute, times: multiplier, plus: constant, atPriority: priority)
+        return self
+    }
+    
+    /**
+     Constrain the right constraint of the current view.
+     
+     - parameter view: The view by which to constrain self.
+     - parameter attribute: The layout attribute of self to constrain (optional, defaults to .Right).
+     - parameter relation: The layout relation of self (optional, defaults to .Equal).
+     - parameter multiplier: The constraint multiplier (optional, defaults to 1).
+     - parameter constant: The constant to use for the constraint (optional, defaults to 0).
+     - parameter priority: The priority for the constraint (optional, defaults to `UILayoutPriorityRequired`).
+     
+     - returns: self
+     */
+    public func pinRight(to view: UIView,
+                     _ attribute: NSLayoutAttribute = .Right,
+                        relation: NSLayoutRelation = .Equal,
+                times multiplier: CGFloat = 1,
+                   plus constant: CGFloat = 0,
+             atPriority priority: UILayoutPriority = UILayoutPriorityRequired) -> Self
+    {
+        constrain(.Right, relation, to: view, attribute, times: multiplier, plus: constant, atPriority: priority)
+        return self
+    }
+    
+    /**
+     Constrain the top constraint of the current view.
+     
+     - parameter view: The view by which to constrain self.
+     - parameter attribute: The layout attribute of self to constrain (optional, defaults to .Top).
+     - parameter relation: The layout relation of self (optional, defaults to .Equal).
+     - parameter multiplier: The constraint multiplier (optional, defaults to 1).
+     - parameter constant: The constant to use for the constraint (optional, defaults to 0).
+     - parameter priority: The priority for the constraint (optional, defaults to `UILayoutPriorityRequired`).
+     
+     - returns: self
+     */
+    public func pinTop(to view: UIView,
+                   _ attribute: NSLayoutAttribute = .Top,
+                      relation: NSLayoutRelation = .Equal,
+              times multiplier: CGFloat = 1,
+                 plus constant: CGFloat = 0,
+           atPriority priority: UILayoutPriority = UILayoutPriorityRequired) -> Self
+    {
+        constrain(.Top, relation, to: view, attribute, times: multiplier, plus: constant, atPriority: priority)
+        return self
+    }
+    
+    /**
+     Constrain the bottom constraint of the current view.
+     
+     - parameter view: The view by which to constrain self.
+     - parameter attribute: The layout attribute of self to constrain (optional, defaults to .Bottom).
+     - parameter relation: The layout relation of self (optional, defaults to .Equal).
+     - parameter multiplier: The constraint multiplier (optional, defaults to 1).
+     - parameter constant: The constant to use for the constraint (optional, defaults to 0).
+     - parameter priority: The priority for the constraint (optional, defaults to `UILayoutPriorityRequired`).
+     
+     - returns: self
+     */
+    public func pinBottom(to view: UIView,
+                      _ attribute: NSLayoutAttribute = .Bottom,
+                         relation: NSLayoutRelation = .Equal,
+                 times multiplier: CGFloat = 1,
+                    plus constant: CGFloat = 0,
+              atPriority priority: UILayoutPriority = UILayoutPriorityRequired) -> Self
+    {
+        constrain(.Bottom, relation, to: view, attribute, times: multiplier, plus: constant, atPriority: priority)
+        return self
+    }
+    
+    /**
+     Constrain the leading constraint of the current view.
+     
+     - parameter view: The view by which to constrain self.
+     - parameter attribute: The layout attribute of self to constrain (optional, defaults to .Leading).
+     - parameter relation: The layout relation of self (optional, defaults to .Equal).
+     - parameter multiplier: The constraint multiplier (optional, defaults to 1).
+     - parameter constant: The constant to use for the constraint (optional, defaults to 0).
+     - parameter priority: The priority for the constraint (optional, defaults to `UILayoutPriorityRequired`).
+     
+     - returns: self
+     */
+    public func pinLeading(to view: UIView,
+                       _ attribute: NSLayoutAttribute = .Leading,
+                          relation: NSLayoutRelation = .Equal,
+                  times multiplier: CGFloat = 1,
+                     plus constant: CGFloat = 0,
+               atPriority priority: UILayoutPriority = UILayoutPriorityRequired) -> Self
+    {
+        constrain(.Leading, relation, to: view, attribute, times: multiplier, plus: constant, atPriority: priority)
+        return self
+    }
+    
+    /**
+     Constrain the trailing constraint of the current view.
+     
+     - parameter view: The view by which to constrain self.
+     - parameter attribute: The layout attribute of self to constrain (optional, defaults to .Trailing).
+     - parameter relation: The layout relation of self (optional, defaults to .Equal).
+     - parameter multiplier: The constraint multiplier (optional, defaults to 1).
+     - parameter constant: The constant to use for the constraint (optional, defaults to 0).
+     - parameter priority: The priority for the constraint (optional, defaults to `UILayoutPriorityRequired`).
+     
+     - returns: self
+     */
+    public func pinTrailing(to view: UIView,
+                        _ attribute: NSLayoutAttribute = .Trailing,
+                           relation: NSLayoutRelation = .Equal,
+                   times multiplier: CGFloat = 1,
+                      plus constant: CGFloat = 0,
+                atPriority priority: UILayoutPriority = UILayoutPriorityRequired) -> Self
+    {
+        constrain(.Trailing, relation, to: view, attribute, times: multiplier, plus: constant, atPriority: priority)
+        return self
+    }
+    
+    /**
+     Constrain the center X constraint of the current view.
+     
+     - parameter view: The view by which to constrain self.
+     - parameter attribute: The layout attribute of self to constrain (optional, defaults to .CenterX).
+     - parameter relation: The layout relation of self (optional, defaults to .Equal).
+     - parameter multiplier: The constraint multiplier (optional, defaults to 1).
+     - parameter constant: The constant to use for the constraint (optional, defaults to 0).
+     - parameter priority: The priority for the constraint (optional, defaults to `UILayoutPriorityRequired`).
+     
+     - returns: self
+     */
+    public func pinCenterX(to view: UIView,
+                       _ attribute: NSLayoutAttribute = .CenterX,
+                          relation: NSLayoutRelation = .Equal,
+                  times multiplier: CGFloat = 1,
+                     plus constant: CGFloat = 0,
+               atPriority priority: UILayoutPriority = UILayoutPriorityRequired) -> Self
+    {
+        constrain(.CenterX, relation, to: view, attribute, times: multiplier, plus: constant, atPriority: priority)
+        return self
+    }
+    
+    /**
+     Constrain the center Y constraint of the current view.
+     
+     - parameter view: The view by which to constrain self.
+     - parameter attribute: The layout attribute of self to constrain (optional, defaults to .CenterY).
+     - parameter relation: The layout relation of self (optional, defaults to .Equal).
+     - parameter multiplier: The constraint multiplier (optional, defaults to 1).
+     - parameter constant: The constant to use for the constraint (optional, defaults to 0).
+     - parameter priority: The priority for the constraint (optional, defaults to `UILayoutPriorityRequired`).
+     
+     - returns: self
+     */
+    public func pinCenterY(to view: UIView,
+                       _ attribute: NSLayoutAttribute = .CenterY,
+                          relation: NSLayoutRelation = .Equal,
+                  times multiplier: CGFloat = 1,
+                     plus constant: CGFloat = 0,
+               atPriority priority: UILayoutPriority = UILayoutPriorityRequired) -> Self
+    {
+        constrain(.CenterY, relation, to: view, attribute, times: multiplier, plus: constant, atPriority: priority)
+        return self
+    }
+    
+    /**
+     Constrain self to fit its content for the specified layout constraint axes.
+     
+     - parameter axes: The axes on which to constrain self (variadic).
+     - parameter priority: The layout priority for content hugging and compression (optional, defaults to `UILayoutPriorityRequired`)
+     */
+    public func constrainSizeToFit(axes: UILayoutConstraintAxis..., priority: UILayoutPriority = UILayoutPriorityRequired) {
+        axes.forEach {
+            setContentHuggingPriority(priority, forAxis: $0)
+            setContentCompressionResistancePriority(priority, forAxis: $0)
+        }
     }
     
     /**
