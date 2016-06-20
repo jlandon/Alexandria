@@ -273,7 +273,7 @@ extension UIView {
      - parameter otherView: The other view to be constrained to.
      - parameter otherAttribute: The layout attribute for the other view.
      - parameter multiplier: The multiplier to use for the constraint (optional, defaults to 1).
-     - parameter priority: The priority for the constraint (optional, defaults to `UILayoutPriorityRequired - 1`).
+     - parameter priority: The priority for the constraint (optional, defaults to `UILayoutPriorityRequired`).
      - parameter identifier: The identifier for the constraint (optional).
      
      - returns: The created constraint for self.
@@ -284,7 +284,7 @@ extension UIView {
                    _ otherAttribute: NSLayoutAttribute,
                    times multiplier: CGFloat = 1,
                       plus constant: CGFloat = 0,
-                atPriority priority: UILayoutPriority = UILayoutPriorityRequired - 1,
+                atPriority priority: UILayoutPriority = UILayoutPriorityRequired,
                          identifier: String? = nil) -> NSLayoutConstraint
     {
         translatesAutoresizingMaskIntoConstraints = false
@@ -313,7 +313,7 @@ extension UIView {
      - parameter support: The support to be constrained to.
      - parameter otherAttribute: The layout attribute for the support.
      - parameter multiplier: The multiplier to use for the constraint (optional, defaults to 1).
-     - parameter priority: The priority for the constraint (optional, defaults to `UILayoutPriorityRequired - 1`).
+     - parameter priority: The priority for the constraint (optional, defaults to `UILayoutPriorityRequired`).
      - parameter identifier: The identifier for the constraint (optional).
      
      - returns: The created constraint for self.
@@ -324,7 +324,7 @@ extension UIView {
                    _ otherAttribute: NSLayoutAttribute,
                    times multiplier: CGFloat = 1,
                       plus constant: CGFloat = 0,
-                atPriority priority: UILayoutPriority = UILayoutPriorityRequired - 1,
+                atPriority priority: UILayoutPriority = UILayoutPriorityRequired,
                          identifier: String? = nil) -> NSLayoutConstraint
     {
         translatesAutoresizingMaskIntoConstraints = false
@@ -351,7 +351,7 @@ extension UIView {
      - parameter attribute: The layout attribute of self to constrain.
      - parameter relation: The layout relation of self (optional, defaults to .Equal).
      - parameter constant: The constant to use for the constraint (optional, defaults to 0).
-     - parameter priority: The priority for the constraint (optional, defaults to `UILayoutPriorityRequired - 1`).
+     - parameter priority: The priority for the constraint (optional, defaults to `UILayoutPriorityRequired`).
      - parameter identifier: The identifier for the constraint (optional).
      
      - returns: The created constraint for self.
@@ -360,7 +360,7 @@ extension UIView {
                          _ relation: NSLayoutRelation = .Equal,
                         to constant: CGFloat,
                    times multiplier: CGFloat = 1,
-                atPriority priority: UILayoutPriority = UILayoutPriorityRequired - 1,
+                atPriority priority: UILayoutPriority = UILayoutPriorityRequired,
                          identifier: String? = nil) -> NSLayoutConstraint
     {
         translatesAutoresizingMaskIntoConstraints = false
@@ -409,14 +409,14 @@ extension UIView {
      - parameter value: The width value.
      - parameter relation: The layout relation of self (optional, defaults to .Equal).
      - parameter constant: The constant to use for the constraint (optional, defaults to 0).
-     - parameter priority: The priority for the constraint (optional, defaults to `UILayoutPriorityRequired - 1`).
+     - parameter priority: The priority for the constraint (optional, defaults to `UILayoutPriorityRequired`).
      
      - returns: self
      */
     public func constrainWidth(to value: CGFloat,
                              _ relation: NSLayoutRelation = .Equal,
                        times multiplier: CGFloat = 1,
-                    atPriority priority: UILayoutPriority = UILayoutPriorityRequired - 1) -> Self
+                    atPriority priority: UILayoutPriority = UILayoutPriorityRequired) -> Self
     {
         constrain(.Width, relation, to: value, times: multiplier, atPriority: priority)
         return self
@@ -428,14 +428,14 @@ extension UIView {
      - parameter value: The height value.
      - parameter relation: The layout relation of self (optional, defaults to .Equal).
      - parameter constant: The constant to use for the constraint (optional, defaults to 0).
-     - parameter priority: The priority for the constraint (optional, defaults to `UILayoutPriorityRequired - 1`).
+     - parameter priority: The priority for the constraint (optional, defaults to `UILayoutPriorityRequired`).
      
      - returns: self
      */
     public func constrainHeight(to value: CGFloat,
                               _ relation: NSLayoutRelation = .Equal,
                         times multiplier: CGFloat = 1,
-                     atPriority priority: UILayoutPriority = UILayoutPriorityRequired - 1) -> Self
+                     atPriority priority: UILayoutPriority = UILayoutPriorityRequired) -> Self
     {
         constrain(.Height, relation, to: value, times: multiplier, atPriority: priority)
         return self
@@ -449,7 +449,7 @@ extension UIView {
      - parameter relation: The layout relation of self (optional, defaults to .Equal).
      - parameter multiplier: The constraint multiplier (optional, defaults to 1).
      - parameter constant: The constant to use for the constraint (optional, defaults to 0).
-     - parameter priority: The priority for the constraint (optional, defaults to `UILayoutPriorityRequired - 1`).
+     - parameter priority: The priority for the constraint (optional, defaults to `UILayoutPriorityRequired`).
      
      - returns: self
      */
@@ -458,7 +458,7 @@ extension UIView {
                               relation: NSLayoutRelation = .Equal,
                       times multiplier: CGFloat = 1,
                          plus constant: CGFloat = 0,
-                   atPriority priority: UILayoutPriority = UILayoutPriorityRequired - 1) -> Self
+                   atPriority priority: UILayoutPriority = UILayoutPriorityRequired) -> Self
     {
         constrain(.Width, relation, to: view, attribute, times: multiplier, plus: constant, atPriority: priority)
         return self
@@ -472,7 +472,7 @@ extension UIView {
      - parameter relation: The layout relation of self (optional, defaults to .Equal).
      - parameter multiplier: The constraint multiplier (optional, defaults to 1).
      - parameter constant: The constant to use for the constraint (optional, defaults to 0).
-     - parameter priority: The priority for the constraint (optional, defaults to `UILayoutPriorityRequired - 1`).
+     - parameter priority: The priority for the constraint (optional, defaults to `UILayoutPriorityRequired`).
      
      - returns: self
      */
@@ -481,7 +481,7 @@ extension UIView {
                                relation: NSLayoutRelation = .Equal,
                        times multiplier: CGFloat = 1,
                           plus constant: CGFloat = 0,
-                    atPriority priority: UILayoutPriority = UILayoutPriorityRequired - 1) -> Self
+                    atPriority priority: UILayoutPriority = UILayoutPriorityRequired) -> Self
     {
         constrain(.Height, relation, to: view, attribute, times: multiplier, plus: constant, atPriority: priority)
         return self
@@ -495,7 +495,7 @@ extension UIView {
      - parameter relation: The layout relation of self (optional, defaults to .Equal).
      - parameter multiplier: The constraint multiplier (optional, defaults to 1).
      - parameter constant: The constant to use for the constraint (optional, defaults to 0).
-     - parameter priority: The priority for the constraint (optional, defaults to `UILayoutPriorityRequired - 1`).
+     - parameter priority: The priority for the constraint (optional, defaults to `UILayoutPriorityRequired`).
      
      - returns: self
      */
@@ -504,7 +504,7 @@ extension UIView {
                        relation: NSLayoutRelation = .Equal,
                times multiplier: CGFloat = 1,
                   plus constant: CGFloat = 0,
-            atPriority priority: UILayoutPriority = UILayoutPriorityRequired - 1) -> Self
+            atPriority priority: UILayoutPriority = UILayoutPriorityRequired) -> Self
     {
         constrain(.Left, relation, to: view, attribute, times: multiplier, plus: constant, atPriority: priority)
         return self
@@ -518,7 +518,7 @@ extension UIView {
      - parameter relation: The layout relation of self (optional, defaults to .Equal).
      - parameter multiplier: The constraint multiplier (optional, defaults to 1).
      - parameter constant: The constant to use for the constraint (optional, defaults to 0).
-     - parameter priority: The priority for the constraint (optional, defaults to `UILayoutPriorityRequired - 1`).
+     - parameter priority: The priority for the constraint (optional, defaults to `UILayoutPriorityRequired`).
      
      - returns: self
      */
@@ -527,7 +527,7 @@ extension UIView {
                         relation: NSLayoutRelation = .Equal,
                 times multiplier: CGFloat = 1,
                    plus constant: CGFloat = 0,
-             atPriority priority: UILayoutPriority = UILayoutPriorityRequired - 1) -> Self
+             atPriority priority: UILayoutPriority = UILayoutPriorityRequired) -> Self
     {
         constrain(.Right, relation, to: view, attribute, times: multiplier, plus: constant, atPriority: priority)
         return self
@@ -541,7 +541,7 @@ extension UIView {
      - parameter relation: The layout relation of self (optional, defaults to .Equal).
      - parameter multiplier: The constraint multiplier (optional, defaults to 1).
      - parameter constant: The constant to use for the constraint (optional, defaults to 0).
-     - parameter priority: The priority for the constraint (optional, defaults to `UILayoutPriorityRequired - 1`).
+     - parameter priority: The priority for the constraint (optional, defaults to `UILayoutPriorityRequired`).
      
      - returns: self
      */
@@ -550,7 +550,7 @@ extension UIView {
                       relation: NSLayoutRelation = .Equal,
               times multiplier: CGFloat = 1,
                  plus constant: CGFloat = 0,
-           atPriority priority: UILayoutPriority = UILayoutPriorityRequired - 1) -> Self
+           atPriority priority: UILayoutPriority = UILayoutPriorityRequired) -> Self
     {
         constrain(.Top, relation, to: view, attribute, times: multiplier, plus: constant, atPriority: priority)
         return self
@@ -564,7 +564,7 @@ extension UIView {
      - parameter relation: The layout relation of self (optional, defaults to .Equal).
      - parameter multiplier: The constraint multiplier (optional, defaults to 1).
      - parameter constant: The constant to use for the constraint (optional, defaults to 0).
-     - parameter priority: The priority for the constraint (optional, defaults to `UILayoutPriorityRequired - 1`).
+     - parameter priority: The priority for the constraint (optional, defaults to `UILayoutPriorityRequired`).
      
      - returns: self
      */
@@ -573,7 +573,7 @@ extension UIView {
                          relation: NSLayoutRelation = .Equal,
                  times multiplier: CGFloat = 1,
                     plus constant: CGFloat = 0,
-              atPriority priority: UILayoutPriority = UILayoutPriorityRequired - 1) -> Self
+              atPriority priority: UILayoutPriority = UILayoutPriorityRequired) -> Self
     {
         constrain(.Bottom, relation, to: view, attribute, times: multiplier, plus: constant, atPriority: priority)
         return self
@@ -587,7 +587,7 @@ extension UIView {
      - parameter relation: The layout relation of self (optional, defaults to .Equal).
      - parameter multiplier: The constraint multiplier (optional, defaults to 1).
      - parameter constant: The constant to use for the constraint (optional, defaults to 0).
-     - parameter priority: The priority for the constraint (optional, defaults to `UILayoutPriorityRequired - 1`).
+     - parameter priority: The priority for the constraint (optional, defaults to `UILayoutPriorityRequired`).
      
      - returns: self
      */
@@ -596,7 +596,7 @@ extension UIView {
                           relation: NSLayoutRelation = .Equal,
                   times multiplier: CGFloat = 1,
                      plus constant: CGFloat = 0,
-               atPriority priority: UILayoutPriority = UILayoutPriorityRequired - 1) -> Self
+               atPriority priority: UILayoutPriority = UILayoutPriorityRequired) -> Self
     {
         constrain(.Leading, relation, to: view, attribute, times: multiplier, plus: constant, atPriority: priority)
         return self
@@ -610,7 +610,7 @@ extension UIView {
      - parameter relation: The layout relation of self (optional, defaults to .Equal).
      - parameter multiplier: The constraint multiplier (optional, defaults to 1).
      - parameter constant: The constant to use for the constraint (optional, defaults to 0).
-     - parameter priority: The priority for the constraint (optional, defaults to `UILayoutPriorityRequired - 1`).
+     - parameter priority: The priority for the constraint (optional, defaults to `UILayoutPriorityRequired`).
      
      - returns: self
      */
@@ -619,7 +619,7 @@ extension UIView {
                            relation: NSLayoutRelation = .Equal,
                    times multiplier: CGFloat = 1,
                       plus constant: CGFloat = 0,
-                atPriority priority: UILayoutPriority = UILayoutPriorityRequired - 1) -> Self
+                atPriority priority: UILayoutPriority = UILayoutPriorityRequired) -> Self
     {
         constrain(.Trailing, relation, to: view, attribute, times: multiplier, plus: constant, atPriority: priority)
         return self
@@ -633,7 +633,7 @@ extension UIView {
      - parameter relation: The layout relation of self (optional, defaults to .Equal).
      - parameter multiplier: The constraint multiplier (optional, defaults to 1).
      - parameter constant: The constant to use for the constraint (optional, defaults to 0).
-     - parameter priority: The priority for the constraint (optional, defaults to `UILayoutPriorityRequired - 1`).
+     - parameter priority: The priority for the constraint (optional, defaults to `UILayoutPriorityRequired`).
      
      - returns: self
      */
@@ -642,7 +642,7 @@ extension UIView {
                           relation: NSLayoutRelation = .Equal,
                   times multiplier: CGFloat = 1,
                      plus constant: CGFloat = 0,
-               atPriority priority: UILayoutPriority = UILayoutPriorityRequired - 1) -> Self
+               atPriority priority: UILayoutPriority = UILayoutPriorityRequired) -> Self
     {
         constrain(.CenterX, relation, to: view, attribute, times: multiplier, plus: constant, atPriority: priority)
         return self
@@ -656,7 +656,7 @@ extension UIView {
      - parameter relation: The layout relation of self (optional, defaults to .Equal).
      - parameter multiplier: The constraint multiplier (optional, defaults to 1).
      - parameter constant: The constant to use for the constraint (optional, defaults to 0).
-     - parameter priority: The priority for the constraint (optional, defaults to `UILayoutPriorityRequired - 1`).
+     - parameter priority: The priority for the constraint (optional, defaults to `UILayoutPriorityRequired`).
      
      - returns: self
      */
@@ -665,7 +665,7 @@ extension UIView {
                           relation: NSLayoutRelation = .Equal,
                   times multiplier: CGFloat = 1,
                      plus constant: CGFloat = 0,
-               atPriority priority: UILayoutPriority = UILayoutPriorityRequired - 1) -> Self
+               atPriority priority: UILayoutPriority = UILayoutPriorityRequired) -> Self
     {
         constrain(.CenterY, relation, to: view, attribute, times: multiplier, plus: constant, atPriority: priority)
         return self
@@ -675,9 +675,9 @@ extension UIView {
      Constrain self to fit its content for the specified layout constraint axes.
      
      - parameter axes: The axes on which to constrain self (variadic).
-     - parameter priority: The layout priority for content hugging and compression (optional, defaults to `UILayoutPriorityRequired - 1`)
+     - parameter priority: The layout priority for content hugging and compression (optional, defaults to `UILayoutPriorityRequired`)
      */
-    public func constrainSizeToFit(axes: UILayoutConstraintAxis..., priority: UILayoutPriority = UILayoutPriorityRequired - 1) {
+    public func constrainSizeToFit(axes: UILayoutConstraintAxis..., priority: UILayoutPriority = UILayoutPriorityRequired) {
         axes.forEach {
             setContentHuggingPriority(priority, forAxis: $0)
             setContentCompressionResistancePriority(priority, forAxis: $0)
