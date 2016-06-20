@@ -47,6 +47,7 @@
 		79B92E591C73369C0050D55B /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B92E381C73369C0050D55B /* UIView+Extensions.swift */; };
 		79B92E5A1C73369C0050D55B /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B92E391C73369C0050D55B /* UIViewController+Extensions.swift */; };
 		814C71FA1B69DD0900BB4DBD /* Alexandria.h in Headers */ = {isa = PBXBuildFile; fileRef = 814C71F91B69DD0900BB4DBD /* Alexandria.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		81A87FD61D1828CD00F43B74 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A87FD51D1828CD00F43B74 /* Operators.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -104,6 +105,7 @@
 		814C71F91B69DD0900BB4DBD /* Alexandria.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Alexandria.h; sourceTree = "<group>"; };
 		814C72051B69DD0900BB4DBD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		814C72061B69DD0900BB4DBD /* AlexandriaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlexandriaTests.swift; sourceTree = "<group>"; };
+		81A87FD51D1828CD00F43B74 /* Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,6 +147,7 @@
 				79B92E261C73369C0050D55B /* NSCharacterSet+Extensions.swift */,
 				79B92E271C73369C0050D55B /* NSDate+Extensions.swift */,
 				79B92E281C73369C0050D55B /* NSObject+Extensions.swift */,
+				81A87FD51D1828CD00F43B74 /* Operators.swift */,
 				79B92E291C73369C0050D55B /* Optional+Extensions.swift */,
 				79B92E2A1C73369C0050D55B /* StoreKit */,
 				79B92E2C1C73369C0050D55B /* String+Extensions.swift */,
@@ -387,6 +390,7 @@
 				79B92E541C73369C0050D55B /* UILabel+Extensions.swift in Sources */,
 				79B92E3D1C73369C0050D55B /* CGAffineTransform+Extensions.swift in Sources */,
 				79B92E5A1C73369C0050D55B /* UIViewController+Extensions.swift in Sources */,
+				81A87FD61D1828CD00F43B74 /* Operators.swift in Sources */,
 				79B92E401C73369C0050D55B /* Comparable+Extensions.swift in Sources */,
 				79B92E531C73369C0050D55B /* UIImage+Extensions.swift in Sources */,
 				79B92E501C73369C0050D55B /* UIColor+Extensions.swift in Sources */,
