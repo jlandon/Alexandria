@@ -48,6 +48,7 @@
 		79B92E5A1C73369C0050D55B /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B92E391C73369C0050D55B /* UIViewController+Extensions.swift */; };
 		814C71FA1B69DD0900BB4DBD /* Alexandria.h in Headers */ = {isa = PBXBuildFile; fileRef = 814C71F91B69DD0900BB4DBD /* Alexandria.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		81A87FD61D1828CD00F43B74 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A87FD51D1828CD00F43B74 /* Operators.swift */; };
+		81A87FD81D182E0800F43B74 /* CGFloatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A87FD71D182E0800F43B74 /* CGFloatTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,6 +107,7 @@
 		814C72051B69DD0900BB4DBD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		814C72061B69DD0900BB4DBD /* AlexandriaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlexandriaTests.swift; sourceTree = "<group>"; };
 		81A87FD51D1828CD00F43B74 /* Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
+		81A87FD71D182E0800F43B74 /* CGFloatTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGFloatTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -229,6 +231,7 @@
 				81253BDF1C69A9720054D52C /* ColorTests.swift */,
 				81253BE11C69B2A20054D52C /* DateTests.swift */,
 				79B152491D01C5FC009E850E /* IntTests.swift */,
+				81A87FD71D182E0800F43B74 /* CGFloatTests.swift */,
 				814C72041B69DD0900BB4DBD /* Supporting Files */,
 			);
 			path = AlexandriaTests;
@@ -353,6 +356,7 @@
 				796510A31C6F4F2F00E01F89 /* DateTests.swift in Sources */,
 				796510A01C6F4F2F00E01F89 /* StringTests.swift in Sources */,
 				796510A21C6F4F2F00E01F89 /* ColorTests.swift in Sources */,
+				81A87FD81D182E0800F43B74 /* CGFloatTests.swift in Sources */,
 				796510A11C6F4F2F00E01F89 /* CollectionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

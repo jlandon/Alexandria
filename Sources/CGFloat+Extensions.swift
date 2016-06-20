@@ -54,6 +54,6 @@ extension CGFloat {
      */
     public func rounded(places places: UInt) -> CGFloat {
         let multiplier = pow(10, CGFloat(places))
-        return CoreGraphics.round(self * multiplier) / multiplier
+        return round(self * multiplier) / multiplier
     }
 }
