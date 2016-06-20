@@ -39,7 +39,6 @@
 		79B92E511C73369C0050D55B /* UIFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B92E301C73369C0050D55B /* UIFont+Extensions.swift */; };
 		79B92E521C73369C0050D55B /* UIGestureRecognizer+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B92E311C73369C0050D55B /* UIGestureRecognizer+Extensions.swift */; };
 		79B92E531C73369C0050D55B /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B92E321C73369C0050D55B /* UIImage+Extensions.swift */; };
-		79B92E541C73369C0050D55B /* UILabel+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B92E331C73369C0050D55B /* UILabel+Extensions.swift */; };
 		79B92E551C73369C0050D55B /* UIScreen+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B92E341C73369C0050D55B /* UIScreen+Extensions.swift */; };
 		79B92E561C73369C0050D55B /* UIScrollView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B92E351C73369C0050D55B /* UIScrollView+Extensions.swift */; };
 		79B92E571C73369C0050D55B /* UISplitViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B92E361C73369C0050D55B /* UISplitViewController+Extensions.swift */; };
@@ -90,7 +89,6 @@
 		79B92E301C73369C0050D55B /* UIFont+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIFont+Extensions.swift"; sourceTree = "<group>"; };
 		79B92E311C73369C0050D55B /* UIGestureRecognizer+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIGestureRecognizer+Extensions.swift"; sourceTree = "<group>"; };
 		79B92E321C73369C0050D55B /* UIImage+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
-		79B92E331C73369C0050D55B /* UILabel+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UILabel+Extensions.swift"; sourceTree = "<group>"; };
 		79B92E341C73369C0050D55B /* UIScreen+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScreen+Extensions.swift"; sourceTree = "<group>"; };
 		79B92E351C73369C0050D55B /* UIScrollView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Extensions.swift"; sourceTree = "<group>"; };
 		79B92E361C73369C0050D55B /* UISplitViewController+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UISplitViewController+Extensions.swift"; sourceTree = "<group>"; };
@@ -159,7 +157,6 @@
 				79B92E301C73369C0050D55B /* UIFont+Extensions.swift */,
 				79B92E311C73369C0050D55B /* UIGestureRecognizer+Extensions.swift */,
 				79B92E321C73369C0050D55B /* UIImage+Extensions.swift */,
-				79B92E331C73369C0050D55B /* UILabel+Extensions.swift */,
 				79B92E341C73369C0050D55B /* UIScreen+Extensions.swift */,
 				79B92E351C73369C0050D55B /* UIScrollView+Extensions.swift */,
 				79B92E361C73369C0050D55B /* UISplitViewController+Extensions.swift */,
@@ -391,7 +388,6 @@
 				79B92E491C73369C0050D55B /* NSDate+Extensions.swift in Sources */,
 				79B92E4A1C73369C0050D55B /* NSObject+Extensions.swift in Sources */,
 				79B92E441C73369C0050D55B /* Float+Extensions.swift in Sources */,
-				79B92E541C73369C0050D55B /* UILabel+Extensions.swift in Sources */,
 				79B92E3D1C73369C0050D55B /* CGAffineTransform+Extensions.swift in Sources */,
 				79B92E5A1C73369C0050D55B /* UIViewController+Extensions.swift in Sources */,
 				81A87FD61D1828CD00F43B74 /* Operators.swift in Sources */,
