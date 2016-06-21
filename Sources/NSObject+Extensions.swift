@@ -47,6 +47,6 @@ extension NSObject {
     }
 }
 
-private func stringFromClass(type: AnyClass) -> String {
-    return NSStringFromClass(type).componentsSeparatedByString(".").last!
+private func stringFromClass(_ type: AnyClass) -> String {
+    return NSStringFromClass(type).components(separatedBy: ".").last!
 }

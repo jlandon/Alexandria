@@ -35,31 +35,31 @@ extension UIImage {
      - parameter tintColor: The UIColor to tint by.
      - returns: A copy of self, tinted by the tintColor.
      */
-    public func tinted(tintColor: UIColor) -> UIImage {
-        UIGraphicsBeginImageContextWithOptions(size, false, UIScreen.mainScreen().scale)
+    public func tinted(_ tintColor: UIColor) -> UIImage {
+        guard let cgImage = cgImage else { return self }
+        
+        UIGraphicsBeginImageContextWithOptions(size, false, UIScreen.main().scale)
 
+        defer { UIGraphicsEndImageContext() }
+        
         let context = UIGraphicsGetCurrentContext()
-        CGContextSaveGState(context)
+        context?.saveGState()
 
         tintColor.setFill()
 
-        CGContextTranslateCTM(context, 0.0, size.height)
-        CGContextScaleCTM(context, 1.0, -1.0)
+        context?.translate(x: 0, y: size.height)
+        context?.scale(x: 1, y: -1)
+        context?.setBlendMode(.normal)
+        
+        let rect = CGRect(origin: .zero, size: size)
+        context?.draw(in: rect, image: cgImage)
+        
+        context?.clipToMask(rect, mask: cgImage)
+        context?.addRect(rect)
+        context?.drawPath(using: .fill)
+        context?.restoreGState()
 
-        CGContextSetBlendMode(context, .Normal)
-        let rect = CGRectMake(0.0, 0.0, size.width, size.height)
-        CGContextDrawImage(context, rect, CGImage)
-
-        CGContextClipToMask(context, rect, CGImage)
-        CGContextAddRect(context, rect)
-        CGContextDrawPath(context, .Fill)
-
-        let coloredImage = UIGraphicsGetImageFromCurrentImageContext()
-
-        CGContextRestoreGState(context)
-        UIGraphicsEndImageContext()
-
-        return coloredImage
+        return UIGraphicsGetImageFromCurrentImageContext() ?? self
     }
     
     /**
@@ -76,10 +76,10 @@ extension UIImage {
      - parameter orientiation: The orientation to use for the scaled image (optional, defaults to the image's `imageOrientation` property).
      - returns: A copy of self, scaled by the scaleFactor (with an optional image orientation).
      */
-    public func scaledBy(scaleFactor: CGFloat, withOrientation orientation: UIImageOrientation? = nil) -> UIImage? {
-        guard let coreImage = CGImage else { return nil }
+    public func scaled(by scaleFactor: CGFloat, withOrientation orientation: UIImageOrientation? = nil) -> UIImage? {
+        guard let coreImage = cgImage else { return nil }
         
-        return UIImage(CGImage: coreImage, scale: 1/scaleFactor, orientation: orientation ?? imageOrientation)
+        return UIImage(cgImage: coreImage, scale: 1/scaleFactor, orientation: orientation ?? imageOrientation)
     }
 
     /**
@@ -105,14 +105,11 @@ extension UIImage {
         UIGraphicsBeginImageContextWithOptions(size, false, 0)
         commands()
 
-        defer {
-            UIGraphicsEndImageContext()
-        }
-        if let image = UIGraphicsGetImageFromCurrentImageContext().CGImage {
-            self.init(CGImage: image)
-            return
-        }
-        return nil
+        defer { UIGraphicsEndImageContext() }
+        
+        guard let image = UIGraphicsGetImageFromCurrentImageContext()?.cgImage else { return nil }
+        
+        self.init(cgImage: image)
     }
 
     /**
@@ -123,19 +120,16 @@ extension UIImage {
     */
     public convenience init?(color: UIColor) {
         let size = CGSize(width: 1, height: 1)
-        let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+        let rect = CGRect(origin: .zero, size: size)
         UIGraphicsBeginImageContextWithOptions(size, false, 0)
 
         color.setFill()
         UIRectFill(rect)
 
-        defer {
-            UIGraphicsEndImageContext()
-        }
-        if let image = UIGraphicsGetImageFromCurrentImageContext().CGImage {
-            self.init(CGImage: image)
-            return
-        }
-        return nil
+        defer { UIGraphicsEndImageContext() }
+        
+        guard let image = UIGraphicsGetImageFromCurrentImageContext()?.cgImage else { return nil }
+        
+        self.init(cgImage: image)
     }
 }

@@ -42,8 +42,8 @@ extension Array {
      
      - returns: The array created by applying the transform to this array.
      */
-    public func mapWithIndex<T> (f: (Int, Element) -> T) -> [T] {
-        return zip((startIndex ..< endIndex), self).map(f)
+    public func mapWithIndex<T> (_ f: (Int, Element) -> T) -> [T] {
+        return zip(startIndex ..< endIndex, self).map(f)
     }
 
     /**
@@ -62,7 +62,7 @@ extension Array {
      
      - returns: Returns the rotated array.
      */
-    public func rotate(shift: Int) -> Array {
+    public func rotated(by shift: Int) -> Array {
         guard !isEmpty else { return [] }
         
         var array = self
@@ -72,15 +72,15 @@ extension Array {
             }
         } else if shift < 0 {
             for _ in 1...abs(shift) {
-                array.insert(array.removeLast(), atIndex: 0)
+                array.insert(array.removeLast(), at: 0)
             }
         }
         return array
     }
     
     /// Rotates self in-place.
-    public mutating func rotateInPlace(shift: Int) {
-        self = rotate(shift)
+    public mutating func rotate(by shift: Int) {
+        self = rotated(by: shift)
     }
 }
 
@@ -91,9 +91,9 @@ extension Array where Element: Equatable {
      - parameter element: The element to remove from the array
      - returns: The removed element or nil, if the element was not found
      */
-    public mutating func removeElement(element: Element) -> Element? {
-        guard let index = indexOf(element) else { return nil }
-        return removeAtIndex(index)
+    public mutating func remove(_ element: Element) -> Element? {
+        guard let index = index(of: element) else { return nil }
+        return remove(at: index)
     }
     
     
@@ -110,11 +110,11 @@ extension Array where Element: Equatable {
      - parameter element: The element to index against.
      - returns: The element before the index element, or nil if there isn't one.
     */
-    public func before(element: Element) -> Element? {
+    public func before(_ element: Element) -> Element? {
         guard !isEmpty else { return nil }
 
-        if let index = indexOf(element) {
-            return self[safe: index.predecessor()]
+        if let index = index(of: element) {
+            return self[safe: self.index(before: index)]
         }
         return nil
     }
@@ -133,11 +133,11 @@ extension Array where Element: Equatable {
      - parameter element: The element to index against.
      - returns: The element after the index element, or nil if there isn't one.
      */
-    public func after(element: Element) -> Element? {
+    public func after(_ element: Element) -> Element? {
         guard !isEmpty else { return nil }
         
-        if let index = indexOf(element) {
-            return self[safe: index.successor()]
+        if let index = index(of: element) {
+            return self[safe: self.index(after: index)]
         }
         return nil
     }
@@ -204,7 +204,7 @@ extension Array where Element: Hashable {
     }
     
     /// Removes duplicates from self in-place.
-    public mutating func uniqueInPlace() {
+    public mutating func formUnique() {
         self = unique()
     }
 }

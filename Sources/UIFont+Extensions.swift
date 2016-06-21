@@ -35,16 +35,19 @@ extension UIFont {
     - parameter fileExtension: The extension of the font file.
     - parameter bundle: The bundle in which the font file is located.
     */
-    public static func registerFont(name name: String, fileExtension: String, inBundle bundle: NSBundle) {
-        guard let path = bundle.pathForResource(name, ofType: fileExtension), fontData = NSData(contentsOfFile: path) else {
+    public static func register(name: String, fileExtension: String, in bundle: Bundle) {
+        guard
+            let path = bundle.pathForResource(name, ofType: fileExtension),
+            let fontData = NSData(contentsOfFile: path),
+            let provider = CGDataProvider(data: fontData as CFData)
+        else {
             print("Error registering font")
             return
         }
         
-        let provider = CGDataProviderCreateWithCFData(fontData as CFDataRef)
-        guard let font = CGFontCreateWithDataProvider(provider) else { return }
+        let font = CGFont(provider)
         
-        var error: Unmanaged<CFErrorRef>?
+        var error: Unmanaged<CFError>?
         guard !CTFontManagerRegisterGraphicsFont(font, &error) else {
             error?.release()
             return

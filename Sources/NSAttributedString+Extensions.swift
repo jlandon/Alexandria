@@ -27,7 +27,7 @@
 
 import Foundation
 
-extension NSAttributedString {
+extension AttributedString {
     /**
     Returns a new mutable string with characters from a given character set removed.
 
@@ -37,10 +37,10 @@ extension NSAttributedString {
       - charSet: The character set with which to remove characters.
     - returns: A new string with the matching characters removed.
     */
-    public func attributedStringByTrimmingCharacterSet(charSet: NSCharacterSet) -> NSAttributedString {
+    public func trimmingCharacters(in set: CharacterSet) -> AttributedString {
         let modString = NSMutableAttributedString(attributedString: self)
-        modString.trimCharactersInSet(charSet)
-        return NSAttributedString(attributedString: modString)
+        modString.trimCharacters(in: set)
+        return AttributedString(attributedString: modString)
     }
 }
 
@@ -55,20 +55,20 @@ extension NSMutableAttributedString {
     - Parameters:
       - charSet: The character set with which to remove characters.
     */
-    public func trimCharactersInSet(charSet: NSCharacterSet) {
-        var range = (string as NSString).rangeOfCharacterFromSet(charSet)
+    public func trimCharacters(in set: CharacterSet) {
+        var range = (string as NSString).rangeOfCharacter(from: set)
 
         // Trim leading characters from character set.
         while range.length != 0 && range.location == 0 {
-            replaceCharactersInRange(range, withString: "")
-            range = (string as NSString).rangeOfCharacterFromSet(charSet)
+            replaceCharacters(in: range, with: "")
+            range = (string as NSString).rangeOfCharacter(from: set)
         }
 
         // Trim trailing characters from character set.
-        range = (string as NSString).rangeOfCharacterFromSet(charSet, options: .BackwardsSearch)
+        range = (string as NSString).rangeOfCharacter(from: set, options: .backwardsSearch)
         while range.length != 0 && NSMaxRange(range) == length {
-            replaceCharactersInRange(range, withString: "")
-            range = (string as NSString).rangeOfCharacterFromSet(charSet, options: .BackwardsSearch)
+            replaceCharacters(in: range, with: "")
+            range = (string as NSString).rangeOfCharacter(from: set, options: .backwardsSearch)
         }
     }
 
@@ -82,8 +82,8 @@ extension NSMutableAttributedString {
      
      - parameter font: The font to apply.
      */
-    public func addFont(font: UIFont) {
-        self.addAttribute(NSFontAttributeName, value: font, range: NSMakeRange(0, self.length))
+    public func addFont(_ font: UIFont) {
+        addAttribute(NSFontAttributeName, value: font, range: NSRange(location: 0, length: length))
     }
     
     
@@ -92,10 +92,10 @@ extension NSMutableAttributedString {
      
      - parameter alignment: The alignment to apply.
      */
-    public func addAlignment(alignment: NSTextAlignment) {
+    public func addAlignment(_ alignment: NSTextAlignment) {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = alignment
-        self.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSMakeRange(0, self.length))
+        addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSRange(location: 0, length: length))
     }
     
     
@@ -104,8 +104,8 @@ extension NSMutableAttributedString {
      
      - parameter color: The color to apply.
      */
-    public func addForegroundColor(color: UIColor) {
-        self.addAttribute(NSForegroundColorAttributeName, value: color, range: NSMakeRange(0, self.length))
+    public func addForegroundColor(_ color: UIColor) {
+        addAttribute(NSForegroundColorAttributeName, value: color, range: NSRange(location: 0, length: length))
     }
     
     
@@ -114,8 +114,8 @@ extension NSMutableAttributedString {
      
      - parameter style: The `NSUnderlineStyle` to apply. Defaults to `.StyleSingle`.
      */
-    public func addUnderline(style: NSUnderlineStyle = .StyleSingle) {
-        self.addAttribute(NSUnderlineStyleAttributeName, value: style.rawValue, range: NSMakeRange(0, self.length))
+    public func addUnderline(style: NSUnderlineStyle = .styleSingle) {
+        addAttribute(NSUnderlineStyleAttributeName, value: style.rawValue, range: NSRange(location: 0, length: length))
     }
 
 }

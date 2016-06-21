@@ -35,7 +35,7 @@ private class CAAnimationDelegate: NSObject {
         self.completion = completion
     }
     
-    override func animationDidStop(anim: CAAnimation, finished flag: Bool) {
+    override func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
         completion(flag)
     }
 }
@@ -49,8 +49,8 @@ extension CALayer {
     - parameter key: A string that identifier the animation.
     - parameter completion: A closure that is executed upon completion of the animation.
     */
-    public func addAnimation(animation: CAAnimation, forKey key: String?, withCompletion completion: (Bool) -> Void) {
+    public func add(_ animation: CAAnimation, forKey key: String?, withCompletion completion: (Bool) -> Void) {
         animation.delegate = CAAnimationDelegate(completion: completion)
-        addAnimation(animation, forKey: key)
+        add(animation, forKey: key)
     }
 }

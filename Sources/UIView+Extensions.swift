@@ -30,39 +30,39 @@ import UIKit
 extension UIView {
     
     /// UIView animation without the long variable names
-    public class func animate(duration: NSTimeInterval,
-                               _ delay: NSTimeInterval,
-                             _ damping: CGFloat,
-                            _ velocity: CGFloat,
-                             _ options: UIViewAnimationOptions,
-                          _ animations: () -> Void,
-                          _ completion: ((Bool) -> Void)?)
+    public class func animate(_ duration: TimeInterval,
+                                 _ delay: TimeInterval,
+                               _ damping: CGFloat,
+                              _ velocity: CGFloat,
+                               _ options: UIViewAnimationOptions,
+                            _ animations: () -> Void,
+                            _ completion: (Bool) -> Void = { _ in })
     {
-        UIView.animateWithDuration(duration,
-            delay: delay,
-            usingSpringWithDamping: damping,
-            initialSpringVelocity: velocity,
-            options: options,
-            animations: animations,
-            completion: completion
+        UIView.animate(withDuration: duration,
+                              delay: delay,
+             usingSpringWithDamping: damping,
+              initialSpringVelocity: velocity,
+                            options: options,
+                         animations: animations,
+                         completion: completion
         )
     }
     
     /// UIView animation without the long variable names or completion block
-    public class func animate(duration: NSTimeInterval,
-                               _ delay: NSTimeInterval,
-                             _ damping: CGFloat,
-                            _ velocity: CGFloat,
-                             _ options: UIViewAnimationOptions,
-                          _ animations: () -> Void)
+    public class func animate(_ duration: TimeInterval,
+                                 _ delay: TimeInterval,
+                               _ damping: CGFloat,
+                              _ velocity: CGFloat,
+                               _ options: UIViewAnimationOptions,
+                            _ animations: () -> Void)
     {
-        UIView.animateWithDuration(duration,
-            delay: delay,
-            usingSpringWithDamping: damping,
-            initialSpringVelocity: velocity,
-            options: options,
-            animations: animations,
-            completion: nil
+        UIView.animate(withDuration: duration,
+                              delay: delay,
+             usingSpringWithDamping: damping,
+              initialSpringVelocity: velocity,
+                            options: options,
+                         animations: animations,
+                         completion: nil
         )
     }
     
@@ -75,11 +75,7 @@ extension UIView {
     - http://ashfurrow.com/blog/you-probably-dont-understand-frames-and-bounds/
     */
     public var size: CGSize {
-        set {
-            var frame = self.frame
-            frame.size = newValue
-            self.frame = frame
-        }
+        set { frame.size = newValue }
         get { return frame.size }
     }
     /**
@@ -91,11 +87,7 @@ extension UIView {
     - http://ashfurrow.com/blog/you-probably-dont-understand-frames-and-bounds/
     */
     public var height: CGFloat {
-        set {
-            var frame = self.frame
-            frame.size.height = newValue
-            self.frame = frame
-        }
+        set { frame.size.height = newValue }
         get { return frame.height }
     }
     /**
@@ -107,11 +99,7 @@ extension UIView {
     - http://ashfurrow.com/blog/you-probably-dont-understand-frames-and-bounds/
     */
     public var width: CGFloat {
-        set {
-            var frame = self.frame
-            frame.size.width = newValue
-            self.frame = frame
-        }
+        set { frame.size.width = newValue }
         get { return frame.width }
     }
     /**
@@ -123,11 +111,7 @@ extension UIView {
     - http://ashfurrow.com/blog/you-probably-dont-understand-frames-and-bounds/
     */
     public var origin: CGPoint {
-        set {
-            var frame = self.frame
-            frame.origin = newValue
-            self.frame = frame
-        }
+        set { frame.origin = newValue }
         get { return frame.origin }
     }
     /**
@@ -139,11 +123,7 @@ extension UIView {
     - http://ashfurrow.com/blog/you-probably-dont-understand-frames-and-bounds/
     */
     public var originX: CGFloat {
-        set {
-            var frame = self.frame
-            frame.origin.x = newValue
-            self.frame = frame
-        }
+        set { frame.origin.x = newValue }
         get { return origin.x }
     }
     /**
@@ -155,11 +135,7 @@ extension UIView {
     - http://ashfurrow.com/blog/you-probably-dont-understand-frames-and-bounds/
     */
     public var originY: CGFloat {
-        set {
-            var frame = self.frame
-            frame.origin.y = newValue
-            self.frame = frame
-        }
+        set { frame.origin.y = newValue }
         get { return origin.y }
     }
     /**
@@ -254,15 +230,15 @@ extension UIView {
     }
     
     /// Creates a UIImage representation of the view
-    public func snapshotAsImage() -> UIImage {
-        UIGraphicsBeginImageContextWithOptions(size, opaque, 0)
-        if let context = UIGraphicsGetCurrentContext() {
-            layer.renderInContext(context)
-        }
-        let img = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
+    public func snapshot() -> UIImage? {
+        defer { UIGraphicsEndImageContext() }
         
-        return img
+        UIGraphicsBeginImageContextWithOptions(size, isOpaque, 0)
+        if let context = UIGraphicsGetCurrentContext() {
+            layer.render(in: context)
+        }
+        
+        return UIGraphicsGetImageFromCurrentImageContext()
     }
     
     /**
@@ -278,14 +254,15 @@ extension UIView {
      
      - returns: The created constraint for self.
      */
-    public func constrain(attribute: NSLayoutAttribute,
-                         _ relation: NSLayoutRelation = .Equal,
-                       to otherView: UIView,
-                   _ otherAttribute: NSLayoutAttribute,
-                   times multiplier: CGFloat = 1,
-                      plus constant: CGFloat = 0,
-                atPriority priority: UILayoutPriority = UILayoutPriorityRequired,
-                         identifier: String? = nil) -> NSLayoutConstraint
+    @discardableResult
+    public func constrain(_ attribute: NSLayoutAttribute,
+                           _ relation: NSLayoutRelation = .equal,
+                         to otherView: UIView,
+                     _ otherAttribute: NSLayoutAttribute,
+                     times multiplier: CGFloat = 1,
+                        plus constant: CGFloat = 0,
+                  atPriority priority: UILayoutPriority = UILayoutPriorityRequired,
+                           identifier: String? = nil) -> NSLayoutConstraint
     {
         translatesAutoresizingMaskIntoConstraints = false
                         
@@ -300,7 +277,7 @@ extension UIView {
         )
         constraint.priority = priority
         constraint.identifier = identifier
-        constraint.active = true
+        constraint.isActive = true
                         
         return constraint
     }
@@ -318,14 +295,15 @@ extension UIView {
      
      - returns: The created constraint for self.
      */
-    public func constrain(attribute: NSLayoutAttribute,
-                         _ relation: NSLayoutRelation = .Equal,
-                  toSupport support: UILayoutSupport,
-                   _ otherAttribute: NSLayoutAttribute,
-                   times multiplier: CGFloat = 1,
-                      plus constant: CGFloat = 0,
-                atPriority priority: UILayoutPriority = UILayoutPriorityRequired,
-                         identifier: String? = nil) -> NSLayoutConstraint
+    @discardableResult
+    public func constrain(_ attribute: NSLayoutAttribute,
+                           _ relation: NSLayoutRelation = .equal,
+                    toSupport support: UILayoutSupport,
+                     _ otherAttribute: NSLayoutAttribute,
+                     times multiplier: CGFloat = 1,
+                        plus constant: CGFloat = 0,
+                  atPriority priority: UILayoutPriority = UILayoutPriorityRequired,
+                           identifier: String? = nil) -> NSLayoutConstraint
     {
         translatesAutoresizingMaskIntoConstraints = false
         
@@ -340,7 +318,7 @@ extension UIView {
         )
         constraint.priority = priority
         constraint.identifier = identifier
-        constraint.active = true
+        constraint.isActive = true
         
         return constraint
     }
@@ -356,12 +334,13 @@ extension UIView {
      
      - returns: The created constraint for self.
      */
-    public func constrain(attribute: NSLayoutAttribute,
-                         _ relation: NSLayoutRelation = .Equal,
-                        to constant: CGFloat,
-                   times multiplier: CGFloat = 1,
-                atPriority priority: UILayoutPriority = UILayoutPriorityRequired,
-                         identifier: String? = nil) -> NSLayoutConstraint
+    @discardableResult
+    public func constrain(_ attribute: NSLayoutAttribute,
+                           _ relation: NSLayoutRelation = .equal,
+                          to constant: CGFloat,
+                     times multiplier: CGFloat = 1,
+                  atPriority priority: UILayoutPriority = UILayoutPriorityRequired,
+                           identifier: String? = nil) -> NSLayoutConstraint
     {
         translatesAutoresizingMaskIntoConstraints = false
                         
@@ -370,13 +349,13 @@ extension UIView {
             attribute: attribute,
             relatedBy: relation,
             toItem: nil,
-            attribute: .NotAnAttribute,
+            attribute: .notAnAttribute,
             multiplier: multiplier,
             constant: constant
         )
         constraint.priority = priority
         constraint.identifier = identifier
-        constraint.active = true
+        constraint.isActive = true
         
         return constraint
     }
@@ -391,14 +370,15 @@ extension UIView {
      
      - returns: All four created constraints (top, leading, bottom, and trailing edges) for self.
      */
-    public func constrainEdgesToSuperview(top top: CGFloat = 0, leading: CGFloat = 0, bottom: CGFloat = 0, trailing: CGFloat = 0) -> (top: NSLayoutConstraint, leading: NSLayoutConstraint, bottom: NSLayoutConstraint, trailing: NSLayoutConstraint) {
+    @discardableResult
+    public func constrainEdgesToSuperview(top: CGFloat = 0, leading: CGFloat = 0, bottom: CGFloat = 0, trailing: CGFloat = 0) -> (top: NSLayoutConstraint, leading: NSLayoutConstraint, bottom: NSLayoutConstraint, trailing: NSLayoutConstraint) {
         
         guard let superview = superview else { fatalError("Unable to add constraints, because the view has no superview") }
         
-        let topConstraint    = constrain(.Top, to: superview, .Top, plus: top)
-        let leadingConstraint   = constrain(.Leading, to: superview, .Leading, plus: leading)
-        let bottomConstraint = constrain(.Bottom, to: superview, .Bottom, plus: -bottom)
-        let trailingConstraint  = constrain(.Trailing, to: superview, .Trailing, plus: -trailing)
+        let topConstraint    = constrain(.top, to: superview, .top, plus: top)
+        let leadingConstraint   = constrain(.leading, to: superview, .leading, plus: leading)
+        let bottomConstraint = constrain(.bottom, to: superview, .bottom, plus: -bottom)
+        let trailingConstraint  = constrain(.trailing, to: superview, .trailing, plus: -trailing)
         
         return (topConstraint, leadingConstraint, bottomConstraint, trailingConstraint)
     }
@@ -413,12 +393,13 @@ extension UIView {
      
      - returns: self
      */
+    @discardableResult
     public func constrainWidth(to value: CGFloat,
-                             _ relation: NSLayoutRelation = .Equal,
+                             _ relation: NSLayoutRelation = .equal,
                        times multiplier: CGFloat = 1,
                     atPriority priority: UILayoutPriority = UILayoutPriorityRequired) -> Self
     {
-        constrain(.Width, relation, to: value, times: multiplier, atPriority: priority)
+        constrain(.width, relation, to: value, times: multiplier, atPriority: priority)
         return self
     }
     
@@ -432,12 +413,13 @@ extension UIView {
      
      - returns: self
      */
+    @discardableResult
     public func constrainHeight(to value: CGFloat,
-                              _ relation: NSLayoutRelation = .Equal,
+                              _ relation: NSLayoutRelation = .equal,
                         times multiplier: CGFloat = 1,
                      atPriority priority: UILayoutPriority = UILayoutPriorityRequired) -> Self
     {
-        constrain(.Height, relation, to: value, times: multiplier, atPriority: priority)
+        constrain(.height, relation, to: value, times: multiplier, atPriority: priority)
         return self
     }
     
@@ -453,14 +435,15 @@ extension UIView {
      
      - returns: self
      */
+    @discardableResult
     public func constrainWidth(to view: UIView,
-                           _ attribute: NSLayoutAttribute = .Width,
-                              relation: NSLayoutRelation = .Equal,
+                           _ attribute: NSLayoutAttribute = .width,
+                              relation: NSLayoutRelation = .equal,
                       times multiplier: CGFloat = 1,
                          plus constant: CGFloat = 0,
                    atPriority priority: UILayoutPriority = UILayoutPriorityRequired) -> Self
     {
-        constrain(.Width, relation, to: view, attribute, times: multiplier, plus: constant, atPriority: priority)
+        constrain(.width, relation, to: view, attribute, times: multiplier, plus: constant, atPriority: priority)
         return self
     }
     
@@ -476,14 +459,15 @@ extension UIView {
      
      - returns: self
      */
+    @discardableResult
     public func constrainHeight(to view: UIView,
-                            _ attribute: NSLayoutAttribute = .Height,
-                               relation: NSLayoutRelation = .Equal,
+                            _ attribute: NSLayoutAttribute = .height,
+                               relation: NSLayoutRelation = .equal,
                        times multiplier: CGFloat = 1,
                           plus constant: CGFloat = 0,
                     atPriority priority: UILayoutPriority = UILayoutPriorityRequired) -> Self
     {
-        constrain(.Height, relation, to: view, attribute, times: multiplier, plus: constant, atPriority: priority)
+        constrain(.height, relation, to: view, attribute, times: multiplier, plus: constant, atPriority: priority)
         return self
     }
     
@@ -499,14 +483,15 @@ extension UIView {
      
      - returns: self
      */
+    @discardableResult
     public func pinLeft(to view: UIView,
-                    _ attribute: NSLayoutAttribute = .Left,
-                       relation: NSLayoutRelation = .Equal,
+                    _ attribute: NSLayoutAttribute = .left,
+                       relation: NSLayoutRelation = .equal,
                times multiplier: CGFloat = 1,
                   plus constant: CGFloat = 0,
             atPriority priority: UILayoutPriority = UILayoutPriorityRequired) -> Self
     {
-        constrain(.Left, relation, to: view, attribute, times: multiplier, plus: constant, atPriority: priority)
+        constrain(.left, relation, to: view, attribute, times: multiplier, plus: constant, atPriority: priority)
         return self
     }
     
@@ -522,14 +507,15 @@ extension UIView {
      
      - returns: self
      */
+    @discardableResult
     public func pinRight(to view: UIView,
-                     _ attribute: NSLayoutAttribute = .Right,
-                        relation: NSLayoutRelation = .Equal,
+                     _ attribute: NSLayoutAttribute = .right,
+                        relation: NSLayoutRelation = .equal,
                 times multiplier: CGFloat = 1,
                    plus constant: CGFloat = 0,
              atPriority priority: UILayoutPriority = UILayoutPriorityRequired) -> Self
     {
-        constrain(.Right, relation, to: view, attribute, times: multiplier, plus: constant, atPriority: priority)
+        constrain(.right, relation, to: view, attribute, times: multiplier, plus: constant, atPriority: priority)
         return self
     }
     
@@ -545,14 +531,15 @@ extension UIView {
      
      - returns: self
      */
+    @discardableResult
     public func pinTop(to view: UIView,
-                   _ attribute: NSLayoutAttribute = .Top,
-                      relation: NSLayoutRelation = .Equal,
+                   _ attribute: NSLayoutAttribute = .top,
+                      relation: NSLayoutRelation = .equal,
               times multiplier: CGFloat = 1,
                  plus constant: CGFloat = 0,
            atPriority priority: UILayoutPriority = UILayoutPriorityRequired) -> Self
     {
-        constrain(.Top, relation, to: view, attribute, times: multiplier, plus: constant, atPriority: priority)
+        constrain(.top, relation, to: view, attribute, times: multiplier, plus: constant, atPriority: priority)
         return self
     }
     
@@ -568,14 +555,15 @@ extension UIView {
      
      - returns: self
      */
+    @discardableResult
     public func pinBottom(to view: UIView,
-                      _ attribute: NSLayoutAttribute = .Bottom,
-                         relation: NSLayoutRelation = .Equal,
+                      _ attribute: NSLayoutAttribute = .bottom,
+                         relation: NSLayoutRelation = .equal,
                  times multiplier: CGFloat = 1,
                     plus constant: CGFloat = 0,
               atPriority priority: UILayoutPriority = UILayoutPriorityRequired) -> Self
     {
-        constrain(.Bottom, relation, to: view, attribute, times: multiplier, plus: constant, atPriority: priority)
+        constrain(.bottom, relation, to: view, attribute, times: multiplier, plus: constant, atPriority: priority)
         return self
     }
     
@@ -591,14 +579,15 @@ extension UIView {
      
      - returns: self
      */
+    @discardableResult
     public func pinLeading(to view: UIView,
-                       _ attribute: NSLayoutAttribute = .Leading,
-                          relation: NSLayoutRelation = .Equal,
+                       _ attribute: NSLayoutAttribute = .leading,
+                          relation: NSLayoutRelation = .equal,
                   times multiplier: CGFloat = 1,
                      plus constant: CGFloat = 0,
                atPriority priority: UILayoutPriority = UILayoutPriorityRequired) -> Self
     {
-        constrain(.Leading, relation, to: view, attribute, times: multiplier, plus: constant, atPriority: priority)
+        constrain(.leading, relation, to: view, attribute, times: multiplier, plus: constant, atPriority: priority)
         return self
     }
     
@@ -614,14 +603,15 @@ extension UIView {
      
      - returns: self
      */
+    @discardableResult
     public func pinTrailing(to view: UIView,
-                        _ attribute: NSLayoutAttribute = .Trailing,
-                           relation: NSLayoutRelation = .Equal,
+                        _ attribute: NSLayoutAttribute = .trailing,
+                           relation: NSLayoutRelation = .equal,
                    times multiplier: CGFloat = 1,
                       plus constant: CGFloat = 0,
                 atPriority priority: UILayoutPriority = UILayoutPriorityRequired) -> Self
     {
-        constrain(.Trailing, relation, to: view, attribute, times: multiplier, plus: constant, atPriority: priority)
+        constrain(.trailing, relation, to: view, attribute, times: multiplier, plus: constant, atPriority: priority)
         return self
     }
     
@@ -637,14 +627,15 @@ extension UIView {
      
      - returns: self
      */
+    @discardableResult
     public func pinCenterX(to view: UIView,
-                       _ attribute: NSLayoutAttribute = .CenterX,
-                          relation: NSLayoutRelation = .Equal,
+                       _ attribute: NSLayoutAttribute = .centerX,
+                          relation: NSLayoutRelation = .equal,
                   times multiplier: CGFloat = 1,
                      plus constant: CGFloat = 0,
                atPriority priority: UILayoutPriority = UILayoutPriorityRequired) -> Self
     {
-        constrain(.CenterX, relation, to: view, attribute, times: multiplier, plus: constant, atPriority: priority)
+        constrain(.centerX, relation, to: view, attribute, times: multiplier, plus: constant, atPriority: priority)
         return self
     }
     
@@ -660,14 +651,15 @@ extension UIView {
      
      - returns: self
      */
+    @discardableResult
     public func pinCenterY(to view: UIView,
-                       _ attribute: NSLayoutAttribute = .CenterY,
-                          relation: NSLayoutRelation = .Equal,
+                       _ attribute: NSLayoutAttribute = .centerY,
+                          relation: NSLayoutRelation = .equal,
                   times multiplier: CGFloat = 1,
                      plus constant: CGFloat = 0,
                atPriority priority: UILayoutPriority = UILayoutPriorityRequired) -> Self
     {
-        constrain(.CenterY, relation, to: view, attribute, times: multiplier, plus: constant, atPriority: priority)
+        constrain(.centerY, relation, to: view, attribute, times: multiplier, plus: constant, atPriority: priority)
         return self
     }
     
@@ -677,22 +669,11 @@ extension UIView {
      - parameter axes: The axes on which to constrain self (variadic).
      - parameter priority: The layout priority for content hugging and compression (optional, defaults to `UILayoutPriorityRequired`)
      */
-    public func constrainSizeToFit(axes: UILayoutConstraintAxis..., priority: UILayoutPriority = UILayoutPriorityRequired) {
+    public func constrainSize(toFit axes: UILayoutConstraintAxis..., priority: UILayoutPriority = UILayoutPriorityRequired) {
         axes.forEach {
-            setContentHuggingPriority(priority, forAxis: $0)
-            setContentCompressionResistancePriority(priority, forAxis: $0)
+            setContentHuggingPriority(priority, for: $0)
+            setContentCompressionResistancePriority(priority, for: $0)
         }
-    }
-    
-    /**
-     Add self to a superview.
-     
-     - parameter superview: The superview in which to add self.
-     */
-    @available(*, deprecated=1.2.0, message="use 'add(toSuperview:)'")
-    public func addToSuperview(superview: UIView) -> Self {
-        superview.addSubview(self)
-        return self
     }
     
     /**
@@ -700,7 +681,7 @@ extension UIView {
      
      - parameter toSuperview: The superview in which to add self.
      */
-    @nonobjc
+    @nonobjc @discardableResult
     public func add(toSuperview superview: UIView) -> Self {
         superview.addSubview(self)
         return self
@@ -711,7 +692,7 @@ extension UIView {
      
      - parameter toStackview: The stackview in which to add self as an arranged subview.
      */
-    @available(iOS 9.0, *)
+    @available(iOS 9.0, *) @discardableResult
     public func add(toStackview stackview: UIStackView) -> Self {
         stackview.addArrangedSubview(self)
         return self
@@ -804,10 +785,10 @@ extension UIView {
     
     - author: Richard Turton http://commandshift.co.uk/blog/2016/03/13/better-snapshots/
     */
-    public func addSnapshotOfView(view: UIView, afterUpdates: Bool = false) -> UIView {
-        let snapshot = view.snapshotViewAfterScreenUpdates(afterUpdates)
-        self.addSubview(snapshot)
-        snapshot.frame = convertRect(view.bounds, fromView: view)
+    @nonobjc public func addSnapshot(of view: UIView, afterUpdates: Bool = false) -> UIView? {
+        let snapshot = view.snapshotView(afterScreenUpdates: afterUpdates)
+        snapshot?.add(toSuperview: self)
+        snapshot?.frame = convert(view.bounds, from: view)
         return snapshot
     }
     
@@ -822,10 +803,9 @@ extension UIView {
      
      - author: Richard Turton http://commandshift.co.uk/blog/2016/03/13/better-snapshots/
      */
-    public func addSnapshotOfViews(views: [UIView], afterUpdates: Bool = false) -> [UIView] {
-        return views.map { addSnapshotOfView($0, afterUpdates: afterUpdates) }
+    @nonobjc public func addSnapshot(of views: [UIView], afterUpdates: Bool = false) -> [UIView] {
+        return views.flatMap { addSnapshot(of: $0, afterUpdates: afterUpdates) }
     }
-
 
 }
 

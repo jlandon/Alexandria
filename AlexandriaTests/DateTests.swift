@@ -40,18 +40,15 @@ class DateTests: XCTestCase {
     }
     
     func testTimeFormatting() {
-        let calendar = NSCalendar.currentCalendar()
+        let calendar = Calendar.current()
         
-        let components = NSDateComponents()
-        components.hour = 9
-        components.minute = 41
-        components.second = 0
+        let components = DateComponents.init(hour: 9, minute: 41, second: 0)
         
-        let date = calendar.dateFromComponents(components)
+        let date = calendar.date(from: components)
         
         XCTAssertEqual(date?.time(), "09:41", "Times are not equal")
-        XCTAssertEqual(date?.time(.HourMinutePeriod), "09:41 AM", "Times are not equal")
-        XCTAssertEqual(date?.time(.HourMinuteSecondMilitary), "09:41:00", "Times are not equal")
-        XCTAssertEqual(date?.time(.HourMinuteSecondPeriod), "09:41:00 AM", "Times are not equal")
+        XCTAssertEqual(date?.time(format: .hourMinutePeriod), "09:41 AM", "Times are not equal")
+        XCTAssertEqual(date?.time(format: .hourMinuteSecondMilitary), "09:41:00", "Times are not equal")
+        XCTAssertEqual(date?.time(format: .hourMinuteSecondPeriod), "09:41:00 AM", "Times are not equal")
     }
 }

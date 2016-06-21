@@ -31,47 +31,7 @@ import UIKit
 
 extension CGContext {
     /// The current graphics context
-    public static func currentContext() -> CGContext? {
+    public static var current: CGContext? {
         return UIGraphicsGetCurrentContext()
     }
-}
-
-@available(iOS 9.0, *)
-extension CGColorSpace {
-    
-    /// CGColorSpace for the generic CMYK color space.
-    public static let GenericCMYK = CGColorSpaceCreateWithName(kCGColorSpaceGenericCMYK)
-    
-    /// CGColorSpace for the Adobe RGB (1998) color space.
-    public static let AdobeRGB1998 = CGColorSpaceCreateWithName(kCGColorSpaceAdobeRGB1998)
-    
-    /// CGColorSpace for the SRGB color space.
-    public static let SRGB = CGColorSpaceCreateWithName(kCGColorSpaceSRGB)
-    
-    /// CGColorSpace for the generic gray color space with a gamma value of 2.2.
-    public static let GenericGrayGamma2_2 = CGColorSpaceCreateWithName(kCGColorSpaceGenericGrayGamma2_2)
-    
-    /// CGColorSpace for the generic gray color space.
-    public static let GenericGray = CGColorSpaceCreateWithName(kCGColorSpaceGenericGray)
-    
-    /// CGColorSpace for the generic RGB color space.
-    public static let GenericRGB = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB)
-    
-    /// CGColorSpace for the generic linear RGB color space.
-    public static let GenericRGBLinear = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGBLinear)
-    
-    /// CGColorSpace for the generic XYZ color space.
-    public static let GenericXYZ = CGColorSpaceCreateWithName(kCGColorSpaceGenericXYZ)
-    
-    /// CGColorSpace for the linear ACESCG color space.
-    public static let ACESCGLinear = CGColorSpaceCreateWithName(kCGColorSpaceACESCGLinear)
-    
-    /// CGColorSpace for the ITUR_709 color space.
-    public static let ITUR_709 = CGColorSpaceCreateWithName(kCGColorSpaceITUR_709)
-    
-    /// CGColorSpace for the ITUR_2020 color space.
-    public static let ITUR_2020 = CGColorSpaceCreateWithName(kCGColorSpaceITUR_2020)
-    
-    /// CGColorSpace for the ROMMRGB color space.
-    public static let ROMMRGB = CGColorSpaceCreateWithName(kCGColorSpaceROMMRGB)
 }

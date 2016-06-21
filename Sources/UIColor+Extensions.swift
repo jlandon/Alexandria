@@ -89,12 +89,12 @@ extension UIColor {
     public convenience init(hexString: String, alpha: CGFloat = 1) {
         var hexString = hexString
         if hexString.hasPrefix("#") {
-            hexString = hexString.substringFromIndex(hexString.startIndex.advancedBy(1))
+            hexString = hexString.substring(from: hexString.index(after: hexString.startIndex))
         }
-        let scanner = NSScanner(string: hexString)
+        let scanner = Scanner(string: hexString)
         var hexEquivalent: UInt32 = 0
         
-        if !scanner.scanHexInt(&hexEquivalent) {
+        if !scanner.scanHexInt32(&hexEquivalent) {
             assertionFailure("hexString did not contain a valid hex value")
         }
         
@@ -112,7 +112,7 @@ extension UIColor {
     }
     
     /// Returns a random UIColor with hue, saturation, and brightness ranging from 0.5 to 1.0.
-    public static func randomColor() -> UIColor {
+    public static func random() -> UIColor {
         let component = { CGFloat(arc4random() % 128)/256.0 + 0.5 }
         return UIColor(hue: component(), saturation: component(), brightness: component(), alpha: 1)
     }
@@ -201,8 +201,8 @@ extension UIColor {
      Returns an alpha-adjusted UIColor.
      - returns: A UIColor with an adjust alpha component (shorthand for `colorWithAlphaComponent`).
      */
-    public final func alpha(alpha: CGFloat) -> UIColor {
-        return colorWithAlphaComponent(alpha)
+    public final func alpha(_ alpha: CGFloat) -> UIColor {
+        return withAlphaComponent(alpha)
     }
     
     /**
@@ -210,7 +210,7 @@ extension UIColor {
      - parameter hex: The color value.
      - returns: A UIColor initialized with the given hex value.
      */
-    public static func hex(hex: UInt32, alpha: CGFloat = 1) -> UIColor {
+    public static func hex(_ hex: UInt32, alpha: CGFloat = 1) -> UIColor {
         return UIColor(hex: hex, alpha: alpha)
     }
 }
@@ -358,7 +358,7 @@ private func convert(hsl h: CGFloat, _ s: CGFloat, _ l: CGFloat) -> (r: CGFloat,
     }
     else {
         let c = (1 - abs(2 * l - 1)) * s
-        let x = c * (1 - abs(h * 6 % 2 - 1))
+        let x = c * (1 - abs((h * 6).truncatingRemainder(dividingBy: 2) - 1))
         let m = l - c/2
         
         switch h * 6 {
@@ -413,7 +413,7 @@ private func convert(rgb r: CGFloat, _ g: CGFloat, _ b: CGFloat) -> (h: CGFloat,
 private func convert(hsb h: CGFloat, _ s: CGFloat, _ b: CGFloat) -> (r: CGFloat, g: CGFloat, b: CGFloat) {
     
     let c = b * s
-    let x = c * (1 - abs((h * 6) % 2 - 1))
+    let x = c * (1 - abs((h * 6).truncatingRemainder(dividingBy: 2) - 1))
     let m = b - c
     
     var r, g, b: CGFloat
@@ -432,7 +432,7 @@ private func convert(hsb h: CGFloat, _ s: CGFloat, _ b: CGFloat) -> (r: CGFloat,
 }
 
 /// Converts UInt32 to RGB
-private func convert(hex hex: UInt32) -> (r: CGFloat, g: CGFloat, b: CGFloat) {
+private func convert(hex: UInt32) -> (r: CGFloat, g: CGFloat, b: CGFloat) {
     let r = CGFloat((hex >> 16) & 0xFF)
     let g = CGFloat((hex >> 8) & 0xFF)
     let b = CGFloat(hex & 0xFF)
@@ -472,86 +472,3 @@ private func convert(cmyk c: CGFloat, _ m: CGFloat, _ y: CGFloat, _ k: CGFloat) 
 private func +(lhs: (CGFloat, CGFloat, CGFloat), rhs: CGFloat) -> (CGFloat, CGFloat, CGFloat) {
     return (lhs.0 + rhs, lhs.1 + rhs, lhs.2 + rhs)
 }
-
-// MARK: - Deprecated
-
-extension UIColor {
-    /**
-     Lightens the given color by the given percentage.
-     - parameter amount: The percentage to lighten the color by. Valid values are from 0.0 to 1.0.
-     - returns: The lightened color.
-     */
-    @available(*, deprecated=1.2.0, message="use 'lighten(by:)'")
-    public final func lighterColorByPercentage(amount: CGFloat) -> UIColor {
-        var hue: CGFloat = 1.0
-        var saturation: CGFloat = 1.0
-        var brightness: CGFloat = 1.0
-        var alpha: CGFloat = 1.0
-        
-        self.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
-        
-        return UIColor(hue: hue, saturation: saturation, brightness: min(brightness * (1 + amount), 1.0), alpha: alpha)
-    }
-    
-    /**
-     Darkens the given color by the given percentage.
-     - parameter amount: The percentage to darken the color by. Valid values are from 0.0 to 1.0.
-     - returns: The darkened color.
-     */
-    @available(*, deprecated=1.2.0, message="use 'darken(by:)'")
-    public final func darkerColorByPercentage(amount: CGFloat) -> UIColor {
-        var hue: CGFloat = 1.0
-        var saturation: CGFloat = 1.0
-        var brightness: CGFloat = 1.0
-        var alpha: CGFloat = 1.0
-        
-        self.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
-        
-        return UIColor(hue: hue, saturation: saturation, brightness: brightness * (1 - amount), alpha: alpha)
-    }
-    
-    /**
-     Returns the RGBA (red, green, blue, alpha) components.
-     - returns: The RGBA components as a tuple (r, g, b, a).
-     */
-    @available(*, unavailable, renamed="rgba")
-    public final var RGBAComponents: (r: CGFloat, g: CGFloat, b: CGFloat, a: CGFloat) {
-        return rgba
-    }
-    
-    /**
-     Returns the red component.
-     - returns: The red component as a CGFloat.
-     */
-    @available(*, deprecated=1.2.0, message="use 'rgba.r'")
-    public final var redComponent: CGFloat {
-        return rgba.r
-    }
-    
-    /**
-     Returns the green component.
-     - returns: The green component as a CGFloat.
-     */
-    @available(*, deprecated=1.2.0, message="use 'rgba.g'")
-    public final var greenComponent: CGFloat {
-        return rgba.g
-    }
-    
-    /**
-     Returns the blue component.
-     - returns: The blue component as a CGFloat.
-     */
-    @available(*, deprecated=1.2.0, message="use 'rgba.b'")
-    public final var blueComponent: CGFloat {
-        return rgba.b
-    }
-    
-    /**
-     Returns the alpha component.
-     - returns: The alpha component as a CGFloat.
-     */
-    @available(*, deprecated=1.2.0, message="use 'rgba.a'")
-    public final var alphaComponent: CGFloat {
-        return rgba.a
-    }
-}   
