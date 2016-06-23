@@ -93,12 +93,12 @@ private struct AssociatedKeys {
     static var ActionName = "action"
 }
 
-@objc protocol ActionSelectable {
+@objc public protocol ActionSelectable {
     func handleAction()
 }
 
 extension UIControl: ActionSelectable, Actionable {
-    func handleAction() {
+    public func handleAction() {
         guard let action = self.action else {
             fatalError("\n" +
                        "Unsupported UIControl Type: \(self.dynamicType). Add the following extension to properly recall closure:" +
@@ -117,12 +117,12 @@ extension UIControl: ActionSelectable, Actionable {
 
 // MARK: - UIKit UIControl Subclasses
 
-extension UIButton           { override func handleAction() { self.action?.action(self) } }
-extension UIDatePicker       { override func handleAction() { self.action?.action(self) } }
-extension UIPageControl      { override func handleAction() { self.action?.action(self) } }
-extension UIRefreshControl   { override func handleAction() { self.action?.action(self) } }
-extension UISegmentedControl { override func handleAction() { self.action?.action(self) } }
-extension UISlider           { override func handleAction() { self.action?.action(self) } }
-extension UIStepper          { override func handleAction() { self.action?.action(self) } }
-extension UISwitch           { override func handleAction() { self.action?.action(self) } }
-extension UITextField        { override func handleAction() { self.action?.action(self) } }
+extension UIButton           { override public func handleAction() { self.action?.action(self) } }
+extension UIDatePicker       { override public func handleAction() { self.action?.action(self) } }
+extension UIPageControl      { override public func handleAction() { self.action?.action(self) } }
+extension UIRefreshControl   { override public func handleAction() { self.action?.action(self) } }
+extension UISegmentedControl { override public func handleAction() { self.action?.action(self) } }
+extension UISlider           { override public func handleAction() { self.action?.action(self) } }
+extension UIStepper          { override public func handleAction() { self.action?.action(self) } }
+extension UISwitch           { override public func handleAction() { self.action?.action(self) } }
+extension UITextField        { override public func handleAction() { self.action?.action(self) } }
