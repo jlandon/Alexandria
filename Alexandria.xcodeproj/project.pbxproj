@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		38ADD9CC1D1C246F0058AC28 /* UIControl+Actionable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38ADD9CB1D1C246F0058AC28 /* UIControl+Actionable.swift */; };
 		796510991C6F4E5C00E01F89 /* Alexandria.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 814C71F41B69DD0900BB4DBD /* Alexandria.framework */; };
 		796510A01C6F4F2F00E01F89 /* StringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81253BDB1C69962E0054D52C /* StringTests.swift */; };
 		796510A11C6F4F2F00E01F89 /* CollectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81253BDD1C69A1D00054D52C /* CollectionTests.swift */; };
@@ -61,6 +62,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		38ADD9CB1D1C246F0058AC28 /* UIControl+Actionable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIControl+Actionable.swift"; sourceTree = "<group>"; };
 		796510941C6F4E5C00E01F89 /* AlexandriaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AlexandriaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		79B152491D01C5FC009E850E /* IntTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntTests.swift; sourceTree = "<group>"; };
 		79B92E171C73369C0050D55B /* Array+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 				79B92E371C73369C0050D55B /* UITableView+Extensions.swift */,
 				79B92E381C73369C0050D55B /* UIView+Extensions.swift */,
 				79B92E391C73369C0050D55B /* UIViewController+Extensions.swift */,
+				38ADD9CB1D1C246F0058AC28 /* UIControl+Actionable.swift */,
 			);
 			path = Sources;
 			sourceTree = SOURCE_ROOT;
@@ -383,6 +386,7 @@
 				79B92E521C73369C0050D55B /* UIGestureRecognizer+Extensions.swift in Sources */,
 				79B92E411C73369C0050D55B /* CoreGraphics+Extensions.swift in Sources */,
 				79B92E551C73369C0050D55B /* UIScreen+Extensions.swift in Sources */,
+				38ADD9CC1D1C246F0058AC28 /* UIControl+Actionable.swift in Sources */,
 				79B92E571C73369C0050D55B /* UISplitViewController+Extensions.swift in Sources */,
 				79B92E451C73369C0050D55B /* UIImage+Effects.swift in Sources */,
 				79B92E491C73369C0050D55B /* NSDate+Extensions.swift in Sources */,
