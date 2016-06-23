@@ -27,9 +27,9 @@
 
 protocol Actionable: NSObjectProtocol {
     
-    init(actionClosure: Self -> Void)
-    init(frame: CGRect, actionClosure: Self -> Void)
-    func addTarget(controlEvents controlEvents: UIControlEvents, actionClosure: Self -> Void)
+    init(actionClosure: (Self) -> Void)
+    init(frame: CGRect, actionClosure: (Self) -> Void)
+    func addTarget(controlEvents controlEvents: UIControlEvents, actionClosure: (Self) -> Void)
     
 }
 
@@ -47,7 +47,7 @@ extension Actionable where Self : UIControl {
      
      - returns: An initialized UIControl.
      */
-    init(actionClosure: Self -> Void) {
+    init(actionClosure: (Self) -> Void) {
         self.init()
         action = Action(action: actionClosure)
         addTarget(self, action: #selector(handleAction), forControlEvents: .TouchUpInside)
@@ -62,7 +62,7 @@ extension Actionable where Self : UIControl {
      
      - returns: An initialized UIControl.
      */
-    init(frame: CGRect, actionClosure: Self -> Void) {
+    init(frame: CGRect, actionClosure: (Self) -> Void) {
         self.init(frame: frame)
         action = Action(action: actionClosure)
         addTarget(self, action: #selector(handleAction), forControlEvents: .TouchUpInside)
@@ -75,16 +75,16 @@ extension Actionable where Self : UIControl {
      - parameter controlEvents: The UIControlEvents upon which to execute this action.
      - parameter action:        The action closure to execute.
      */
-    func addTarget(controlEvents controlEvents: UIControlEvents, actionClosure: Self -> Void) {
+    func addTarget(controlEvents controlEvents: UIControlEvents, actionClosure: (Self) -> Void) {
         action = Action(action: actionClosure)
         addTarget(self, action: #selector(handleAction), forControlEvents: controlEvents)
     }
 }
 
 private class Action<T: ActionSelectable> {
-    var action: T -> Void
+    var action: (T) -> Void
     
-    init(action: T -> Void) {
+    init(action: (T) -> Void) {
         self.action = action
     }
 }
