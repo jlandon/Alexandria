@@ -25,7 +25,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-protocol Actionable: NSObjectProtocol {
+public protocol Actionable: NSObjectProtocol {
     
     init(actionClosure: (Self) -> Void)
     init(frame: CGRect, actionClosure: (Self) -> Void)
@@ -33,7 +33,7 @@ protocol Actionable: NSObjectProtocol {
     
 }
 
-extension Actionable where Self : UIControl {
+public extension Actionable where Self : UIControl {
     
     private var action: Action<Self>? {
         set { objc_setAssociatedObject(self, &AssociatedKeys.ActionName, newValue, .OBJC_ASSOCIATION_RETAIN) }
@@ -47,7 +47,7 @@ extension Actionable where Self : UIControl {
      
      - returns: An initialized UIControl.
      */
-    init(actionClosure: (Self) -> Void) {
+    public init(actionClosure: (Self) -> Void) {
         self.init()
         action = Action(action: actionClosure)
         addTarget(self, action: #selector(handleAction), forControlEvents: .TouchUpInside)
@@ -62,7 +62,7 @@ extension Actionable where Self : UIControl {
      
      - returns: An initialized UIControl.
      */
-    init(frame: CGRect, actionClosure: (Self) -> Void) {
+    public init(frame: CGRect, actionClosure: (Self) -> Void) {
         self.init(frame: frame)
         action = Action(action: actionClosure)
         addTarget(self, action: #selector(handleAction), forControlEvents: .TouchUpInside)
@@ -75,7 +75,7 @@ extension Actionable where Self : UIControl {
      - parameter controlEvents: The UIControlEvents upon which to execute this action.
      - parameter action:        The action closure to execute.
      */
-    func addTarget(controlEvents controlEvents: UIControlEvents, actionClosure: (Self) -> Void) {
+    public func addTarget(controlEvents controlEvents: UIControlEvents, actionClosure: (Self) -> Void) {
         action = Action(action: actionClosure)
         addTarget(self, action: #selector(handleAction), forControlEvents: controlEvents)
     }
