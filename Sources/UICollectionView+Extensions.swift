@@ -49,7 +49,7 @@ extension UICollectionView {
      collectionView.registerCell(CustomCell)
      ```
      */
-    public func registerCell<T: UICollectionViewCell>(type: T.Type = T.self, withIdentifier reuseIdentifier: String = String(T)) {
+    public func registerCell<T: UICollectionViewCell>(_ type: T.Type, withIdentifier reuseIdentifier: String = String(T)) {
         register(T.self, forCellWithReuseIdentifier: reuseIdentifier)
     }
     
@@ -74,7 +74,7 @@ extension UICollectionView {
      let cell = collectionView.dequeueReusableCell(CustomCell.self, forIndexPath: indexPath)
      ```
      */
-    public func dequeueCell<T: UICollectionViewCell>(type: T.Type = T.self,
+    public func dequeueCell<T: UICollectionViewCell>(_ type: T.Type = T.self,
                            withIdentifier reuseIdentifier: String = String(T),
                                             for indexPath: IndexPath) -> T
     {
@@ -153,7 +153,7 @@ extension UICollectionView {
      collectionView.registerFooter(CustomFooter)
      ```
      */
-    public func registerFooter<T: UICollectionReusableView>(_ type: T.Type = T.self, withIdentifier reuseIdentifier: String = String(T)) {
+    public func registerFooter<T: UICollectionReusableView>(_ type: T.Type, withIdentifier reuseIdentifier: String = String(T)) {
         register(T.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: reuseIdentifier)
     }
     
@@ -178,7 +178,7 @@ extension UICollectionView {
      let footerView = collectionView.dequeueReusableFooter(CustomFooter.self, forIndexPath: indexPath)
      ```
      */
-    public func dequeueFooter<T: UICollectionReusableView>(_ type: T.Type,
+    public func dequeueFooter<T: UICollectionReusableView>(_ type: T.Type = T.self,
                                    withIdentifier reuseIdentifier: String = String(T),
                                                     for indexPath: IndexPath) -> T
     {
