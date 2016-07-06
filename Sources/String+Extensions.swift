@@ -259,7 +259,7 @@ extension String {
         if #available(iOS 9.0, *) {
             return localizedStandardContains(string)
         }
-        return range(of: string, options: [.caseInsensitiveSearch, .diacriticInsensitiveSearch], locale: .current()) != nil
+        return range(of: string, options: [.caseInsensitive, .diacriticInsensitive], locale: .current) != nil
     }
     
     /**

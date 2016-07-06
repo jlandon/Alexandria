@@ -65,10 +65,10 @@ extension NSMutableAttributedString {
         }
 
         // Trim trailing characters from character set.
-        range = (string as NSString).rangeOfCharacter(from: set, options: .backwardsSearch)
+        range = (string as NSString).rangeOfCharacter(from: set, options: .backwards)
         while range.length != 0 && NSMaxRange(range) == length {
             replaceCharacters(in: range, with: "")
-            range = (string as NSString).rangeOfCharacter(from: set, options: .backwardsSearch)
+            range = (string as NSString).rangeOfCharacter(from: set, options: .backwards)
         }
     }
 

@@ -125,7 +125,7 @@ extension Date {
      - returns: A Date value initialized with the provided month, day, and year
      */
     public init?(month: Int, day: Int, year: Int) {
-        let calendar = Calendar.autoupdatingCurrent()
+        let calendar = Calendar.autoupdatingCurrent
         let components = DateComponents(year: year, month: month, day: day)
         
         if let date = calendar.date(from: components) {
@@ -139,7 +139,7 @@ extension Date {
     
     /// The current year
     public static var currentYear: Int {
-        let calendar = Calendar.autoupdatingCurrent()
+        let calendar = Calendar.autoupdatingCurrent
         let components = calendar.components(.year, from: Date())
         
         return components.year ?? 0
@@ -147,7 +147,7 @@ extension Date {
     
     /// The current month
     public static var currentMonth: Int {
-        let calendar = Calendar.autoupdatingCurrent()
+        let calendar = Calendar.autoupdatingCurrent
         let components = calendar.components(.month, from: Date())
         
         return components.month ?? 0
@@ -155,7 +155,7 @@ extension Date {
     
     /// The current day
     public static var currentDay: Int {
-        let calendar = Calendar.autoupdatingCurrent()
+        let calendar = Calendar.autoupdatingCurrent
         let components = calendar.components(.day, from: Date())
         
         return components.day ?? 0
@@ -163,7 +163,7 @@ extension Date {
     
     /// The current hour
     public static var currentHour: Int {
-        let calendar = Calendar.autoupdatingCurrent()
+        let calendar = Calendar.autoupdatingCurrent
         let components = calendar.components(.hour, from: Date())
         
         return components.hour ?? 0
@@ -171,7 +171,7 @@ extension Date {
     
     /// The current minute
     public static var currentMinute: Int {
-        let calendar = Calendar.autoupdatingCurrent()
+        let calendar = Calendar.autoupdatingCurrent
         let components = calendar.components(.minute, from: Date())
         
         return components.minute ?? 0
@@ -179,7 +179,7 @@ extension Date {
     
     /// The current second
     public static var currentSecond: Int {
-        let calendar = Calendar.autoupdatingCurrent()
+        let calendar = Calendar.autoupdatingCurrent
         let components = calendar.components(.second, from: Date())
         
         return components.second ?? 0
@@ -311,6 +311,6 @@ extension Date {
     }
     
     private var components: DateComponents {
-        return Calendar.autoupdatingCurrent().components(allCalendarComponents, from: self)
+        return Calendar.autoupdatingCurrent.components(allCalendarComponents, from: self)
     }
 }

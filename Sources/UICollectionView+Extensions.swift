@@ -49,7 +49,7 @@ extension UICollectionView {
      collectionView.registerCell(CustomCell)
      ```
      */
-    public func registerCell<T: UICollectionViewCell>(_ type: T.Type, withIdentifier reuseIdentifier: String = String(T)) {
+    public func registerCell<T: UICollectionViewCell>(_ type: T.Type, withIdentifier reuseIdentifier: String = String(T.self)) {
         register(T.self, forCellWithReuseIdentifier: reuseIdentifier)
     }
     
@@ -75,7 +75,7 @@ extension UICollectionView {
      ```
      */
     public func dequeueCell<T: UICollectionViewCell>(_ type: T.Type = T.self,
-                           withIdentifier reuseIdentifier: String = String(T),
+                           withIdentifier reuseIdentifier: String = String(T.self),
                                             for indexPath: IndexPath) -> T
     {
         return dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! T
@@ -101,7 +101,7 @@ extension UICollectionView {
      collectionView.registerHeader(CustomHeader)
      ```
      */
-    public func registerHeader<T: UICollectionReusableView>(_ type: T.Type, withIdentifier reuseIdentifier: String = String(T)) {
+    public func registerHeader<T: UICollectionReusableView>(_ type: T.Type, withIdentifier reuseIdentifier: String = String(T.self)) {
         register(T.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: reuseIdentifier)
     }
     
@@ -127,7 +127,7 @@ extension UICollectionView {
      ```
      */
     public func dequeueHeader<T: UICollectionReusableView>(_ type: T.Type = T.self,
-                                   withIdentifier reuseIdentifier: String = String(T),
+                                   withIdentifier reuseIdentifier: String = String(T.self),
                                                     for indexPath: IndexPath) -> T
     {
         return dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: reuseIdentifier, for: indexPath) as! T
@@ -153,7 +153,7 @@ extension UICollectionView {
      collectionView.registerFooter(CustomFooter)
      ```
      */
-    public func registerFooter<T: UICollectionReusableView>(_ type: T.Type, withIdentifier reuseIdentifier: String = String(T)) {
+    public func registerFooter<T: UICollectionReusableView>(_ type: T.Type, withIdentifier reuseIdentifier: String = String(T.self)) {
         register(T.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: reuseIdentifier)
     }
     
@@ -179,7 +179,7 @@ extension UICollectionView {
      ```
      */
     public func dequeueFooter<T: UICollectionReusableView>(_ type: T.Type = T.self,
-                                   withIdentifier reuseIdentifier: String = String(T),
+                                   withIdentifier reuseIdentifier: String = String(T.self),
                                                     for indexPath: IndexPath) -> T
     {
         return dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter, withReuseIdentifier: reuseIdentifier, for: indexPath) as! T
@@ -255,13 +255,11 @@ extension UICollectionView {
         
         assertIsValid(indexPath: indexPath)
         
-        guard let item = indexPath.item else { return nil }
-        
         let lastItem = numberOfItems(inSection: indexPath.section)
-        if item == lastItem  {
+        if indexPath.item == lastItem  {
             return IndexPath(item: 0, section: indexPath.section + 1)
         } else {
-            return IndexPath(item: item + 1, section: indexPath.section)
+            return IndexPath(item: indexPath.item + 1, section: indexPath.section)
         }
     }
     
@@ -280,13 +278,11 @@ extension UICollectionView {
         
         assertIsValid(indexPath: indexPath)
         
-        guard let item = indexPath.item else { return nil }
-        
-        if item == 0 {
+        if indexPath.item == 0 {
             let lastItem = numberOfItems(inSection: indexPath.section - 1)
             return IndexPath(item: lastItem, section: indexPath.section - 1)
         } else {
-            return IndexPath(item: item - 1, section: indexPath.section)
+            return IndexPath(item: indexPath.item - 1, section: indexPath.section)
         }
     }
     

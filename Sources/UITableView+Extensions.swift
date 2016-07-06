@@ -46,7 +46,7 @@ extension UITableView {
      tableView.registerCell(CustomCell)
      ```
      */
-    public func registerCell<T: UITableViewCell>(_ type: T.Type, withIdentifier reuseIdentifier: String = String(T)) {
+    public func registerCell<T: UITableViewCell>(_ type: T.Type, withIdentifier reuseIdentifier: String = String(T.self)) {
         register(T.self, forCellReuseIdentifier: reuseIdentifier)
     }
     
@@ -70,7 +70,7 @@ extension UITableView {
      let cell = tableView.dequeueReusableCell(CustomCell)
      ```
      */
-    public func dequeueCell<T: UITableViewCell>(_ type: T.Type = T.self, withIdentifier reuseIdentifier: String = String(T)) -> T {
+    public func dequeueCell<T: UITableViewCell>(_ type: T.Type = T.self, withIdentifier reuseIdentifier: String = String(T.self)) -> T {
         return dequeueReusableCell(withIdentifier: reuseIdentifier) as! T
     }
     
@@ -96,7 +96,7 @@ extension UITableView {
      ```
      */
     public func dequeueCell<T: UITableViewCell>(_ type: T.Type = T.self,
-                      withIdentifier reuseIdentifier: String = String(T),
+                      withIdentifier reuseIdentifier: String = String(T.self),
                                        for indexPath: IndexPath) -> T
     {
         return dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! T

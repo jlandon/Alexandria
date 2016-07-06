@@ -27,15 +27,15 @@
 
 import UIKit
 
-private class CAAnimationDelegate: NSObject {
+private final class AnimationDelegate: NSObject, CAAnimationDelegate {
     
     private var completion: (Bool) -> Void
     
     init(completion: (Bool) -> Void) {
         self.completion = completion
     }
-    
-    override func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+
+    private func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
         completion(flag)
     }
 }
@@ -50,7 +50,7 @@ extension CALayer {
     - parameter completion: A closure that is executed upon completion of the animation.
     */
     public func add(_ animation: CAAnimation, forKey key: String?, withCompletion completion: (Bool) -> Void) {
-        animation.delegate = CAAnimationDelegate(completion: completion)
+        animation.delegate = AnimationDelegate(completion: completion)
         add(animation, forKey: key)
     }
 }
