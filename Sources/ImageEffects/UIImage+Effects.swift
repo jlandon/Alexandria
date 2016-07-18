@@ -302,7 +302,7 @@ public extension UIImage {
         outputContext?.draw(in: imageRect, image: cgImage)
         
         // Draw effect image.
-        if let effectImage = effectImage?.cgImage where hasBlur {
+        if let effectImage = effectImage?.cgImage, hasBlur {
             outputContext?.saveGState()
             if let image = maskImage?.cgImage {
                 outputContext?.clipToMask(imageRect, mask: image)

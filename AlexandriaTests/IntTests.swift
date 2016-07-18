@@ -41,18 +41,18 @@ class IntTests: XCTestCase {
     
 
     func testToAbbreviatedString() {
-        XCTAssertEqual(Int(598).toAbbreviatedString, "598")
-        XCTAssertEqual(Int(-999).toAbbreviatedString, "-999")
-        XCTAssertEqual(Int(1000).toAbbreviatedString, "1K")
-        XCTAssertEqual(Int(-1284).toAbbreviatedString, "-1.3K")
-        XCTAssertEqual(Int(9940).toAbbreviatedString, "9.9K")
-        XCTAssertEqual(Int(9980).toAbbreviatedString, "10K")
-        XCTAssertEqual(Int(39900).toAbbreviatedString, "39.9K")
-        XCTAssertEqual(Int(99880).toAbbreviatedString, "99.9K")
-        XCTAssertEqual(Int(399880).toAbbreviatedString, "0.4M")
-        XCTAssertEqual(Int(999898).toAbbreviatedString, "1M")
-        XCTAssertEqual(Int(999999).toAbbreviatedString, "1M")
-        XCTAssertEqual(Int(1456384).toAbbreviatedString, "1.5M")
-        XCTAssertEqual(Int(12383474).toAbbreviatedString, "12.4M")
+        XCTAssertEqual(Int(598).abbreviatedString, "598")
+        XCTAssertEqual(Int(-999).abbreviatedString, "-999")
+        XCTAssertEqual(Int(1000).abbreviatedString, "1K")
+        XCTAssertEqual(Int(-1284).abbreviatedString, "-1.3K")
+        XCTAssertEqual(Int(9940).abbreviatedString, "9.9K")
+        XCTAssertEqual(Int(9980).abbreviatedString, "10K")
+        XCTAssertEqual(Int(39900).abbreviatedString, "39.9K")
+        XCTAssertEqual(Int(99880).abbreviatedString, "99.9K")
+        XCTAssertEqual(Int(399880).abbreviatedString, "0.4M")
+        XCTAssertEqual(Int(999898).abbreviatedString, "1M")
+        XCTAssertEqual(Int(999999).abbreviatedString, "1M")
+        XCTAssertEqual(Int(1456384).abbreviatedString, "1.5M")
+        XCTAssertEqual(Int(12383474).abbreviatedString, "12.4M")
     }
 }

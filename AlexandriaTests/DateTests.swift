@@ -40,7 +40,7 @@ class DateTests: XCTestCase {
     }
     
     func testTimeFormatting() {
-        let calendar = Calendar.current()
+        let calendar = Calendar.current
         
         let components = DateComponents.init(hour: 9, minute: 41, second: 0)
         
