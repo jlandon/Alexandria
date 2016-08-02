@@ -41,19 +41,19 @@ class ColorTests: XCTestCase {
     }
 
     func testHexInitializer() {
-        XCTAssertEqual(UIColor(hex: 0xFF0000), UIColor.red(), "Colors not equal")
-        XCTAssertEqual(UIColor(hexString: "#00FF00"), UIColor.green(), "Colors not equal")
-        XCTAssertEqual(UIColor(hexString: "0000FF"), UIColor.blue(), "Colors not equal")
-        XCTAssertEqual(UIColor(hue: 0, saturation: 1, lightness: 0.5), UIColor.red(), "Colors not equal")
-        XCTAssertEqual(UIColor(cyan: 0, magenta: 1, yellow: 1, key: 0), UIColor.red(), "Colors not equal")
+        XCTAssertEqual(UIColor(hex: 0xFF0000), UIColor.red, "Colors not equal")
+        XCTAssertEqual(UIColor(hexString: "#00FF00"), UIColor.green, "Colors not equal")
+        XCTAssertEqual(UIColor(hexString: "0000FF"), UIColor.blue, "Colors not equal")
+        XCTAssertEqual(UIColor(hue: 0, saturation: 1, lightness: 0.5), UIColor.red, "Colors not equal")
+        XCTAssertEqual(UIColor(cyan: 0, magenta: 1, yellow: 1, key: 0), UIColor.red, "Colors not equal")
     }
     
     func testHexString() {
-        XCTAssertEqual(UIColor.purple().hexString, "#7f007f", "Hex strings are not equal")
+        XCTAssertEqual(UIColor.purple.hexString, "#7f007f", "Hex strings are not equal")
     }
     
     func testHex() {
-        XCTAssertEqual(UIColor.yellow().hex, UIColor(hex: 0xFFFF00).hex, "Hex values are not equal")
+        XCTAssertEqual(UIColor.yellow.hex, UIColor(hex: 0xFFFF00).hex, "Hex values are not equal")
     }
     
     func testComponents() {

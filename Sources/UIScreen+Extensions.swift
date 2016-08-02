@@ -48,16 +48,16 @@ extension UIScreen {
     
     /// The center of the main screen
     public static var mainCenter: CGPoint {
-        return UIScreen.main().center
+        return UIScreen.main.center
     }
     
     /// The width of the main screen
     public static var mainWidth: CGFloat {
-        return UIScreen.main().width
+        return UIScreen.main.width
     }
     
     /// The height of the main screen
     public static var mainHeight: CGFloat {
-        return UIScreen.main().height
+        return UIScreen.main.height
     }
 }

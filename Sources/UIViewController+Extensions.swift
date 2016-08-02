@@ -33,7 +33,7 @@ extension UIViewController {
     ///
     /// Based off code here: http://stackoverflow.com/questions/24825123/get-the-current-view-controller-from-the-app-delegate
     public static var current: UIViewController? {
-        if let controller = UIApplication.shared().keyWindow?.rootViewController {
+        if let controller = UIApplication.shared.keyWindow?.rootViewController {
             return findCurrent(controller)
         }
         return nil

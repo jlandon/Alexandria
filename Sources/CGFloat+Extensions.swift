@@ -26,6 +26,7 @@
 // SOFTWARE.
 
 import Foundation
+import CoreGraphics
 
 extension CGFloat {
     /// Generate a random CGFloat bounded by a closed interval range.
@@ -54,6 +55,6 @@ extension CGFloat {
      */
     public func rounded(places: UInt) -> CGFloat {
         let multiplier = pow(10, CGFloat(places))
-        return round(self * multiplier) / multiplier
+        return (self * multiplier).rounded() / multiplier
     }
 }

@@ -81,7 +81,7 @@ extension CGAffineTransform {
     - returns: An inverted transform.
     */
     public static func invert(_ transform: CGAffineTransform) -> CGAffineTransform {
-        return transform.invert()
+        return transform.inverted()
     }
     
     // MARK: Concat
@@ -95,7 +95,7 @@ extension CGAffineTransform {
     */
     public static func concat(_ transforms: CGAffineTransform...) -> CGAffineTransform {
         var transform: CGAffineTransform = .identity
-        transforms.forEach { transform = transform.concat($0) }
+        transforms.forEach { transform = transform.concatenating($0) }
         
         return transform
     }

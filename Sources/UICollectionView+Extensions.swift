@@ -234,7 +234,7 @@ extension UICollectionView {
 
     /// The maximum ("ending") `IndexPath` for traversing a `UICollectionView` "sequentially".
     public var maximumIndexPath: IndexPath {
-        let lastSection = max(0, numberOfSections() - 1)
+        let lastSection = max(0, numberOfSections - 1)
         let lastItem = max(0, numberOfItems(inSection: lastSection) - 1)
         return IndexPath(item: lastItem, section: lastSection)
     }

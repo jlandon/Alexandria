@@ -37,7 +37,7 @@ extension UIFont {
     */
     public static func register(name: String, fileExtension: String, in bundle: Bundle) {
         guard
-            let path = bundle.pathForResource(name, ofType: fileExtension),
+            let path = bundle.path(forResource: name, ofType: fileExtension),
             let fontData = NSData(contentsOfFile: path),
             let provider = CGDataProvider(data: fontData as CFData)
         else {

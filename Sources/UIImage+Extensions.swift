@@ -38,7 +38,7 @@ extension UIImage {
     public func tinted(_ tintColor: UIColor) -> UIImage {
         guard let cgImage = cgImage else { return self }
         
-        UIGraphicsBeginImageContextWithOptions(size, false, UIScreen.main().scale)
+        UIGraphicsBeginImageContextWithOptions(size, false, UIScreen.main.scale)
 
         defer { UIGraphicsEndImageContext() }
         
@@ -47,14 +47,14 @@ extension UIImage {
 
         tintColor.setFill()
 
-        context?.translate(x: 0, y: size.height)
-        context?.scale(x: 1, y: -1)
+        context?.translateBy(x: 0, y: size.height)
+        context?.scaleBy(x: 1, y: -1)
         context?.setBlendMode(.normal)
         
         let rect = CGRect(origin: .zero, size: size)
         context?.draw(in: rect, image: cgImage)
         
-        context?.clipToMask(rect, mask: cgImage)
+        context?.clip(to: rect, mask: cgImage)
         context?.addRect(rect)
         context?.drawPath(using: .fill)
         context?.restoreGState()

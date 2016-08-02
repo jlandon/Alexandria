@@ -27,7 +27,7 @@
 
 import Foundation
 
-extension AttributedString {
+extension NSAttributedString {
     /**
     Returns a new mutable string with characters from a given character set removed.
 
@@ -37,10 +37,10 @@ extension AttributedString {
       - charSet: The character set with which to remove characters.
     - returns: A new string with the matching characters removed.
     */
-    public func trimmingCharacters(in set: CharacterSet) -> AttributedString {
+    public func trimmingCharacters(in set: CharacterSet) -> NSAttributedString {
         let modString = NSMutableAttributedString(attributedString: self)
         modString.trimCharacters(in: set)
-        return AttributedString(attributedString: modString)
+        return NSAttributedString(attributedString: modString)
     }
 }
 

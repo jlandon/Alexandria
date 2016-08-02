@@ -197,7 +197,7 @@ public extension UIImage {
         defer { UIGraphicsEndImageContext() }
         
         let epsilon = CGFloat(FLT_EPSILON)
-        let screenScale = UIScreen.main().scale
+        let screenScale = UIScreen.main.scale
         let imageRect = CGRect(origin: .zero, size: size)
         var effectImage: UIImage? = self
         
@@ -218,8 +218,8 @@ public extension UIImage {
             
             guard let effectInContext = UIGraphicsGetCurrentContext() else { return self }
             
-            effectInContext.scale(x: 1, y: -1)
-            effectInContext.translate(x: 0, y: -size.height)
+            effectInContext.scaleBy(x: 1, y: -1)
+            effectInContext.translateBy(x: 0, y: -size.height)
             effectInContext.draw(in: imageRect, image: cgImage)
             
             var effectInBuffer = createEffectBuffer(effectInContext)
@@ -245,7 +245,8 @@ public extension UIImage {
                 //
                 
                 let inputRadius = blurRadius * screenScale
-                var radius = UInt32(floor(inputRadius * 3.0 * sqrt(2 * CGFloat.pi) / 4 + 0.5))
+                let input = inputRadius * 3 * sqrt(2 * .pi) / 4 + 0.5
+                var radius = UInt32(floor(input))
                 if radius % 2 != 1 {
                     radius += 1 // force radius to be odd so that the three box-blur methodology works.
                 }
@@ -295,8 +296,8 @@ public extension UIImage {
         // Set up output context.
         UIGraphicsBeginImageContextWithOptions(size, false, screenScale)
         let outputContext = UIGraphicsGetCurrentContext()
-        outputContext?.scale(x: 1, y: -1)
-        outputContext?.translate(x: 0, y: -size.height)
+        outputContext?.scaleBy(x: 1, y: -1)
+        outputContext?.translateBy(x: 0, y: -size.height)
         
         // Draw base image.
         outputContext?.draw(in: imageRect, image: cgImage)
@@ -305,7 +306,7 @@ public extension UIImage {
         if let effectImage = effectImage?.cgImage, hasBlur {
             outputContext?.saveGState()
             if let image = maskImage?.cgImage {
-                outputContext?.clipToMask(imageRect, mask: image)
+                outputContext?.clip(to: imageRect, mask: image)
             }
             outputContext?.draw(in: imageRect, image: effectImage)
             outputContext?.restoreGState()

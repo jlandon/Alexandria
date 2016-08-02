@@ -99,7 +99,7 @@ extension String {
      */
     public mutating func formRegex(_ pattern: String, _ replacement: String) {
         do {
-            let expression = try RegularExpression(pattern: pattern, options: [])
+            let expression = try NSRegularExpression(pattern: pattern, options: [])
             let range = NSRange(location: 0, length: characters.count)
             self = expression.stringByReplacingMatches(in: self, options: [], range: range, withTemplate: replacement)
         }
@@ -139,9 +139,9 @@ extension String {
      */
     public mutating func formRegex(_ pattern: String, _ matches: (String) -> String) {
 
-        let expression: RegularExpression
+        let expression: NSRegularExpression
         do {
-            expression = try RegularExpression(pattern: "(\(pattern))", options: [])
+            expression = try NSRegularExpression(pattern: "(\(pattern))", options: [])
         }
         catch {
             print("regex error: \(error)")
