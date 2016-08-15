@@ -32,9 +32,7 @@ import Foundation
 */
 extension UIScrollView {
     
-    /**
-    Immediately stops the scrollview scrolling.
-    */
+    /// Immediately stops the scrollview scrolling.
     public func stopScrolling() {
         // http://stackoverflow.com/questions/3410777/how-can-i-programmatically-force-stop-scrolling-in-a-uiscrollview
         let offset = contentOffset

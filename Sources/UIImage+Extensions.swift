@@ -87,13 +87,13 @@ extension UIImage {
 
     Example:
 
-        let image = UIImage(size: CGSizeMake(12, 24)) {
+        let image = UIImage(size: CGSize(width: 12, height: 24)) {
             let path = UIBezierPath()
-            path.moveToPoint(...)
-            path.addLineToPoint(...)
-            path.addLineToPoint(...)
+            path.move(to: ...)
+            path.addLine(to: ...)
+            path.addLine(to: ...)
             path.lineWidth = 2
-            UIColor.whiteColor().setStroke()
+            UIColor.white.setStroke()
             path.stroke()
         }
 

@@ -47,16 +47,19 @@ extension UIScreen {
     }
     
     /// The center of the main screen
+    @available(*, deprecated: 2.0, message: "use main.center")
     public static var mainCenter: CGPoint {
         return UIScreen.main.center
     }
     
     /// The width of the main screen
+    @available(*, deprecated: 2.0, message: "use main.width")
     public static var mainWidth: CGFloat {
         return UIScreen.main.width
     }
     
     /// The height of the main screen
+    @available(*, deprecated: 2.0, message: "use main.height")
     public static var mainHeight: CGFloat {
         return UIScreen.main.height
     }

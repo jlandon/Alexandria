@@ -87,7 +87,7 @@ public extension MutableCollection where Index == Int, IndexDistance == Int {
      
      - returns: A random element from the collection.
      */
-    public func randomElement() -> Generator.Element {
+    public func random() -> Generator.Element {        
         let index = Int(arc4random_uniform(UInt32(count)))
         return self[index]
     }

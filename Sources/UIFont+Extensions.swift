@@ -28,6 +28,23 @@
 import UIKit
 
 extension UIFont {
+    
+    public enum Extension {
+        case otf
+        case ttf
+        case woff
+        case custom(String)
+        
+        private var type: String {
+            switch self {
+            case .otf:               return "otf"
+            case .ttf:               return "ttf"
+            case .woff:              return "woff"
+            case .custom(let value): return value
+            }
+        }
+    }
+    
     /**
     Registers a font for use in the app
 
@@ -35,13 +52,13 @@ extension UIFont {
     - parameter fileExtension: The extension of the font file.
     - parameter bundle: The bundle in which the font file is located.
     */
-    public static func register(name: String, fileExtension: String, in bundle: Bundle) {
+    public static func register(name: String, fileExtension: Extension, in bundle: Bundle) {
         guard
-            let path = bundle.path(forResource: name, ofType: fileExtension),
+            let path = bundle.path(forResource: name, ofType: fileExtension.type),
             let fontData = NSData(contentsOfFile: path),
             let provider = CGDataProvider(data: fontData as CFData)
         else {
-            print("Error registering font")
+            print("Error registering font: \(name).\(fileExtension.type)")
             return
         }
         
@@ -55,7 +72,7 @@ extension UIFont {
         
         if let errorRef = error?.takeRetainedValue() {
             let errorDescription = CFErrorCopyDescription(errorRef)
-            print("Failed to load font: \(errorDescription)")
+            print("Failed to load font: \(errorDescription) (\(name).\(fileExtension.type))")
         }
 
         error?.release()

@@ -71,7 +71,10 @@ extension UITableView {
      ```
      */
     public func dequeueCell<T: UITableViewCell>(_ type: T.Type = T.self, withIdentifier reuseIdentifier: String = String(T.self)) -> T {
-        return dequeueReusableCell(withIdentifier: reuseIdentifier) as! T
+        guard let cell = dequeueReusableCell(withIdentifier: reuseIdentifier) as? T else {
+            fatalError("Unknown cell type (\(T.self)) for reuse identifier: \(reuseIdentifier)")
+        }
+        return cell
     }
     
     /**
@@ -95,11 +98,11 @@ extension UITableView {
      let cell = tableView.dequeueReusableCell(CustomCell.self, forIndexPath: indexPath)
      ```
      */
-    public func dequeueCell<T: UITableViewCell>(_ type: T.Type = T.self,
-                      withIdentifier reuseIdentifier: String = String(T.self),
-                                       for indexPath: IndexPath) -> T
-    {
-        return dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! T
+    public func dequeueCell<T: UITableViewCell>(_ type: T.Type = T.self, withIdentifier reuseIdentifier: String = String(T.self), for indexPath: IndexPath) -> T {
+        guard let cell = dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as? T else {
+            fatalError("Unknown cell type (\(T.self)) for reuse identifier: \(reuseIdentifier)")
+        }
+        return cell
     }
     
     /**
@@ -110,6 +113,8 @@ extension UITableView {
      - parameter animation: The animation to use for the row insertion (optional, defaults to `.Automatic`).
      */
     public func insert(_ indices: [Int], section: Int = 0, animation: UITableViewRowAnimation = .automatic) {
+        guard !indices.isEmpty else { return }
+        
         let indexPaths = indices.map { IndexPath(row: $0, section: section) }
         
         beginUpdates()
@@ -125,6 +130,8 @@ extension UITableView {
      - parameter animation: The animation to use for the row deletion (optional, defaults to `.Automatic`).
      */
     public func delete(_ indices: [Int], section: Int = 0, animation: UITableViewRowAnimation = .automatic) {
+        guard !indices.isEmpty else { return }
+        
         let indexPaths = indices.map { IndexPath(row: $0, section: section) }
         
         beginUpdates()
@@ -140,6 +147,8 @@ extension UITableView {
      - parameter animation: The animation to use for reloading the rows (optional, defaults to `.Automatic`).
      */
     public func reload(_ indices: [Int], section: Int = 0, animation: UITableViewRowAnimation = .automatic) {
+        guard !indices.isEmpty else { return }
+        
         let indexPaths = indices.map { IndexPath(row: $0, section: section) }
         
         beginUpdates()
@@ -147,7 +156,6 @@ extension UITableView {
         endUpdates()
     }
 }
-
 
 // MARK: - IndexPathTraversing
 extension UITableView {

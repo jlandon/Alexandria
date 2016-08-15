@@ -25,8 +25,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import Foundation
-
 extension Float {
     /// Generate a random Float bounded by a closed interval range.
     public static func random(_ range: ClosedRange<Float>) -> Float {

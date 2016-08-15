@@ -45,7 +45,6 @@ extension UIButton {
         get { return objc_getAssociatedObject(self, &AssociatedKeys.ActionName) as? ButtonAction }
     }
     
-    
     /**
      Initialize a UIButton, using the given closure as the .TouchUpInside target/action event.
      

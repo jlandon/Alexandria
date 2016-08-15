@@ -99,16 +99,17 @@ extension CGAffineTransform {
         
         return transform
     }
-}
+    
+    /**
+     Concatenates two CGAffineTransforms and returns the result. Equivalent to `CGAffineTransformConcat(lhs, rhs)`.
+     
+     - parameter lhs: The first transform.
+     - parameter rhs: The second transform.
+     
+     - returns: The concatentation of the two transforms.
+     */
+    public static func *(lhs: CGAffineTransform, rhs: CGAffineTransform) -> CGAffineTransform {
+        return .concat(lhs, rhs)
+    }
 
-/**
- Concatenates two CGAffineTransforms and returns the result. Equivalent to `CGAffineTransformConcat(lhs, rhs)`.
- 
- - parameter lhs: The first transform.
- - parameter rhs: The second transform.
- 
- - returns: The concatentation of the two transforms.
- */
-public func *(lhs: CGAffineTransform, rhs: CGAffineTransform) -> CGAffineTransform {
-    return .concat(lhs, rhs)
 }

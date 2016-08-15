@@ -54,8 +54,8 @@ extension Array {
      ```
      var array = [1, 2, 3, 4, 5]
      
-     let x = array.rotate(2)   // x should be [3, 4, 5, 1, 2]
-     let y = array.rotate(-2)  // y should be [4, 5, 1, 2, 3]
+     let x = array.rotated(by: 2)   // x should be [3, 4, 5, 1, 2]
+     let y = array.rotated(by: -2)  // y should be [4, 5, 1, 2, 3]
      ```
      
      - parameter shift: The number of indices by which the array should be shifted. Positive shifts right, negative shifts left.

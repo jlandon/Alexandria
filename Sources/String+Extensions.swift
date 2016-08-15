@@ -228,8 +228,8 @@ extension String {
     Examples:
     
     ```
-    "hello there".truncate(5)                   // "hello"
-    "hello there".truncate(5, trailing: "...")  // "hello..."
+    "hello there".truncated(to: 5)                   // "hello"
+    "hello there".truncated(to: 5, trailing: "...")  // "hello..."
     ```
 
     */

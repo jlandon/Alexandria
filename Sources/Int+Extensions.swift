@@ -196,7 +196,7 @@ extension Int {
      
      - parameter block: The block to execute (includes the current execution index)
      */
-    public func repeatBlock(_ block: @noescape (Int) throws -> ()) rethrows {
+    public func `repeat`(_ block: @noescape (Int) throws -> Void) rethrows {
         guard self > 0 else { return }
         try (1...self).forEach(block)
     }

@@ -66,14 +66,14 @@ class ColorTests: XCTestCase {
     
     func testLightenColor() {
         let color = UIColor(hex: 0xEF5138)
-        XCTAssertEqual(color.lighten(by: 0.2).hex, 0xF3816F)
-        XCTAssertEqual(color.lighten(by: 20%).hex, 0xF3816F)
+        XCTAssertEqual(color.lightened(by: 0.2).hex, 0xF3816F)
+        XCTAssertEqual(color.lightened(by: 20%).hex, 0xF3816F)
     }
     
     func testDarkenColor() {
         let color = UIColor(hex: 0xEF5138)
-        XCTAssertEqual(color.darken(by: 0.2).hex, 0xDA2D12)
-        XCTAssertEqual(color.darken(by: 20%).hex, 0xDA2D12)
+        XCTAssertEqual(color.darkened(by: 0.2).hex, 0xDA2D12)
+        XCTAssertEqual(color.darkened(by: 20%).hex, 0xDA2D12)
     }
     
     func testRGBColorModel() {

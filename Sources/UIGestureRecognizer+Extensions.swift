@@ -50,7 +50,6 @@ extension UIGestureRecognizer {
         get { return objc_getAssociatedObject(self, &AssociatedKeys.ActionName) as? GestureAction }
     }
     
-    
     /**
      Convenience initializer, associating an action closure with the gesture recognizer (instead of the more traditional target/action).
      

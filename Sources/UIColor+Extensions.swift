@@ -112,7 +112,7 @@ extension UIColor {
     }
     
     /// Returns a random UIColor with hue, saturation, and brightness ranging from 0.5 to 1.0.
-    public static func random() -> UIColor {
+    public static var random: UIColor {
         let component = { CGFloat(arc4random() % 128)/256.0 + 0.5 }
         return UIColor(hue: component(), saturation: component(), brightness: component(), alpha: 1)
     }
@@ -122,7 +122,7 @@ extension UIColor {
      - parameter amount: The percentage by which to lighten the color. Valid values are from `0.0` to `1.0`, or for a more readable format `0%` to `100%`.
      - returns: The lightened color.
      */
-    public final func lighten(by amount: CGFloat) -> UIColor {
+    public final func lightened(by amount: CGFloat) -> UIColor {
         assert((0...1).contains(amount), "amount must be in range 0-100%")
         
         let (h, s, l) = hsl
@@ -134,13 +134,12 @@ extension UIColor {
      - parameter amount: The percentage by which to darken the color. Valid values are from `0.0` to `1.0`, or for a more readable format `0%` to `100%`.
      - returns: The darkened color.
      */
-    public final func darken(by amount: CGFloat) -> UIColor {
+    public final func darkened(by amount: CGFloat) -> UIColor {
         assert((0...1).contains(amount), "amount must be in range 0-100%")
         
         let (h, s, l) = hsl
         return UIColor(hue: h, saturation: s, lightness: l * (1 - amount), alpha: rgba.a)
     }
-
     
     /**
      Returns the color represenation as a hexadecimal string, prefixed with '#'.
