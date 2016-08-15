@@ -35,8 +35,8 @@ extension UIView {
                                _ damping: CGFloat,
                               _ velocity: CGFloat,
                                _ options: UIViewAnimationOptions,
-                            _ animations: () -> Void,
-                            _ completion: (Bool) -> Void = { _ in })
+                            _ animations: @escaping () -> Void,
+                            _ completion: @escaping (Bool) -> Void = { _ in })
     {
         UIView.animate(withDuration: duration,
                               delay: delay,
@@ -54,7 +54,7 @@ extension UIView {
                                _ damping: CGFloat,
                               _ velocity: CGFloat,
                                _ options: UIViewAnimationOptions,
-                            _ animations: () -> Void)
+                            _ animations: @escaping () -> Void)
     {
         UIView.animate(withDuration: duration,
                               delay: delay,

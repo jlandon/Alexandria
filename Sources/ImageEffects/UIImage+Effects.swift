@@ -220,7 +220,7 @@ public extension UIImage {
             
             effectInContext.scaleBy(x: 1, y: -1)
             effectInContext.translateBy(x: 0, y: -size.height)
-            effectInContext.draw(in: imageRect, image: cgImage)
+            effectInContext.draw(cgImage, in: imageRect)
             
             var effectInBuffer = createEffectBuffer(effectInContext)
             
@@ -300,7 +300,7 @@ public extension UIImage {
         outputContext?.translateBy(x: 0, y: -size.height)
         
         // Draw base image.
-        outputContext?.draw(in: imageRect, image: cgImage)
+        outputContext?.draw(cgImage, in: imageRect)
         
         // Draw effect image.
         if let effectImage = effectImage?.cgImage, hasBlur {
@@ -308,7 +308,7 @@ public extension UIImage {
             if let image = maskImage?.cgImage {
                 outputContext?.clip(to: imageRect, mask: image)
             }
-            outputContext?.draw(in: imageRect, image: effectImage)
+            outputContext?.draw(effectImage, in: imageRect)
             outputContext?.restoreGState()
         }
         

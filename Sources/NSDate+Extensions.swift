@@ -289,7 +289,7 @@ extension Date {
 
 extension Date {
     
-    private var allCalendarComponents: Set<Calendar.Component> {
+    fileprivate var allCalendarComponents: Set<Calendar.Component> {
         return [
             .era,
             .year,
@@ -310,7 +310,7 @@ extension Date {
         ]
     }
     
-    private var components: DateComponents {
+    fileprivate var components: DateComponents {
         return Calendar.autoupdatingCurrent.dateComponents(allCalendarComponents, from: self)
     }
 }

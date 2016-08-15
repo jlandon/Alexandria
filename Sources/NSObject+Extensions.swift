@@ -34,7 +34,7 @@ extension NSObject {
      Determines the class name of the object's dynamic type.
      */
     public var className: String {
-        return self.dynamicType.className
+        return type(of: self).className
     }
     
     /**

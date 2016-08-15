@@ -35,7 +35,7 @@ extension UIFont {
         case woff
         case custom(String)
         
-        private var type: String {
+        fileprivate var type: String {
             switch self {
             case .otf:               return "otf"
             case .ttf:               return "ttf"

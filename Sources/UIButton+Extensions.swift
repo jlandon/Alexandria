@@ -31,7 +31,7 @@ extension UIButton {
     private class ButtonAction {
         var action: (UIButton) -> Void
         
-        init(action: (UIButton) -> Void) {
+        init(action: @escaping (UIButton) -> Void) {
             self.action = action
         }
     }
@@ -52,7 +52,7 @@ extension UIButton {
      
      - returns: An initialized UIButton.
      */
-    public convenience init(action: (UIButton) -> Void) {
+    public convenience init(action: @escaping (UIButton) -> Void) {
         self.init()
         buttonAction = ButtonAction(action: action)
         addTarget(self, action: #selector(handleAction(_:)), for: .touchUpInside)
@@ -67,7 +67,7 @@ extension UIButton {
      
      - returns: An initialized UIButton.
      */
-    public convenience init(frame: CGRect, action: (UIButton) -> Void) {
+    public convenience init(frame: CGRect, action: @escaping (UIButton) -> Void) {
         self.init(frame: frame)
         buttonAction = ButtonAction(action: action)
         addTarget(self, action: #selector(handleAction(_:)), for: .touchUpInside)
@@ -80,7 +80,7 @@ extension UIButton {
      - parameter controlEvents: The UIControlEvents upon which to execute this action.
      - parameter action:        The action closure to execute.
      */
-    public func addTarget(for controlEvents: UIControlEvents, action: (UIButton) -> Void) {
+    public func addTarget(for controlEvents: UIControlEvents, action: @escaping (UIButton) -> Void) {
         buttonAction = ButtonAction(action: action)
         addTarget(self, action: #selector(handleAction(_:)), for: controlEvents)
     }

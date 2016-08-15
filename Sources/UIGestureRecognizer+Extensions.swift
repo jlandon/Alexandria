@@ -36,7 +36,7 @@ extension UIGestureRecognizer {
     private class GestureAction {
         var action: (UIGestureRecognizer) -> Void
         
-        init(action: (UIGestureRecognizer) -> Void) {
+        init(action: @escaping (UIGestureRecognizer) -> Void) {
             self.action = action
         }
     }
@@ -57,7 +57,7 @@ extension UIGestureRecognizer {
      
      - returns: The UIGestureRecognizer.
      */
-    public convenience init(action: (UIGestureRecognizer) -> Void) {
+    public convenience init(action: @escaping (UIGestureRecognizer) -> Void) {
         self.init()
         gestureAction = GestureAction(action: action)
         addTarget(self, action: #selector(handleAction(_:)))

@@ -46,7 +46,7 @@ extension UITableView {
      tableView.registerCell(CustomCell)
      ```
      */
-    public func registerCell<T: UITableViewCell>(_ type: T.Type, withIdentifier reuseIdentifier: String = String(T.self)) {
+    public func registerCell<T: UITableViewCell>(_ type: T.Type, withIdentifier reuseIdentifier: String = String(describing: T.self)) {
         register(T.self, forCellReuseIdentifier: reuseIdentifier)
     }
     
@@ -70,7 +70,7 @@ extension UITableView {
      let cell = tableView.dequeueReusableCell(CustomCell)
      ```
      */
-    public func dequeueCell<T: UITableViewCell>(_ type: T.Type = T.self, withIdentifier reuseIdentifier: String = String(T.self)) -> T {
+    public func dequeueCell<T: UITableViewCell>(_ type: T.Type = T.self, withIdentifier reuseIdentifier: String = String(describing: T.self)) -> T {
         guard let cell = dequeueReusableCell(withIdentifier: reuseIdentifier) as? T else {
             fatalError("Unknown cell type (\(T.self)) for reuse identifier: \(reuseIdentifier)")
         }
@@ -98,7 +98,7 @@ extension UITableView {
      let cell = tableView.dequeueReusableCell(CustomCell.self, forIndexPath: indexPath)
      ```
      */
-    public func dequeueCell<T: UITableViewCell>(_ type: T.Type = T.self, withIdentifier reuseIdentifier: String = String(T.self), for indexPath: IndexPath) -> T {
+    public func dequeueCell<T: UITableViewCell>(_ type: T.Type = T.self, withIdentifier reuseIdentifier: String = String(describing: T.self), for indexPath: IndexPath) -> T {
         guard let cell = dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as? T else {
             fatalError("Unknown cell type (\(T.self)) for reuse identifier: \(reuseIdentifier)")
         }

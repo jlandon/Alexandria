@@ -52,7 +52,7 @@ extension UIImage {
         context?.setBlendMode(.normal)
         
         let rect = CGRect(origin: .zero, size: size)
-        context?.draw(in: rect, image: cgImage)
+        context?.draw(cgImage, in: rect)
         
         context?.clip(to: rect, mask: cgImage)
         context?.addRect(rect)

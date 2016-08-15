@@ -49,7 +49,7 @@ extension UIViewController {
         else if let controller = controller as? UINavigationController, let topViewController = controller.topViewController, controller.viewControllers.count > 0 {
             return findCurrent(topViewController)
         }
-        else if let controller = controller as? UITabBarController, let selectedViewController = controller.selectedViewController, controller.viewControllers?.count > 0 {
+        else if let controller = controller as? UITabBarController, let selectedViewController = controller.selectedViewController, (controller.viewControllers?.count ?? 0) > 0 {
             return findCurrent(selectedViewController)
         }
         else {

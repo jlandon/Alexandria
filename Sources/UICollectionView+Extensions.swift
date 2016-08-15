@@ -49,7 +49,7 @@ extension UICollectionView {
      collectionView.registerCell(CustomCell)
      ```
      */
-    public func registerCell<T: UICollectionViewCell>(_ type: T.Type, withIdentifier reuseIdentifier: String = String(T.self)) {
+    public func registerCell<T: UICollectionViewCell>(_ type: T.Type, withIdentifier reuseIdentifier: String = String(describing: T.self)) {
         register(T.self, forCellWithReuseIdentifier: reuseIdentifier)
     }
     
@@ -75,8 +75,8 @@ extension UICollectionView {
      ```
      */
     public func dequeueCell<T: UICollectionViewCell>(_ type: T.Type = T.self,
-                           withIdentifier reuseIdentifier: String = String(T.self),
-                                            for indexPath: IndexPath) -> T
+                             withIdentifier reuseIdentifier: String = String(describing: T.self),
+                                              for indexPath: IndexPath) -> T
     {
         guard let cell = dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? T else {
             fatalError("Unknown cell type (\(T.self)) for reuse identifier: \(reuseIdentifier)")
@@ -104,7 +104,7 @@ extension UICollectionView {
      collectionView.registerHeader(CustomHeader)
      ```
      */
-    public func registerHeader<T: UICollectionReusableView>(_ type: T.Type, withIdentifier reuseIdentifier: String = String(T.self)) {
+    public func registerHeader<T: UICollectionReusableView>(_ type: T.Type, withIdentifier reuseIdentifier: String = String(describing: T.self)) {
         register(T.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: reuseIdentifier)
     }
     
@@ -130,7 +130,7 @@ extension UICollectionView {
      ```
      */
     public func dequeueHeader<T: UICollectionReusableView>(_ type: T.Type = T.self,
-                                   withIdentifier reuseIdentifier: String = String(T.self),
+                                   withIdentifier reuseIdentifier: String = String(describing: T.self),
                                                     for indexPath: IndexPath) -> T
     {
         guard let header = dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: reuseIdentifier, for: indexPath) as? T else {
@@ -159,7 +159,7 @@ extension UICollectionView {
      collectionView.registerFooter(CustomFooter)
      ```
      */
-    public func registerFooter<T: UICollectionReusableView>(_ type: T.Type, withIdentifier reuseIdentifier: String = String(T.self)) {
+    public func registerFooter<T: UICollectionReusableView>(_ type: T.Type, withIdentifier reuseIdentifier: String = String(describing: T.self)) {
         register(T.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: reuseIdentifier)
     }
     
@@ -185,7 +185,7 @@ extension UICollectionView {
      ```
      */
     public func dequeueFooter<T: UICollectionReusableView>(_ type: T.Type = T.self,
-                                   withIdentifier reuseIdentifier: String = String(T.self),
+                                   withIdentifier reuseIdentifier: String = String(describing: T.self),
                                                     for indexPath: IndexPath) -> T
     {
         guard let footer = dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter, withReuseIdentifier: reuseIdentifier, for: indexPath) as? T else {
@@ -201,7 +201,7 @@ extension UICollectionView {
      - parameter section: The section in which to insert the rows (optional, defaults to 0).
      - parameter completion: The completion handler, called after the rows have been inserted (optional).
      */
-    public func insert(_ indices: [Int], section: Int = 0, completion: (Bool) -> Void = { _ in }) {
+    public func insert(_ indices: [Int], section: Int = 0, completion: @escaping (Bool) -> Void = { _ in }) {
         guard !indices.isEmpty else { return }
         
         let indexPaths = indices.map { IndexPath(row: $0, section: section) }
@@ -215,7 +215,7 @@ extension UICollectionView {
      - parameter section: The section in which to delete the rows (optional, defaults to 0).
      - parameter completion: The completion handler, called after the rows have been deleted (optional).
      */
-    public func delete(_ indices: [Int], section: Int = 0, completion: (Bool) -> Void = { _ in }) {
+    public func delete(_ indices: [Int], section: Int = 0, completion: @escaping (Bool) -> Void = { _ in }) {
         guard !indices.isEmpty else { return }
         
         let indexPaths = indices.map { IndexPath(row: $0, section: section) }
@@ -229,7 +229,7 @@ extension UICollectionView {
      - parameter section: The section in which to reload the rows (optional, defaults to 0).
      - parameter completion: The completion handler, called after the rows have been reloaded (optional).
      */
-    public func reload(_ indices: [Int], section: Int = 0, completion: (Bool) -> Void = { _ in }) {
+    public func reload(_ indices: [Int], section: Int = 0, completion: @escaping (Bool) -> Void = { _ in }) {
         guard !indices.isEmpty else { return }
         
         let indexPaths = indices.map { IndexPath(row: $0, section: section) }
