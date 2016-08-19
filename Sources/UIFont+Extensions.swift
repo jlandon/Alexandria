@@ -55,7 +55,7 @@ extension UIFont {
     public static func register(name: String, fileExtension: Extension, in bundle: Bundle) {
         guard
             let path = bundle.path(forResource: name, ofType: fileExtension.type),
-            let fontData = NSData(contentsOfFile: path),
+            let fontData = try? Data(contentsOf: URL(fileURLWithPath: path)),
             let provider = CGDataProvider(data: fontData as CFData)
         else {
             print("Error registering font: \(name).\(fileExtension.type)")

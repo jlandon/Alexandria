@@ -1,5 +1,5 @@
 //
-//  NSCharacterSet+Extensions.swift
+//  CharacterSet+Extensions.swift
 //
 //  Created by hsoi on 11/17/15.
 //
@@ -29,13 +29,13 @@
 import Foundation
 
 /** 
- Extensions to NSCharacterSet
+ Extensions to CharacterSet
 */
 public extension CharacterSet {
     
     /**
     
-     Returns an `NSCharacterSet` comprised of the Unicode characters for currency symbols, as specified in:
+     Returns an `CharacterSet` comprised of the Unicode characters for currency symbols, as specified in:
     
         http://unicode.org/charts/PDF/U20A0.pdf
      
@@ -45,7 +45,7 @@ public extension CharacterSet {
      symbols in other blocks.
      
      
-    - returns: An NSCharacterSet of currency symbols
+    - returns: An CharacterSet of currency symbols
 
     */
     public static var currencySymbols: CharacterSet {        
