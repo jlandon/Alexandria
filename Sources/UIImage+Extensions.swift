@@ -68,8 +68,45 @@ extension UIImage {
      Example:
      ```
      let image = UIImage(named: <image_name>) // image size = (width: 200, height: 100)
-     image?.scaledBy(0.25) // image size = (width: 50, height: 25)
-     image?.scaledBy(2)    // image size = (width: 400, height: 200)
+     image?.resized(width: 50, height: 50) // image size = (width: 50, height: 50)
+     image?.resized(width: 50, height: 50, maintainAspectRatio: true) // image size = (width: 50, height: 25)
+     ```
+     
+     - parameter width: The width to which to resize the image.
+     - parameter height: The height to which to resize the image.
+     - parameter maintainAspectRatio: A Boolean flag indicating whether or not to maintain the image's aspect ratio when resizing (optional, defaults to `false`).
+     - returns: A copy of self, resized to a specified width and heigh (with an option to maintain the original aspect ratio).
+     */
+    public func resized(width: CGFloat, height: CGFloat, maintainAspectRatio: Bool = false) -> UIImage? {
+        
+        let inputSize = CGSize(width: width, height: height)
+        let newSize: CGSize
+        
+        if maintainAspectRatio {
+            let ratio = min(inputSize.width / size.width, inputSize.height / size.height)
+            newSize = CGSize(width: size.width * ratio, height: size.height * ratio)
+        }
+        else {
+            newSize = inputSize
+        }
+        
+        UIGraphicsBeginImageContextWithOptions(newSize, false, UIScreen.main.scale)
+        
+        defer { UIGraphicsEndImageContext() }
+        
+        draw(in: CGRect(origin: .zero, size: newSize))
+        
+        return UIGraphicsGetImageFromCurrentImageContext()
+    }
+    
+    /**
+     Returns a copy of self, scaled by a specified scale factor (with an optional image orientation).
+     
+     Example:
+     ```
+     let image = UIImage(named: <image_name>) // image size = (width: 200, height: 100)
+     image?.scaled(by: 0.25) // image size = (width: 50, height: 25)
+     image?.scaled(by: 2)    // image size = (width: 400, height: 200)
      ```
      
      - parameter scaleFactor: The factor at which to scale this image.

@@ -103,9 +103,9 @@ extension UIColor {
     
     /**
      Returns a UIColor initialized with color components divided by 255.0.
-     - parameter red: Integer representation of the red component in range of 0-255
-     - parameter green: Integer representation of the green component in range of 0-255
-     - parameter blue: Integer representation of the blue component in range of 0-255
+     - parameter red: Integer representation of the red component in range of 0-255.
+     - parameter green: Integer representation of the green component in range of 0-255.
+     - parameter blue: Integer representation of the blue component in range of 0-255.
     */
     public convenience init(red: UInt8, green: UInt8, blue: UInt8) {
         self.init(red: CGFloat(red)/255.0, green: CGFloat(green)/255.0, blue: CGFloat(blue)/255.0, alpha: 1.0)
@@ -207,10 +207,23 @@ extension UIColor {
     /**
      Returns a UIColor from the given hexidecimal integer.
      - parameter hex: The color value.
+     - parameter alpha: The alpha component.
      - returns: A UIColor initialized with the given hex value.
      */
     public static func hex(_ hex: UInt32, alpha: CGFloat = 1) -> UIColor {
         return UIColor(hex: hex, alpha: alpha)
+    }
+    
+    /**
+     Returns a UIColor from the given RGB components.
+     - parameter red: The red component in range of 0-255.
+     - parameter green: The green component in range of 0-255.
+     - parameter blue: The blue component in range of 0-255.
+     - parameter alpha: The alpha component.
+     - returns: A UIColor initialized with the given RGB components.
+     */
+    public static func rgb(_ red: UInt8, _ green: UInt8, _ blue: UInt8, alpha: CGFloat = 1) -> UIColor {
+        return UIColor(red: red, green: green, blue: blue).alpha(alpha)
     }
 }
 

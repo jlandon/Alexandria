@@ -29,9 +29,74 @@
 
 import UIKit
 
+// MARK: - CGContext
+
 extension CGContext {
     /// The current graphics context
     public static var current: CGContext? {
         return UIGraphicsGetCurrentContext()
     }
+}
+
+// MARK: - CGRect
+
+extension CGRect {
+    /**
+     Returns a CGRect value initialized with an origin at (0,0) and the provided width and height
+     
+     - parameter width: The width
+     - parameter height: The height
+     
+     - returns: A CGRect value initialized with an origin at (0,0) and the provided width and height
+     */
+    public init(width: CGFloat, height: CGFloat) {
+        self.init(x: 0, y: 0, width: width, height: height)
+    }
+}
+
+// MARK: - CGPoint
+
+extension CGPoint {
+    /**
+     Returns the distance between two points.
+     
+     - parameter point: The point to which to calculate the distance.
+     
+     - returns: The distance between self and another point.
+     */
+    public func distance(to point: CGPoint) -> CGFloat {
+        return sqrt(pow(point.x - x, 2) + pow(point.y - y, 2))
+    }
+}
+
+public func +(lhs: CGPoint, rhs: CGPoint) -> CGPoint {
+    return CGPoint(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
+}
+
+public func +=(lhs: inout CGPoint, rhs: CGPoint) {
+    lhs = lhs + rhs
+}
+
+public func -(lhs: CGPoint, rhs: CGPoint) -> CGPoint {
+    return CGPoint(x: lhs.x - rhs.x, y: lhs.y - rhs.y)
+}
+
+public func -=(lhs: inout CGPoint, rhs: CGPoint) {
+    lhs = lhs - rhs
+}
+
+public func *(lhs: CGPoint, rhs: CGPoint) -> CGPoint {
+    return CGPoint(x: lhs.x * rhs.x, y: lhs.y * rhs.y)
+}
+
+public func *=(lhs: inout CGPoint, rhs: CGPoint) {
+    lhs = lhs * rhs
+}
+
+public func /(lhs: CGPoint, rhs: CGPoint) -> CGPoint {
+    return CGPoint(x: lhs.x / rhs.x, y: lhs.y / rhs.y)
+}
+
+public func /=(lhs: inout CGPoint, rhs: CGPoint) {
+    lhs = lhs / rhs
 }
