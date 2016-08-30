@@ -1,7 +1,7 @@
 //
-//  UIButton+Extensions.swift
+//  NSObject+Customizable.swift
 //
-//  Created by Jonathan Landon on 9/22/15.
+//  Created by Jonathan Landon on 1/19/16.
 //
 // The MIT License (MIT)
 //
@@ -27,14 +27,37 @@
 
 import Foundation
 
-extension UIButton {
+/**
+ Describes a protocol to enable objects to be customized, typically chained at initialization time.
+ 
+ Inspired by: https://github.com/devxoul/Then
+ */
+public protocol Customizable {}
+
+extension Customizable {
+    
     /**
-     Sets the background color to use for the specified button state.
+     Set properties on `self` with a closure.
      
-     - parameter color: The background color to use for the specified state.
-     - parameter state: The state that uses the specified image.
+     Example:
+     ```
+     let label = UILabel(frame: .zero).customize {
+        $0.text = "Text goes here..."
+        $0.textColor = .blackColor()
+        $0.sizeToFit()
+        $0.center = view.center
+        view.addSubview($0)
+     }
+     ```
+
+     - parameter customize: A closure, performing the customization.
+     
+     - returns: `self`
      */
-    public func setBackgroundColor(_ color: UIColor, for state: UIControlState) {
-        setBackgroundImage(UIImage(color: color), for: state)
+    public func customize(@noescape customize: (Self) -> Void) -> Self {
+        customize(self)
+        return self
     }
 }
+
+extension NSObject: Customizable {}
