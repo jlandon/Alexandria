@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name                = "Alexandria"
-  s.version             = "1.2.0"
+  s.version             = "1.3.0"
   s.summary             = "Oven Bits' library of useful iOS Swift extensions."
   s.description         = <<-DESC
     The Oven Bits open source library, Alexandria, is one of the new Wonders of the iOS World.
@@ -34,13 +34,13 @@ Pod::Spec.new do |s|
   }
   s.author              = {
     "John Daub" => "hsoi@hsoi.com",
-    "Jonathan Landon" => "jonathan.landon@ovenbits.com",
-    "Ben Kreeger" => "ben.kreeger@ovenbits.com",
-    "Chris Voss" => "chris.voss@ovenbits.com",
-    "Steven Schobert" => "steven.schobert@ovenbits.com",
-    "Jayson Lane" => "jayson.lane@ovenbits.com",
+    "Jonathan Landon" => "jlandon@me.com",
+    "Ben Kreeger" => "ben.kreeger@icloud.com",
+    "Chris Voss" => "chrisvoss@gmail.com",
+    "Steven Schobert" => "spschobert@gmail.com",
+    "Jayson Lane" => "jaysonlane@gmail.com",
     "Claire Knight" => "claire.knight@krider.co.uk",
-    "Alex Corcoran" => "alex.corcoran@ovenbits.com"
+    "Alex Corcoran" => "alex.p.corcoran@gmail.com"
   }
   s.social_media_url    = 'https://twitter.com/ovenbitsmobile'
   s.platform            = :ios, "8.0"
