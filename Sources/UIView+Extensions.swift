@@ -826,13 +826,13 @@ extension UIView {
      */
     @nonobjc
     public func pinLeft(to support: UILayoutSupport,
-                           _ attribute: NSLayoutAttribute = .Left,
-                             relation: NSLayoutRelation = .Equal,
+                           _ attribute: NSLayoutAttribute = .left,
+                             relation: NSLayoutRelation = .equal,
                              times multiplier: CGFloat = 1,
                                    plus constant: CGFloat = 0,
                                         atPriority priority: UILayoutPriority = UILayoutPriorityRequired) -> Self
     {
-        constrain(.Left, relation, toSupport: support, attribute, times: multiplier, plus: constant, atPriority: priority)
+        constrain(.left, relation, toSupport: support, attribute, times: multiplier, plus: constant, atPriority: priority)
         return self
     }
     
@@ -850,13 +850,13 @@ extension UIView {
      */
     @nonobjc
     public func pinRight(to support: UILayoutSupport,
-                            _ attribute: NSLayoutAttribute = .Right,
-                              relation: NSLayoutRelation = .Equal,
+                            _ attribute: NSLayoutAttribute = .right,
+                              relation: NSLayoutRelation = .equal,
                               times multiplier: CGFloat = 1,
                                     plus constant: CGFloat = 0,
                                          atPriority priority: UILayoutPriority = UILayoutPriorityRequired) -> Self
     {
-        constrain(.Right, relation, toSupport: support, attribute, times: multiplier, plus: constant, atPriority: priority)
+        constrain(.right, relation, toSupport: support, attribute, times: multiplier, plus: constant, atPriority: priority)
         return self
     }
     
@@ -874,13 +874,13 @@ extension UIView {
      */
     @nonobjc
     public func pinTop(to support: UILayoutSupport,
-                          _ attribute: NSLayoutAttribute = .Top,
-                            relation: NSLayoutRelation = .Equal,
+                          _ attribute: NSLayoutAttribute = .top,
+                            relation: NSLayoutRelation = .equal,
                             times multiplier: CGFloat = 1,
                                   plus constant: CGFloat = 0,
                                        atPriority priority: UILayoutPriority = UILayoutPriorityRequired) -> Self
     {
-        constrain(.Top, relation, toSupport: support, attribute, times: multiplier, plus: constant, atPriority: priority)
+        constrain(.top, relation, toSupport: support, attribute, times: multiplier, plus: constant, atPriority: priority)
         return self
     }
     
@@ -898,13 +898,13 @@ extension UIView {
      */
     @nonobjc
     public func pinBottom(to support: UILayoutSupport,
-                             _ attribute: NSLayoutAttribute = .Bottom,
-                               relation: NSLayoutRelation = .Equal,
+                             _ attribute: NSLayoutAttribute = .bottom,
+                               relation: NSLayoutRelation = .equal,
                                times multiplier: CGFloat = 1,
                                      plus constant: CGFloat = 0,
                                           atPriority priority: UILayoutPriority = UILayoutPriorityRequired) -> Self
     {
-        constrain(.Bottom, relation, toSupport: support, attribute, times: multiplier, plus: constant, atPriority: priority)
+        constrain(.bottom, relation, toSupport: support, attribute, times: multiplier, plus: constant, atPriority: priority)
         return self
     }
     
@@ -922,13 +922,13 @@ extension UIView {
      */
     @nonobjc
     public func pinLeading(to support: UILayoutSupport,
-                              _ attribute: NSLayoutAttribute = .Leading,
-                                relation: NSLayoutRelation = .Equal,
+                              _ attribute: NSLayoutAttribute = .leading,
+                                relation: NSLayoutRelation = .equal,
                                 times multiplier: CGFloat = 1,
                                       plus constant: CGFloat = 0,
                                            atPriority priority: UILayoutPriority = UILayoutPriorityRequired) -> Self
     {
-        constrain(.Leading, relation, toSupport: support, attribute, times: multiplier, plus: constant, atPriority: priority)
+        constrain(.leading, relation, toSupport: support, attribute, times: multiplier, plus: constant, atPriority: priority)
         return self
     }
     
@@ -946,13 +946,13 @@ extension UIView {
      */
     @nonobjc
     public func pinTrailing(to support: UILayoutSupport,
-                               _ attribute: NSLayoutAttribute = .Trailing,
-                                 relation: NSLayoutRelation = .Equal,
+                               _ attribute: NSLayoutAttribute = .trailing,
+                                 relation: NSLayoutRelation = .equal,
                                  times multiplier: CGFloat = 1,
                                        plus constant: CGFloat = 0,
                                             atPriority priority: UILayoutPriority = UILayoutPriorityRequired) -> Self
     {
-        constrain(.Trailing, relation, toSupport: support, attribute, times: multiplier, plus: constant, atPriority: priority)
+        constrain(.trailing, relation, toSupport: support, attribute, times: multiplier, plus: constant, atPriority: priority)
         return self
     }
     
@@ -970,13 +970,13 @@ extension UIView {
      */
     @nonobjc
     public func pinCenterX(to support: UILayoutSupport,
-                              _ attribute: NSLayoutAttribute = .CenterX,
-                                relation: NSLayoutRelation = .Equal,
+                              _ attribute: NSLayoutAttribute = .centerX,
+                                relation: NSLayoutRelation = .equal,
                                 times multiplier: CGFloat = 1,
                                       plus constant: CGFloat = 0,
                                            atPriority priority: UILayoutPriority = UILayoutPriorityRequired) -> Self
     {
-        constrain(.CenterX, relation, toSupport: support, attribute, times: multiplier, plus: constant, atPriority: priority)
+        constrain(.centerX, relation, toSupport: support, attribute, times: multiplier, plus: constant, atPriority: priority)
         return self
     }
     
@@ -994,13 +994,13 @@ extension UIView {
      */
     @nonobjc
     public func pinCenterY(to support: UILayoutSupport,
-                              _ attribute: NSLayoutAttribute = .CenterY,
-                                relation: NSLayoutRelation = .Equal,
+                              _ attribute: NSLayoutAttribute = .centerY,
+                                relation: NSLayoutRelation = .equal,
                                 times multiplier: CGFloat = 1,
                                       plus constant: CGFloat = 0,
                                            atPriority priority: UILayoutPriority = UILayoutPriorityRequired) -> Self
     {
-        constrain(.CenterY, relation, toSupport: support, attribute, times: multiplier, plus: constant, atPriority: priority)
+        constrain(.centerY, relation, toSupport: support, attribute, times: multiplier, plus: constant, atPriority: priority)
         return self
     }
     
