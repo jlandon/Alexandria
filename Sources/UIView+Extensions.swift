@@ -835,7 +835,7 @@ extension UIView {
     /**
      Constrain the left constraint of the current view.
      
-     - parameter view: The view by which to constrain self.
+     - parameter support: The support by which to constrain self.
      - parameter attribute: The layout attribute of self to constrain (optional, defaults to .Left).
      - parameter relation: The layout relation of self (optional, defaults to .Equal).
      - parameter multiplier: The constraint multiplier (optional, defaults to 1).
@@ -859,7 +859,7 @@ extension UIView {
     /**
      Constrain the right constraint of the current view.
      
-     - parameter view: The view by which to constrain self.
+     - parameter support: The support by which to constrain self.
      - parameter attribute: The layout attribute of self to constrain (optional, defaults to .Right).
      - parameter relation: The layout relation of self (optional, defaults to .Equal).
      - parameter multiplier: The constraint multiplier (optional, defaults to 1).
@@ -883,7 +883,7 @@ extension UIView {
     /**
      Constrain the top constraint of the current view.
      
-     - parameter view: The view by which to constrain self.
+     - parameter support: The support by which to constrain self.
      - parameter attribute: The layout attribute of self to constrain (optional, defaults to .Top).
      - parameter relation: The layout relation of self (optional, defaults to .Equal).
      - parameter multiplier: The constraint multiplier (optional, defaults to 1).
@@ -907,7 +907,7 @@ extension UIView {
     /**
      Constrain the bottom constraint of the current view.
      
-     - parameter view: The view by which to constrain self.
+     - parameter support: The support by which to constrain self.
      - parameter attribute: The layout attribute of self to constrain (optional, defaults to .Bottom).
      - parameter relation: The layout relation of self (optional, defaults to .Equal).
      - parameter multiplier: The constraint multiplier (optional, defaults to 1).
@@ -931,7 +931,7 @@ extension UIView {
     /**
      Constrain the leading constraint of the current view.
      
-     - parameter view: The view by which to constrain self.
+     - parameter support: The support by which to constrain self.
      - parameter attribute: The layout attribute of self to constrain (optional, defaults to .Leading).
      - parameter relation: The layout relation of self (optional, defaults to .Equal).
      - parameter multiplier: The constraint multiplier (optional, defaults to 1).
@@ -955,7 +955,7 @@ extension UIView {
     /**
      Constrain the trailing constraint of the current view.
      
-     - parameter view: The view by which to constrain self.
+     - parameter support: The support by which to constrain self.
      - parameter attribute: The layout attribute of self to constrain (optional, defaults to .Trailing).
      - parameter relation: The layout relation of self (optional, defaults to .Equal).
      - parameter multiplier: The constraint multiplier (optional, defaults to 1).
@@ -979,7 +979,7 @@ extension UIView {
     /**
      Constrain the center X constraint of the current view.
      
-     - parameter view: The view by which to constrain self.
+     - parameter support: The support by which to constrain self.
      - parameter attribute: The layout attribute of self to constrain (optional, defaults to .CenterX).
      - parameter relation: The layout relation of self (optional, defaults to .Equal).
      - parameter multiplier: The constraint multiplier (optional, defaults to 1).
@@ -1003,7 +1003,7 @@ extension UIView {
     /**
      Constrain the center Y constraint of the current view.
      
-     - parameter view: The view by which to constrain self.
+     - parameter support: The support by which to constrain self.
      - parameter attribute: The layout attribute of self to constrain (optional, defaults to .CenterY).
      - parameter relation: The layout relation of self (optional, defaults to .Equal).
      - parameter multiplier: The constraint multiplier (optional, defaults to 1).
