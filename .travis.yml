@@ -8,8 +8,7 @@ notifications:
   - jlandon@me.com
   - ben.kreeger@icloud.com
 script:
-- xcodebuild -project Alexandria.xcodeproj -scheme Alexandria -sdk iphonesimulator9.3
-  -destination 'platform=iOS Simulator,name=iPhone 6,OS=9.3' test
+- xcodebuild -project Alexandria.xcodeproj -scheme Alexandria -sdk iphonesimulator9.3 -destination 'platform=iOS Simulator,name=iPhone 6,OS=9.3' test
 after_success:
 - ./Support/create_docs.sh
 env:
