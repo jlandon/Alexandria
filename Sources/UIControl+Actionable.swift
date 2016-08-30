@@ -25,15 +25,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-public protocol Actionable: NSObjectProtocol, ActionSelectable {
-    
-    init(actionClosure: () -> Void)
-    init(frame: CGRect, actionClosure: () -> Void)
-    func addTarget(controlEvents controlEvents: UIControlEvents, actionClosure: () -> Void)
-    
+private struct AssociatedKeys {
+    static var ActionName = "action"
 }
 
-public extension Actionable where Self : UIControl {
+extension UIControl {
     
     private var action: Action? {
         set { objc_setAssociatedObject(self, &AssociatedKeys.ActionName, newValue, .OBJC_ASSOCIATION_RETAIN) }
@@ -47,7 +43,7 @@ public extension Actionable where Self : UIControl {
      
      - returns: An initialized UIControl.
      */
-    public init(actionClosure: () -> Void) {
+    public convenience init(actionClosure: () -> Void) {
         self.init()
         action = Action(action: actionClosure)
         addTarget(self, action: #selector(handleAction), forControlEvents: .TouchUpInside)
@@ -62,7 +58,7 @@ public extension Actionable where Self : UIControl {
      
      - returns: An initialized UIControl.
      */
-    public init(frame: CGRect, actionClosure: () -> Void) {
+    public convenience init(frame: CGRect, actionClosure: () -> Void) {
         self.init(frame: frame)
         action = Action(action: actionClosure)
         addTarget(self, action: #selector(handleAction), forControlEvents: .TouchUpInside)
@@ -79,6 +75,12 @@ public extension Actionable where Self : UIControl {
         action = Action(action: actionClosure)
         addTarget(self, action: #selector(handleAction), forControlEvents: controlEvents)
     }
+    
+    public func handleAction() {
+        assert(self.action != nil, "Action caught but action closure missing for control: \(self.dynamicType)")
+        guard let action = self.action else { return }
+        action.action()
+    }
 }
 
 public class Action {
@@ -86,21 +88,5 @@ public class Action {
     
     init(action: () -> Void) {
         self.action = action
-    }
-}
-
-private struct AssociatedKeys {
-    static var ActionName = "action"
-}
-
-@objc public protocol ActionSelectable {
-    func handleAction()
-}
-
-extension UIControl: ActionSelectable, Actionable {
-    public func handleAction() {
-        assert(self.action != nil, "Action caught but action closure missing for control: \(self.dynamicType)")
-        guard let action = self.action else { return }
-        action.action()
     }
 }
