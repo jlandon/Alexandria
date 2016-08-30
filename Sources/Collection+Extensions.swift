@@ -35,7 +35,7 @@ extension Collection where Self.Index == Self.Indices.Iterator.Element {
      
      - returns: An optional element from the collection at the specified index.
      */
-    public subscript (safe i: Index) -> Self.Iterator.Element? {
+    public subscript(safe i: Index) -> Self.Iterator.Element? {
         return at(i)
     }
     

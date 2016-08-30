@@ -114,7 +114,7 @@ extension Array where Element: Equatable {
         guard !isEmpty else { return nil }
 
         if let index = index(of: element) {
-            return self[safe: self.index(before: index)]
+            return at(self.index(before: index))
         }
         return nil
     }
@@ -137,7 +137,7 @@ extension Array where Element: Equatable {
         guard !isEmpty else { return nil }
         
         if let index = index(of: element) {
-            return self[safe: self.index(after: index)]
+            return at(self.index(after: index))
         }
         return nil
     }

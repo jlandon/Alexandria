@@ -33,10 +33,10 @@ extension Date {
      TimeFormat is an enum for formatting timestamps.
      
      Given an hour, minute, and second, the time will be formatted in one of four formats.
-     - `HourMinuteMilitary` (e.g. "19:41")
-     - `HourMinutePeriod` (e.g. "07:41 PM")
-     - `HourMinuteSecondMilitary` (e.g. "19:41:30")
-     - `HourMinuteSecondPeriod` (e.g. "07:41:30 PM")
+     - `hourMinuteMilitary` (e.g. "19:41")
+     - `hourMinutePeriod` (e.g. "07:41 PM")
+     - `hourMinuteSecondMilitary` (e.g. "19:41:30")
+     - `hourMinuteSecondPeriod` (e.g. "07:41:30 PM")
      */
     public enum TimeFormat {
         /// Military time with hours and minutes (e.g. "19:41")
@@ -63,7 +63,7 @@ extension Date {
          
          - returns: The formatted string
          */
-        public func convert(hour: Int, minute: Int, second: Int) -> String {
+        public func stringify(hour: Int, minute: Int, second: Int) -> String {
             
             assert((0..<24).contains(hour), "The hour \(hour) is outside the valid range of 0-23")
             assert((0..<60).contains(minute), "The minute \(minute) is outside the valid range of 0-59")
@@ -138,51 +138,39 @@ extension Date {
     }
     
     /// The current year
+    @available(*, deprecated: 2.0, message: "use Date().year")
     public static var currentYear: Int {
-        let calendar = Calendar.autoupdatingCurrent
-        let components = calendar.dateComponents([.year], from: Date())
-        
-        return components.year ?? 0
+        return Date().year
     }
     
     /// The current month
+    @available(*, deprecated: 2.0, message: "use Date().month")
     public static var currentMonth: Int {
-        let calendar = Calendar.autoupdatingCurrent
-        let components = calendar.dateComponents([.month], from: Date())
-        
-        return components.month ?? 0
+        return Date().month
     }
     
     /// The current day
+    @available(*, deprecated: 2.0, message: "use Date().day")
     public static var currentDay: Int {
-        let calendar = Calendar.autoupdatingCurrent
-        let components = calendar.dateComponents([.day], from: Date())
-        
-        return components.day ?? 0
+        return Date().day
     }
     
     /// The current hour
+    @available(*, deprecated: 2.0, message: "use Date().hour")
     public static var currentHour: Int {
-        let calendar = Calendar.autoupdatingCurrent
-        let components = calendar.dateComponents([.hour], from: Date())
-        
-        return components.hour ?? 0
+        return Date().hour
     }
     
     /// The current minute
+    @available(*, deprecated: 2.0, message: "use Date().minute")
     public static var currentMinute: Int {
-        let calendar = Calendar.autoupdatingCurrent
-        let components = calendar.dateComponents([.minute], from: Date())
-        
-        return components.minute ?? 0
+        return Date().minute
     }
     
     /// The current second
+    @available(*, deprecated: 2.0, message: "use Date().second")
     public static var currentSecond: Int {
-        let calendar = Calendar.autoupdatingCurrent
-        let components = calendar.dateComponents([.second], from: Date())
-        
-        return components.second ?? 0
+        return Date().second
     }
     
     /// The era component of self
@@ -281,7 +269,7 @@ extension Date {
      - returns: The formatted time string.
      */
     public func time(format: TimeFormat = .hourMinuteMilitary) -> String {
-        return format.convert(hour: hour, minute: minute, second: second)
+        return format.stringify(hour: hour, minute: minute, second: second)
     }
 }
 
