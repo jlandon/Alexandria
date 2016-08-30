@@ -25,17 +25,17 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-public protocol Actionable: NSObjectProtocol {
+public protocol Actionable: NSObjectProtocol, ActionSelectable {
     
-    init(actionClosure: (Self) -> Void)
-    init(frame: CGRect, actionClosure: (Self) -> Void)
-    func addTarget(controlEvents controlEvents: UIControlEvents, actionClosure: (Self) -> Void)
+    init(actionClosure: () -> Void)
+    init(frame: CGRect, actionClosure: () -> Void)
+    func addTarget(controlEvents controlEvents: UIControlEvents, actionClosure: () -> Void)
     
 }
 
 public extension Actionable where Self : UIControl {
     
-    private var action: Action<Self>? {
+    private var action: Action? {
         set { objc_setAssociatedObject(self, &AssociatedKeys.ActionName, newValue, .OBJC_ASSOCIATION_RETAIN) }
         get { return objc_getAssociatedObject(self, &AssociatedKeys.ActionName) as? Action }
     }
@@ -47,7 +47,7 @@ public extension Actionable where Self : UIControl {
      
      - returns: An initialized UIControl.
      */
-    public init(actionClosure: (Self) -> Void) {
+    public init(actionClosure: () -> Void) {
         self.init()
         action = Action(action: actionClosure)
         addTarget(self, action: #selector(handleAction), forControlEvents: .TouchUpInside)
@@ -62,7 +62,7 @@ public extension Actionable where Self : UIControl {
      
      - returns: An initialized UIControl.
      */
-    public init(frame: CGRect, actionClosure: (Self) -> Void) {
+    public init(frame: CGRect, actionClosure: () -> Void) {
         self.init(frame: frame)
         action = Action(action: actionClosure)
         addTarget(self, action: #selector(handleAction), forControlEvents: .TouchUpInside)
@@ -75,16 +75,16 @@ public extension Actionable where Self : UIControl {
      - parameter controlEvents: The UIControlEvents upon which to execute this action.
      - parameter action:        The action closure to execute.
      */
-    public func addTarget(controlEvents controlEvents: UIControlEvents, actionClosure: (Self) -> Void) {
+    public func addTarget(controlEvents controlEvents: UIControlEvents, actionClosure: () -> Void) {
         action = Action(action: actionClosure)
         addTarget(self, action: #selector(handleAction), forControlEvents: controlEvents)
     }
 }
 
-private class Action<T: ActionSelectable> {
-    var action: (T) -> Void
+public class Action {
+    var action: () -> Void
     
-    init(action: (T) -> Void) {
+    init(action: () -> Void) {
         self.action = action
     }
 }
@@ -99,30 +99,8 @@ private struct AssociatedKeys {
 
 extension UIControl: ActionSelectable, Actionable {
     public func handleAction() {
-        guard let action = self.action else {
-            fatalError("\n" +
-                       "Unsupported UIControl Type: \(self.dynamicType). Add the following extension to properly recall closure:" +
-                       "\n\n" +
-                       "extension \(self.dynamicType) {\n" +
-                       "    override func handleAction() {\n" +
-                       "        self.action?.action(self)\n" +
-                       "    }\n" +
-                       "}" +
-                       "\n\n" +
-                       "If this is a UIKit control, please open an issue or pull request at http://github.com/ovenbits/Alexandria and we will look into adding support for the extension in a future release. Thank you.")
-        }
-        action.action(self)
+        assert(self.action != nil, "Action caught but action closure missing for control: \(self.dynamicType)")
+        guard let action = self.action else { return }
+        action.action()
     }
 }
-
-// MARK: - UIKit UIControl Subclasses
-
-extension UIButton           { override public func handleAction() { self.action?.action(self) } }
-extension UIDatePicker       { override public func handleAction() { self.action?.action(self) } }
-extension UIPageControl      { override public func handleAction() { self.action?.action(self) } }
-extension UIRefreshControl   { override public func handleAction() { self.action?.action(self) } }
-extension UISegmentedControl { override public func handleAction() { self.action?.action(self) } }
-extension UISlider           { override public func handleAction() { self.action?.action(self) } }
-extension UIStepper          { override public func handleAction() { self.action?.action(self) } }
-extension UISwitch           { override public func handleAction() { self.action?.action(self) } }
-extension UITextField        { override public func handleAction() { self.action?.action(self) } }
