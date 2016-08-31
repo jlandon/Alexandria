@@ -4,12 +4,11 @@ install:
 - gem install jazzy --no-rdoc --no-ri --no-document
 notifications:
   email:
-  - john.daub@ovenbits.com
-  - jonathan.landon@ovenbits.com
-  - ben.kreeger@ovenbits.com
+  - hsoi@hsoi.com
+  - jlandon@me.com
+  - ben.kreeger@icloud.com
 script:
-- xcodebuild -project Alexandria.xcodeproj -scheme Alexandria -sdk iphonesimulator10.0
-  -destination 'platform=iOS Simulator,name=iPhone 6,OS=10.0' test
+- xcodebuild -project Alexandria.xcodeproj -scheme Alexandria -sdk iphonesimulator10.0 -destination 'platform=iOS Simulator,name=iPhone 6,OS=10.0' test
 after_success:
 - ./Support/create_docs.sh
 env:

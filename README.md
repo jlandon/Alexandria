@@ -82,8 +82,6 @@ Then, add the files manually to your Xcode project/workspace.
 
 Alexandria is maintained by the team at [Oven Bits](https://ovenbits.com), a software design and development agency based in Dallas, Texas.
 
-> P.S. [We're hiring!](http://ovenbits.com/jobs).
-
 Find us online:
 
 - [Twitter (@OvenBitsMobile)](https://twitter.com/OvenBitsMobile)
