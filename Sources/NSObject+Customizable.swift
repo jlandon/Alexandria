@@ -54,7 +54,8 @@ extension Customizable {
      
      - returns: `self`
      */
-    public func customize(_ customize: @escaping (Self) -> Void) -> Self {
+    @discardableResult
+    public func customize(_ customize: (Self) -> Void) -> Self {
         customize(self)
         return self
     }
