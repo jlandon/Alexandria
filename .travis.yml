@@ -1,5 +1,6 @@
 language: objective-c
 osx_image: xcode8
+rvm: 2.2.1
 install:
 - gem install jazzy --no-rdoc --no-ri --no-document
 notifications:
