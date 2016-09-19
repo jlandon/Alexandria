@@ -5,7 +5,7 @@ echo -e "Executing create_docs"
 if [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" == "master" ]; then
     echo -e "Generating Jazzy output \n"
     
-    jazzy --clean --author "Oven Bits, LLC" --author_url https://ovenbits.com --github_url https://github.com/ovenbits/Alexandria --xcodebuild-arguments "-scheme,Alexandria" --module Alexandria --root-url https://ovenbits.github.io/Alexandria --theme apple --swift-version 2.2
+    jazzy --clean --author "Oven Bits, LLC" --author_url https://ovenbits.com --github_url https://github.com/ovenbits/Alexandria --xcodebuild-arguments "-scheme,Alexandria" --module Alexandria --root-url https://ovenbits.github.io/Alexandria --theme apple --swift-version 3.0
 
     pushd docs
 
