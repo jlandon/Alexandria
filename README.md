@@ -23,8 +23,10 @@ _Alexandria_ (as in the [Library of Alexandria](https://en.wikipedia.org/wiki/Li
 ## Requirements
 
 - iOS 8+
-- Xcode 7.3+
-- Swift 2.2
+- Xcode 8+
+- Swift 3
+
+If you need support for older versions of Swift, there are (semi-maintained) version-specific branches available. Our plan is to move forward as the Swift language progresses, but we understand some transition time is necessary. We will maintain the older version branches as long as we can, but most progress will occur on `master` moving forward with the language.
 
 
 ## Documentation
