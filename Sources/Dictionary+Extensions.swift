@@ -33,7 +33,7 @@ extension Dictionary {
      
      - parameter dictionary: The dictionary to add to self
      */
-    public mutating func unionInPlace(dictionary: Dictionary) {
+    public mutating func formUnion(_ dictionary: Dictionary) {
         dictionary.forEach { updateValue($0.1, forKey: $0.0) }
     }
     
@@ -43,9 +43,9 @@ extension Dictionary {
      - parameter dictionary: The dictionary to add
      - returns: The combination of self and dictionary
      */
-    public func union(dictionary: Dictionary) -> Dictionary {
+    public func union(_ dictionary: Dictionary) -> Dictionary {
         var completeDictionary = self
-        completeDictionary.unionInPlace(dictionary)
+        completeDictionary.formUnion(dictionary)
         return completeDictionary
     }
 }
@@ -67,6 +67,6 @@ public func +<Key, Value>(lhs: Dictionary<Key, Value>, rhs: Dictionary<Key, Valu
  - parameter lhs: The dictionary in which to add key-values.
  - parameter rhs: The dictionary from which to add key-values.
  */
-public func +=<Key, Value>(inout lhs: Dictionary<Key, Value>, rhs: Dictionary<Key, Value>) {
-    lhs.unionInPlace(rhs)
+public func +=<Key, Value>(lhs: inout Dictionary<Key, Value>, rhs: Dictionary<Key, Value>) {
+    lhs.formUnion(rhs)
 }

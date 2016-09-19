@@ -43,10 +43,10 @@ extension Customizable {
      ```
      let label = UILabel(frame: .zero).customize {
         $0.text = "Text goes here..."
-        $0.textColor = .blackColor()
+        $0.textColor = .black
         $0.sizeToFit()
         $0.center = view.center
-        view.addSubview($0)
+        $0.add(toSuperview: $0)
      }
      ```
 
@@ -54,7 +54,8 @@ extension Customizable {
      
      - returns: `self`
      */
-    public func customize(@noescape customize: (Self) -> Void) -> Self {
+    @discardableResult
+    public func customize(_ customize: (Self) -> Void) -> Self {
         customize(self)
         return self
     }

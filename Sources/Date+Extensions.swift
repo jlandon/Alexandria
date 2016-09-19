@@ -1,5 +1,5 @@
 //
-//  NSDate+Extensions.swift
+//  Date+Extensions.swift
 //
 //  Created by Jonathan Landon on 4/15/15.
 //
@@ -27,31 +27,31 @@
 
 import Foundation
 
-extension NSDate {
+extension Date {
     
     /**
      TimeFormat is an enum for formatting timestamps.
      
      Given an hour, minute, and second, the time will be formatted in one of four formats.
-     - `HourMinuteMilitary` (e.g. "19:41")
-     - `HourMinutePeriod` (e.g. "07:41 PM")
-     - `HourMinuteSecondMilitary` (e.g. "19:41:30")
-     - `HourMinuteSecondPeriod` (e.g. "07:41:30 PM")
+     - `hourMinuteMilitary` (e.g. "19:41")
+     - `hourMinutePeriod` (e.g. "07:41 PM")
+     - `hourMinuteSecondMilitary` (e.g. "19:41:30")
+     - `hourMinuteSecondPeriod` (e.g. "07:41:30 PM")
      */
     public enum TimeFormat {
         /// Military time with hours and minutes (e.g. "19:41")
-        case HourMinuteMilitary
+        case hourMinuteMilitary
         /// Standard time with hours and minutes (e.g. "07:41 PM")
-        case HourMinutePeriod
+        case hourMinutePeriod
         /// Military time with hours, minutes, and seconds (e.g. "19:41:30")
-        case HourMinuteSecondMilitary
+        case hourMinuteSecondMilitary
         /// Standard time with hours, minutes, and seconds (e.g. "07:41:30 PM")
-        case HourMinuteSecondPeriod
+        case hourMinuteSecondPeriod
         
         /// Time period (i.e. `AM` and `PM`)
         private enum Period: String {
-            case AM
-            case PM
+            case am
+            case pm
         }
         
         /**
@@ -63,23 +63,23 @@ extension NSDate {
          
          - returns: The formatted string
          */
-        public func convert(hour hour: Int, minute: Int, second: Int) -> String {
+        public func stringify(hour: Int, minute: Int, second: Int) -> String {
             
             assert((0..<24).contains(hour), "The hour \(hour) is outside the valid range of 0-23")
             assert((0..<60).contains(minute), "The minute \(minute) is outside the valid range of 0-59")
             assert((0..<60).contains(second), "The second \(second) is outside the valid range of 0-59")
             
             switch self {
-            case .HourMinuteMilitary:
+            case .hourMinuteMilitary:
                 return String(format: "%02d:%02d", hour, minute)
-            case .HourMinutePeriod:
+            case .hourMinutePeriod:
                 let (adjustedHour, period) = adjustHourForPeriod(hour)
-                return String(format: "%02d:%02d %@", adjustedHour, minute, period.rawValue)
-            case .HourMinuteSecondMilitary:
+                return String(format: "%02d:%02d %@", adjustedHour, minute, period.rawValue.uppercased())
+            case .hourMinuteSecondMilitary:
                 return String(format: "%02d:%02d:%02d", hour, minute, second)
-            case .HourMinuteSecondPeriod:
+            case .hourMinuteSecondPeriod:
                 let (adjustedHour, period) = adjustHourForPeriod(hour)
-                return String(format: "%02d:%02d:%02d %@", adjustedHour, minute, second, period.rawValue)
+                return String(format: "%02d:%02d:%02d %@", adjustedHour, minute, second, period.rawValue.uppercased())
             }
         }
         
@@ -92,23 +92,23 @@ extension NSDate {
          
          - returns: The adjusted hour and period
          */
-        private func adjustHourForPeriod(hour: Int) -> (hour: Int, period: Period) {
+        private func adjustHourForPeriod(_ hour: Int) -> (hour: Int, period: Period) {
             let adjustedHour: Int
             let period: Period
             
             switch hour {
             case 0:
                 adjustedHour = 12
-                period = .AM
+                period = .am
             case 12:
                 adjustedHour = 12
-                period = .PM
+                period = .pm
             case 13...23:
                 adjustedHour = hour - 12
-                period = .PM
+                period = .pm
             default:
                 adjustedHour = hour
-                period = .AM
+                period = .am
             }
             
             return (hour: adjustedHour, period: period)
@@ -116,24 +116,20 @@ extension NSDate {
     }
     
     /**
-     Returns an NSDate object initialized with the provided month, day, and year
+     Returns a Date value initialized with the provided month, day, and year
     
      - parameter month: The month
      - parameter day: The day
      - parameter year: The year
     
-     - returns: An NSDate object initialized with the provided month, day, and year
+     - returns: A Date value initialized with the provided month, day, and year
      */
-    public convenience init?(month: Int, day: Int, year: Int) {
-        let calendar = NSCalendar.currentCalendar()
+    public init?(month: Int, day: Int, year: Int) {
+        let calendar = Calendar.autoupdatingCurrent
+        let components = DateComponents(year: year, month: month, day: day)
         
-        let components = NSDateComponents()
-        components.month = month
-        components.day = day
-        components.year = year
-        
-        if let date = calendar.dateFromComponents(components) {
-            self.init(timeInterval: 0, sinceDate: date)
+        if let date = calendar.date(from: components) {
+            self.init(timeInterval: 0, since: date)
         }
         else {
             self.init(timeIntervalSince1970: 0) // required by the compiler
@@ -142,130 +138,118 @@ extension NSDate {
     }
     
     /// The current year
+    @available(*, deprecated: 2.0, message: "use Date().year")
     public static var currentYear: Int {
-        let calendar = NSCalendar.autoupdatingCurrentCalendar()
-        let components = calendar.components(.Year, fromDate: NSDate())
-        
-        return components.year
+        return Date().year
     }
     
     /// The current month
+    @available(*, deprecated: 2.0, message: "use Date().month")
     public static var currentMonth: Int {
-        let calendar = NSCalendar.autoupdatingCurrentCalendar()
-        let components = calendar.components(.Month, fromDate: NSDate())
-        
-        return components.month
+        return Date().month
     }
     
     /// The current day
+    @available(*, deprecated: 2.0, message: "use Date().day")
     public static var currentDay: Int {
-        let calendar = NSCalendar.autoupdatingCurrentCalendar()
-        let components = calendar.components(.Day, fromDate: NSDate())
-        
-        return components.day
+        return Date().day
     }
     
     /// The current hour
+    @available(*, deprecated: 2.0, message: "use Date().hour")
     public static var currentHour: Int {
-        let calendar = NSCalendar.autoupdatingCurrentCalendar()
-        let components = calendar.components(.Hour, fromDate: NSDate())
-        
-        return components.hour
+        return Date().hour
     }
     
     /// The current minute
+    @available(*, deprecated: 2.0, message: "use Date().minute")
     public static var currentMinute: Int {
-        let calendar = NSCalendar.autoupdatingCurrentCalendar()
-        let components = calendar.components(.Minute, fromDate: NSDate())
-        
-        return components.minute
+        return Date().minute
     }
     
     /// The current second
+    @available(*, deprecated: 2.0, message: "use Date().second")
     public static var currentSecond: Int {
-        let calendar = NSCalendar.autoupdatingCurrentCalendar()
-        let components = calendar.components(.Second, fromDate: NSDate())
-        
-        return components.second
+        return Date().second
     }
     
     /// The era component of self
-    public final var era: Int {
-        return components.era
+    public var era: Int {
+        return components.era ?? 0
     }
     
     /// The year component of self
-    public final var year: Int {
-        return components.year
+    public var year: Int {
+        return components.year ?? 0
     }
     
     /// The month component of self
-    public final var month: Int {
-        return components.month
+    public var month: Int {
+        return components.month ?? 0
     }
     
     /// The day component of self
-    public final var day: Int {
-        return components.day
+    public var day: Int {
+        return components.day ?? 0
     }
     
     /// The hour component of self
-    public final var hour: Int {
-        return components.hour
+    public var hour: Int {
+        return components.hour ?? 0
     }
     
     /// The minute component of self
-    public final var minute: Int {
-        return components.minute
+    public var minute: Int {
+        return components.minute ?? 0
     }
     
     /// The second component of self
-    public final var second: Int {
-        return components.second
+    public var second: Int {
+        return components.second ?? 0
     }
     
     /// The weekday component of self
-    public final var weekday: Int {
-        return components.weekday
+    public var weekday: Int {
+        return components.weekday ?? 0
     }
     
     /// The weekdayOrdinal component of self
-    public final var weekdayOrdinal: Int {
-        return components.weekdayOrdinal
+    public var weekdayOrdinal: Int {
+        return components.weekdayOrdinal ?? 0
     }
     
     /// The quarter component of self
-    public final var quarter: Int {
-        return components.quarter
+    public var quarter: Int {
+        return components.quarter ?? 0
     }
     
     /// The weekOfMonth component of self
-    public final var weekOfMonth: Int {
-        return components.weekOfMonth
+    public var weekOfMonth: Int {
+        return components.weekOfMonth ?? 0
     }
     
     /// The weekOfYear component of self
-    public final var weekOfYear: Int {
-        return components.weekOfYear
+    public var weekOfYear: Int {
+        return components.weekOfYear ?? 0
     }
     
     /// The yearForWeekOfYear component of self
-    public final var yearForWeekOfYear: Int {
-        return components.yearForWeekOfYear
+    public var yearForWeekOfYear: Int {
+        return components.yearForWeekOfYear ?? 0
     }
     
     /// The nanosecond component of self
-    public final var nanosecond: Int {
-        return components.nanosecond
+    public var nanosecond: Int {
+        return components.nanosecond ?? 0
     }
     
     /// The calendar component of self
-    public final var calendar: NSCalendar? {
+    public var calendar: Calendar? {
         return components.calendar
     }
     
     /// The timeZone component of self
-    public final var timeZone: NSTimeZone? {
+    public var timeZone: TimeZone? {
         return components.timeZone
     }
     
@@ -284,56 +268,37 @@ extension NSDate {
      
      - returns: The formatted time string.
      */
-    public final func time(format: TimeFormat = .HourMinuteMilitary) -> String {
-        return format.convert(hour: hour, minute: minute, second: second)
+    public func time(format: TimeFormat = .hourMinuteMilitary) -> String {
+        return format.stringify(hour: hour, minute: minute, second: second)
     }
 }
 
 // MARK: Private
 
-extension NSDate {
+extension Date {
     
-    private final var autoupdatingCurrentCalendar: NSCalendar {
-        return NSCalendar.autoupdatingCurrentCalendar()
-    }
-    
-    private final var allCalendarComponents: NSCalendarUnit {
+    fileprivate var allCalendarComponents: Set<Calendar.Component> {
         return [
-            .Era,
-            .Year,
-            .Month,
-            .Day,
-            .Hour,
-            .Minute,
-            .Second,
-            .Weekday,
-            .WeekdayOrdinal,
-            .Quarter,
-            .WeekOfMonth,
-            .WeekOfYear,
-            .YearForWeekOfYear,
-            .Nanosecond,
-            .Calendar,
-            .TimeZone
+            .era,
+            .year,
+            .month,
+            .day,
+            .hour,
+            .minute,
+            .second,
+            .weekday,
+            .weekdayOrdinal,
+            .quarter,
+            .weekOfMonth,
+            .weekOfYear,
+            .yearForWeekOfYear,
+            .nanosecond,
+            .calendar,
+            .timeZone
         ]
     }
     
-    private final var components: NSDateComponents {
-        return autoupdatingCurrentCalendar.components(allCalendarComponents, fromDate: self)
+    fileprivate var components: DateComponents {
+        return Calendar.autoupdatingCurrent.dateComponents(allCalendarComponents, from: self)
     }
 }
-
-// MARK: Comparable
-
-extension NSDate: Comparable {}
-
-/// Returns true if both dates are equal to each other.
-public func ==(lhs: NSDate, rhs: NSDate) -> Bool {
-    return lhs === rhs || lhs.compare(rhs) == .OrderedSame
-}
-
-/// Returns true if the first date is less than the second date.
-public func <(lhs: NSDate, rhs: NSDate) -> Bool {
-    return lhs.compare(rhs) == .OrderedAscending
-}
-

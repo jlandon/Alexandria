@@ -45,16 +45,16 @@ extension String {
      "someword With Characters".camelCasedString   // "somewordWithCharacters"
      ```
      */
-    public var camelCasedString: String {
+    public var camelCased: String {
         guard !characters.isEmpty else { return self }
         
         if characters.contains(" ") {
-            let first = self[0].lowercaseString
-            let cammel = capitalizedString.stringByReplacingOccurrencesOfString(" ", withString: "")
+            let first = self[0].lowercased()
+            let cammel = capitalized.replacingOccurrences(of: " ", with: "")
             let rest = String(cammel.characters.dropFirst())
             return first + rest
         } else {
-            let first = self[0].lowercaseString
+            let first = self[0].lowercased()
             let rest = String(characters.dropFirst())
             return first + rest
         }
@@ -64,18 +64,18 @@ extension String {
      The base64 encoded version of self.
      Credit: http://stackoverflow.com/a/29365954
      */
-    public var base64EncodedString: String? {
-        let utf8str = dataUsingEncoding(NSUTF8StringEncoding)
-        return utf8str?.base64EncodedStringWithOptions([])
+    public var base64Encoded: String? {
+        let utf8str = data(using: .utf8)
+        return utf8str?.base64EncodedString()
     }
     
     /**
      The decoded value of a base64 encoded string
      Credit: http://stackoverflow.com/a/29365954
      */
-    public var base64DecodedString: String? {
-        let base64Decoded = NSData(base64EncodedString: self, options: []).flatMap({ String(data: $0, encoding: NSUTF8StringEncoding) })
-        return base64Decoded
+    public var base64Decoded: String? {
+        guard let data = Data(base64Encoded: self, options: []) else { return nil }
+        return String(data: data, encoding: .utf8)
     }
     
     /**
@@ -84,7 +84,7 @@ extension String {
     */
     public var isNumeric: Bool {
         guard !isEmpty else { return false }
-        return stringByTrimmingCharactersInSet(.decimalDigitCharacterSet()).isEmpty
+        return trimmingCharacters(in: .decimalDigits).isEmpty
     }
 
     /**
@@ -97,11 +97,11 @@ extension String {
      "hello".regexInPlace("([aeiou])", "<$1>") // "h<e>ll<o>"
      ```
      */
-    public mutating func regexInPlace(pattern: String, _ replacement: String) {
+    public mutating func formRegex(_ pattern: String, _ replacement: String) {
         do {
             let expression = try NSRegularExpression(pattern: pattern, options: [])
-            let range = NSMakeRange(0, self.characters.count)
-            self = expression.stringByReplacingMatchesInString(self, options: [], range: range, withTemplate: replacement)
+            let range = NSRange(location: 0, length: characters.count)
+            self = expression.stringByReplacingMatches(in: self, options: [], range: range, withTemplate: replacement)
         }
         catch { return }
     }
@@ -116,9 +116,9 @@ extension String {
      "hello".regex("([aeiou])", "<$1>") // "h<e>ll<o>"
      ```
      */
-    public func regex(pattern: String, _ replacement: String) -> String {
+    public func regex(_ pattern: String, _ replacement: String) -> String {
         var replacementString = self
-        replacementString.regexInPlace(pattern, replacement)
+        replacementString.formRegex(pattern, replacement)
         return replacementString
     }
 
@@ -137,7 +137,7 @@ extension String {
         return "\(v) "
      }   // "104 101 108 108 111 "
      */
-    public mutating func regexInPlace(pattern: String, _ matches: (String) -> String) {
+    public mutating func formRegex(_ pattern: String, _ matches: (String) -> String) {
 
         let expression: NSRegularExpression
         do {
@@ -152,7 +152,7 @@ extension String {
 
         var startOffset = 0
 
-        let results = expression.matchesInString(self, options: [], range: range)
+        let results = expression.matches(in: self, options: [], range: range)
 
         for result in results {
 
@@ -162,14 +162,14 @@ extension String {
                 var resultRange = result.range
                 resultRange.location += startOffset
 
-                let startIndex = self.startIndex.advancedBy(resultRange.location)
-                let endIndex = self.startIndex.advancedBy(resultRange.location + resultRange.length)
-                let replacementRange = startIndex..<endIndex
+                let startIndex = self.index(self.startIndex, offsetBy: resultRange.location)
+                let endIndex = self.index(self.startIndex, offsetBy: resultRange.location + resultRange.length)
+                let replacementRange = startIndex ..< endIndex
                 
-                let match = expression.replacementStringForResult(result, inString: self, offset: startOffset, template: "$\(i)")
+                let match = expression.replacementString(for: result, in: self, offset: startOffset, template: "$\(i)")
                 let replacement = matches(match)
 
-                self.replaceRange(replacementRange, with: replacement)
+                self.replaceSubrange(replacementRange, with: replacement)
 
                 endOffset += replacement.characters.count - resultRange.length
             }
@@ -195,26 +195,25 @@ extension String {
         return "\(v) "
      }   // "104 101 108 108 111 "
      */
-    public func regex(pattern: String, _ matches: (String) -> String) -> String {
+    public func regex(_ pattern: String, _ matches: (String) -> String) -> String {
         var replacementString = self
-        replacementString.regexInPlace(pattern, matches)
+        replacementString.formRegex(pattern, matches)
         return replacementString
-    }
-
-    /// Range for substring
-    public func range(substring: String) -> Range<String.Index>? {
-        let range = self.startIndex..<self.startIndex.advancedBy(self.characters.count)
-        return self.rangeOfString(substring, options: [], range: range, locale: nil)
     }
 
     /// Substring at index
     public subscript(i: Int) -> String {
-        return String(self[startIndex.advancedBy(i)])
+        return String(self[index(startIndex, offsetBy: i)])
     }
 
     /// Substring for range
     public subscript(r: Range<Int>) -> String {
-        return substringWithRange(startIndex.advancedBy(r.startIndex)..<startIndex.advancedBy(r.endIndex))
+        return substring(with: index(startIndex, offsetBy: r.lowerBound) ..< index(startIndex, offsetBy: r.upperBound))
+    }
+    
+    /// Substring for closed range
+    public subscript(r: ClosedRange<Int>) -> String {
+        return substring(with: index(startIndex, offsetBy: r.lowerBound) ..< index(startIndex, offsetBy: r.upperBound + 1))
     }
     
     /**
@@ -229,16 +228,19 @@ extension String {
     Examples:
     
     ```
-    "hello there".truncate(5)                   // "hello"
-    "hello there".truncate(5, trailing: "...")  // "hello..."
+    "hello there".truncated(to: 5)                   // "hello"
+    "hello there".truncated(to: 5, trailing: "...")  // "hello..."
     ```
 
     */
-    public func truncate(length: Int, trailing: String = "") -> String {
+    public func truncated(to length: Int, trailing: String = "") -> String {
         guard !characters.isEmpty && characters.count > length else { return self }
-        return self.substringToIndex(startIndex.advancedBy(length)) + trailing
+        return self.substring(to: index(startIndex, offsetBy: length)) + trailing
     }
     
+    public mutating func truncate(to length: Int, trailing: String = "") {
+        self = truncated(to: length, trailing: trailing)
+    }
     
     /**
      A bridge for invoking `String.localizedStandardContainsString()`, which is available in iOS 9 and later. If you need to
@@ -253,11 +255,11 @@ extension String {
      
      - returns: Returns true if self contains string, taking the current locale into account.
      */
-    public func compatibleStandardContainsString(string: String) -> Bool {
+    public func compatibleStandardContains(_ string: String) -> Bool {
         if #available(iOS 9.0, *) {
-            return localizedStandardContainsString(string)
+            return localizedStandardContains(string)
         }
-        return self.rangeOfString(string, options: [.CaseInsensitiveSearch, .DiacriticInsensitiveSearch], locale: NSLocale.currentLocale()) != nil
+        return range(of: string, options: [.caseInsensitive, .diacriticInsensitive], locale: .current) != nil
     }
     
     /**
@@ -275,14 +277,15 @@ extension String {
      
      - returns: The Range, if it was possible to convert. Otherwise nil.
      */
-    public func rangeFromNSRange(nsRange : NSRange) -> Range<String.Index>? {
-        let from16 = utf16.startIndex.advancedBy(nsRange.location, limit: utf16.endIndex)
-        let to16 = from16.advancedBy(nsRange.length, limit: utf16.endIndex)
-        if let from = String.Index(from16, within: self),
-            let to = String.Index(to16, within: self) {
-            return from ..< to
-        }
-        return nil
+    public func range(from nsRange: NSRange) -> Range<String.Index>? {
+        guard
+            let from16 = utf16.index(utf16.startIndex, offsetBy: nsRange.location, limitedBy: utf16.endIndex),
+            let to16 = utf16.index(from16, offsetBy: nsRange.length, limitedBy: utf16.endIndex),
+            let from = String.Index(from16, within: self),
+            let to = String.Index(to16, within: self)
+        else { return nil }
+        
+        return from ..< to
     }
     
     /**
@@ -298,11 +301,10 @@ extension String {
      
      - returns: The NSRange converted from the input. This will always succeed.
      */
-    public func NSRangeFromRange(range : Range<String.Index>) -> NSRange {
-        let utf16view = self.utf16
-        let from = String.UTF16View.Index(range.startIndex, within: utf16view)
-        let to = String.UTF16View.Index(range.endIndex, within: utf16view)
-        return NSMakeRange(utf16view.startIndex.distanceTo(from), from.distanceTo(to))
+    public func nsRange(from range: Range<String.Index>) -> NSRange {
+        let from = String.UTF16View.Index(range.lowerBound, within: utf16)
+        let to = String.UTF16View.Index(range.upperBound, within: utf16)
+        return NSRange(location: utf16.distance(from: utf16.startIndex, to: from), length: utf16.distance(from: from, to: to))
     }
 
 }

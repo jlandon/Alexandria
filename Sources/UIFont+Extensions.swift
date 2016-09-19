@@ -28,6 +28,23 @@
 import UIKit
 
 extension UIFont {
+    
+    public enum Extension {
+        case otf
+        case ttf
+        case woff
+        case custom(String)
+        
+        fileprivate var type: String {
+            switch self {
+            case .otf:               return "otf"
+            case .ttf:               return "ttf"
+            case .woff:              return "woff"
+            case .custom(let value): return value
+            }
+        }
+    }
+    
     /**
     Registers a font for use in the app
 
@@ -35,16 +52,19 @@ extension UIFont {
     - parameter fileExtension: The extension of the font file.
     - parameter bundle: The bundle in which the font file is located.
     */
-    public static func registerFont(name name: String, fileExtension: String, inBundle bundle: NSBundle) {
-        guard let path = bundle.pathForResource(name, ofType: fileExtension), fontData = NSData(contentsOfFile: path) else {
-            print("Error registering font")
+    public static func register(name: String, fileExtension: Extension, in bundle: Bundle) {
+        guard
+            let path = bundle.path(forResource: name, ofType: fileExtension.type),
+            let fontData = try? Data(contentsOf: URL(fileURLWithPath: path)),
+            let provider = CGDataProvider(data: fontData as CFData)
+        else {
+            print("Error registering font: \(name).\(fileExtension.type)")
             return
         }
         
-        let provider = CGDataProviderCreateWithCFData(fontData as CFDataRef)
-        guard let font = CGFontCreateWithDataProvider(provider) else { return }
+        let font = CGFont(provider)
         
-        var error: Unmanaged<CFErrorRef>?
+        var error: Unmanaged<CFError>?
         guard !CTFontManagerRegisterGraphicsFont(font, &error) else {
             error?.release()
             return
@@ -52,7 +72,7 @@ extension UIFont {
         
         if let errorRef = error?.takeRetainedValue() {
             let errorDescription = CFErrorCopyDescription(errorRef)
-            print("Failed to load font: \(errorDescription)")
+            print("Failed to load font: \(errorDescription) (\(name).\(fileExtension.type))")
         }
 
         error?.release()

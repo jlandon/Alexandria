@@ -43,8 +43,8 @@ class CollectionTests: XCTestCase {
     func testRemoveArrayElement() {
         var array = [1, 2, 3, 4, 5]
         
-        XCTAssertEqual(array.removeElement(3), 3, "Element not found")
-        XCTAssertEqual(array.removeElement(3), .None, "Element found")
+        XCTAssertEqual(array.remove(3), 3, "Element not found")
+        XCTAssertEqual(array.remove(3), .none, "Element found")
     }
     
     func testUniqueArray() {
@@ -55,37 +55,37 @@ class CollectionTests: XCTestCase {
     
     func testRotateArray() {
         var array = [1, 2, 3, 4, 5]
-
-        XCTAssertEqual(array.rotate(array.count), array, "Array should have been rotated right")
-        XCTAssertEqual(array.rotate(1), [2, 3, 4, 5, 1], "Array should have been rotated right")
-        XCTAssertEqual(array.rotate(2), [3, 4, 5, 1, 2], "Array should have been rotated right")
-        XCTAssertEqual(array.rotate(0), array, "Array should not have been rotated")
-        XCTAssertEqual(array.rotate(-2), [4, 5, 1, 2, 3], "Array should have been rotated left")
-        XCTAssertEqual(array.rotate(-1), [5, 1, 2, 3, 4], "Array should have been rotated left")
-        XCTAssertEqual(array.rotate(-1 * array.count), array, "Array should have been rotated left")
+        
+        XCTAssertEqual(array.rotated(by: array.count), array, "Array should have been rotated right")
+        XCTAssertEqual(array.rotated(by: 1), [2, 3, 4, 5, 1], "Array should have been rotated right")
+        XCTAssertEqual(array.rotated(by: 2), [3, 4, 5, 1, 2], "Array should have been rotated right")
+        XCTAssertEqual(array.rotated(by: 0), array, "Array should not have been rotated")
+        XCTAssertEqual(array.rotated(by: -2), [4, 5, 1, 2, 3], "Array should have been rotated left")
+        XCTAssertEqual(array.rotated(by: -1), [5, 1, 2, 3, 4], "Array should have been rotated left")
+        XCTAssertEqual(array.rotated(by: -1 * array.count), array, "Array should have been rotated left")
         
         array = []
-        XCTAssertEqual(array.rotate(2), [], "Empty array cannot be rotated")
+        XCTAssertEqual(array.rotated(by: 2), [], "Empty array cannot be rotated")
     }
     
     func testRotateInPlace() {
         var array = [1, 2, 3, 4, 5]
-        array.rotateInPlace(1)
+        array.rotate(by: 1)
         XCTAssertEqual([2, 3, 4, 5, 1], array, "Array should have been rotated right")
         array = [1, 2, 3, 4, 5]
-        array.rotateInPlace(2)
+        array.rotate(by: 2)
         XCTAssertEqual([3, 4, 5, 1, 2], array, "Array should have been rotated right")
         array = [1, 2, 3, 4, 5]
-        array.rotateInPlace(0)
+        array.rotate(by: 0)
         XCTAssertEqual(array, array, "Array should not have been rotated")
         array = [1, 2, 3, 4, 5]
-        array.rotateInPlace(-2)
+        array.rotate(by: -2)
         XCTAssertEqual([4, 5, 1, 2, 3], array, "Array should have been rotated left")
         array = [1, 2, 3, 4, 5]
-        array.rotateInPlace(-1)
+        array.rotate(by: -1)
         XCTAssertEqual([5, 1, 2, 3, 4], array, "Array should have been rotated left")
         array = []
-        array.rotateInPlace(2)
+        array.rotate(by: 2)
         XCTAssertEqual(array, array, "Empty array cannot be rotated")
     }
     

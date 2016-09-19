@@ -1,5 +1,5 @@
 //
-//  NSCharacterSet+Extensions.swift
+//  CharacterSet+Extensions.swift
 //
 //  Created by hsoi on 11/17/15.
 //
@@ -29,13 +29,13 @@
 import Foundation
 
 /** 
- Extensions to NSCharacterSet
+ Extensions to CharacterSet
 */
-public extension NSCharacterSet {
+public extension CharacterSet {
     
     /**
     
-     Returns an `NSCharacterSet` comprised of the Unicode characters for currency symbols, as specified in:
+     Returns an `CharacterSet` comprised of the Unicode characters for currency symbols, as specified in:
     
         http://unicode.org/charts/PDF/U20A0.pdf
      
@@ -45,12 +45,12 @@ public extension NSCharacterSet {
      symbols in other blocks.
      
      
-    - returns: An NSCharacterSet of currency symbols
+    - returns: An CharacterSet of currency symbols
 
     */
-    public class func currencySymbolCharacterSet() -> NSCharacterSet {
-        let charset = NSMutableCharacterSet.currencySymbolCharacterSet()
-        return charset.copy() as! NSCharacterSet
+    public static var currencySymbols: CharacterSet {        
+        let charset = NSMutableCharacterSet.currencySymbols()
+        return charset.copy() as! CharacterSet
     }
 }
 
@@ -75,16 +75,16 @@ public extension NSMutableCharacterSet {
      - returns: An NSMutableCharacterSet of currency symbols
      
     */
-    public override class func currencySymbolCharacterSet() -> NSMutableCharacterSet {
+    public class func currencySymbols() -> NSMutableCharacterSet {
         let charset = NSMutableCharacterSet()
         
         // http://unicode.org/charts/PDF/U20A0.pdf
         // http://www.alanwood.net/unicode/currency_symbols.html
         let otherSymbols = "\u{0024}\u{00A2}\u{00A3}\u{00A4}\u{00A5}\u{0192}\u{058F}\u{060B}\u{09F2}\u{09F3}\u{0AF1}\u{0BF9}\u{0E3F}\u{17DB}\u{2133}\u{3350}\u{5143}\u{5186}\u{5706}\u{570E}\u{5713}\u{571C}\u{A838}\u{C6D0}\u{FDFC}\u{FF04}\u{FFE0}\u{FFE1}\u{FFE5}\u{FFE6}\u{1F4B2}"
-        charset.addCharactersInString(otherSymbols)
+        charset.addCharacters(in: otherSymbols)
         
         let range = NSRange(location: 0x20A0, length: 0x20CF - 0x20A0 + 1)
-        charset.addCharactersInRange(range)
+        charset.addCharacters(in: range)
         
         return charset
     }

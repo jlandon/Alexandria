@@ -40,14 +40,14 @@ class StringTests: XCTestCase {
     }
 
     func testCamelCased() {
-        XCTAssertEqual("os version".camelCasedString, "osVersion", "CamelCased strings are not equal")
-        XCTAssertEqual("HelloWorld".camelCasedString, "helloWorld", "CamelCased strings are not equal")
-        XCTAssertEqual("someword With Characters".camelCasedString, "somewordWithCharacters", "CamelCased strings are not equal")
+        XCTAssertEqual("os version".camelCased, "osVersion", "CamelCased strings are not equal")
+        XCTAssertEqual("HelloWorld".camelCased, "helloWorld", "CamelCased strings are not equal")
+        XCTAssertEqual("someword With Characters".camelCased, "somewordWithCharacters", "CamelCased strings are not equal")
     }
 
     func testBase64() {
-        XCTAssertEqual("Oven Bits".base64EncodedString, "T3ZlbiBCaXRz", "Base64 encoded strings are not equal")
-        XCTAssertEqual("T3ZlbiBCaXRz".base64DecodedString, "Oven Bits", "Base64 decoded strings are not equal")
+        XCTAssertEqual("Oven Bits".base64Encoded, "T3ZlbiBCaXRz", "Base64 encoded strings are not equal")
+        XCTAssertEqual("T3ZlbiBCaXRz".base64Decoded, "Oven Bits", "Base64 decoded strings are not equal")
     }
     
     func testRegex() {
@@ -68,8 +68,8 @@ class StringTests: XCTestCase {
     }
     
     func testTruncate() {
-        XCTAssertEqual("hello there".truncate(5), "hello", "Truncated strings are not equal")
-        XCTAssertEqual("hello there".truncate(5, trailing: "..."), "hello...", "Truncated strings are not equal")
+        XCTAssertEqual("hello there".truncated(to: 5), "hello", "Truncated strings are not equal")
+        XCTAssertEqual("hello there".truncated(to: 5, trailing: "..."), "hello...", "Truncated strings are not equal")
     }
     
     func testNumeric() {
@@ -85,23 +85,23 @@ class StringTests: XCTestCase {
     func testExtendedStringRangeConversions() {
         let uk = "🇬🇧"
         let str = "a😜b🇬🇧c"
-        let r1 = str.rangeOfString(uk)!
+        let r1 = str.range(of: uk)!
         
-        let n1 = str.NSRangeFromRange(r1)
-        XCTAssertEqual((str as NSString).substringWithRange(n1), uk, "Range should have found the UK flag")
+        let n1 = str.nsRange(from: r1)
+        XCTAssertEqual((str as NSString).substring(with: n1), uk, "Range should have found the UK flag")
         
-        let r2 = str.rangeFromNSRange(n1)!
-        XCTAssertEqual(str.substringWithRange(r2), uk, "Range should have found the UK flag")
+        let r2 = str.range(from: n1)!
+        XCTAssertEqual(str.substring(with: r2), uk, "Range should have found the UK flag")
     }
     
     func testRepeatedRangeConversion() {
         var content: String = "This library was created by <link id=\"ovenbits\" type=\"ahref\"/> and can be found on <link id=\"github\" type=\"ahref\"/>"
         let regexStr = "<link id=\"(.*?)\" type=\"ahref\"/>"
         do {
-            let regex = try NSRegularExpression(pattern: regexStr, options: .CaseInsensitive)
-            for match in regex.matchesInString(content, options: NSMatchingOptions(), range: NSMakeRange(0, content.characters.count)).reverse() {
-                let reference = content.substringWithRange(content.rangeFromNSRange(match.rangeAtIndex(1))!)
-                content = content.stringByReplacingCharactersInRange(content.rangeFromNSRange(match.range)!, withString: "<a class=\"link\" href=\"http://www.\(reference).com\">\(reference)</a>")
+            let regex = try NSRegularExpression(pattern: regexStr, options: .caseInsensitive)
+            for match in regex.matches(in: content, options: [], range: NSRange(location: 0, length: content.characters.count)).reversed() {
+                let reference = content.substring(with: content.range(from: match.rangeAt(1))!)
+                content = content.replacingCharacters(in: content.range(from: match.range)!, with: "<a class=\"link\" href=\"http://www.\(reference).com\">\(reference)</a>")
             }
             XCTAssertEqual(content, "This library was created by <a class=\"link\" href=\"http://www.ovenbits.com\">ovenbits</a> and can be found on <a class=\"link\" href=\"http://www.github.com\">github</a>", "Repeated regex should have been handled")
         } catch {

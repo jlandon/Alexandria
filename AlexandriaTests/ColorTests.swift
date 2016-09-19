@@ -41,19 +41,19 @@ class ColorTests: XCTestCase {
     }
 
     func testHexInitializer() {
-        XCTAssertEqual(UIColor(hex: 0xFF0000), UIColor.redColor(), "Colors not equal")
-        XCTAssertEqual(UIColor(hexString: "#00FF00"), UIColor.greenColor(), "Colors not equal")
-        XCTAssertEqual(UIColor(hexString: "0000FF"), UIColor.blueColor(), "Colors not equal")
-        XCTAssertEqual(UIColor(hue: 0, saturation: 1, lightness: 0.5), UIColor.redColor(), "Colors not equal")
-        XCTAssertEqual(UIColor(cyan: 0, magenta: 1, yellow: 1, key: 0), UIColor.redColor(), "Colors not equal")
+        XCTAssertEqual(UIColor(hex: 0xFF0000), UIColor.red, "Colors not equal")
+        XCTAssertEqual(UIColor(hexString: "#00FF00"), UIColor.green, "Colors not equal")
+        XCTAssertEqual(UIColor(hexString: "0000FF"), UIColor.blue, "Colors not equal")
+        XCTAssertEqual(UIColor(hue: 0, saturation: 1, lightness: 0.5), UIColor.red, "Colors not equal")
+        XCTAssertEqual(UIColor(cyan: 0, magenta: 1, yellow: 1, key: 0), UIColor.red, "Colors not equal")
     }
     
     func testHexString() {
-        XCTAssertEqual(UIColor.purpleColor().hexString, "#7f007f", "Hex strings are not equal")
+        XCTAssertEqual(UIColor.purple.hexString, "#7f007f", "Hex strings are not equal")
     }
     
     func testHex() {
-        XCTAssertEqual(UIColor.yellowColor().hex, UIColor(hex: 0xFFFF00).hex, "Hex values are not equal")
+        XCTAssertEqual(UIColor.yellow.hex, UIColor(hex: 0xFFFF00).hex, "Hex values are not equal")
     }
     
     func testComponents() {
@@ -66,14 +66,14 @@ class ColorTests: XCTestCase {
     
     func testLightenColor() {
         let color = UIColor(hex: 0xEF5138)
-        XCTAssertEqual(color.lighten(by: 0.2).hex, 0xF3816F)
-        XCTAssertEqual(color.lighten(by: 20%).hex, 0xF3816F)
+        XCTAssertEqual(color.lightened(by: 0.2).hex, 0xF3816F)
+        XCTAssertEqual(color.lightened(by: 20%).hex, 0xF3816F)
     }
     
     func testDarkenColor() {
         let color = UIColor(hex: 0xEF5138)
-        XCTAssertEqual(color.darken(by: 0.2).hex, 0xDA2D12)
-        XCTAssertEqual(color.darken(by: 20%).hex, 0xDA2D12)
+        XCTAssertEqual(color.darkened(by: 0.2).hex, 0xDA2D12)
+        XCTAssertEqual(color.darkened(by: 20%).hex, 0xDA2D12)
     }
     
     func testRGBColorModel() {
@@ -310,6 +310,6 @@ class ColorTests: XCTestCase {
     }
 }
 
-func XCTAssertCGFloatEqual(lhs: CGFloat, _ rhs: CGFloat, roundedToDecimalPlaces places: UInt, _ message: String) {
+func XCTAssertCGFloatEqual(_ lhs: CGFloat, _ rhs: CGFloat, roundedToDecimalPlaces places: UInt, _ message: String) {
     XCTAssertEqual(lhs.rounded(places: places), rhs.rounded(places: places), message)
 }

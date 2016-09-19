@@ -32,25 +32,25 @@ extension UIViewController {
     /// Retrieve the view controller currently on-screen
     ///
     /// Based off code here: http://stackoverflow.com/questions/24825123/get-the-current-view-controller-from-the-app-delegate
-    public class var currentViewController: UIViewController? {
-        if let controller = UIApplication.sharedApplication().keyWindow?.rootViewController {
-            return findCurrentViewController(controller)
+    public static var current: UIViewController? {
+        if let controller = UIApplication.shared.keyWindow?.rootViewController {
+            return findCurrent(controller)
         }
         return nil
     }
     
-    private class func findCurrentViewController(controller: UIViewController) -> UIViewController {
+    private static func findCurrent(_ controller: UIViewController) -> UIViewController {
         if let controller = controller.presentedViewController {
-            return findCurrentViewController(controller)
+            return findCurrent(controller)
         }
-        else if let controller = controller as? UISplitViewController, lastViewController = controller.viewControllers.first where controller.viewControllers.count > 0 {
-            return findCurrentViewController(lastViewController)
+        else if let controller = controller as? UISplitViewController, let lastViewController = controller.viewControllers.first, controller.viewControllers.count > 0 {
+            return findCurrent(lastViewController)
         }
-        else if let controller = controller as? UINavigationController, topViewController = controller.topViewController where controller.viewControllers.count > 0 {
-            return findCurrentViewController(topViewController)
+        else if let controller = controller as? UINavigationController, let topViewController = controller.topViewController, controller.viewControllers.count > 0 {
+            return findCurrent(topViewController)
         }
-        else if let controller = controller as? UITabBarController, selectedViewController = controller.selectedViewController where controller.viewControllers?.count > 0 {
-            return findCurrentViewController(selectedViewController)
+        else if let controller = controller as? UITabBarController, let selectedViewController = controller.selectedViewController, (controller.viewControllers?.count ?? 0) > 0 {
+            return findCurrent(selectedViewController)
         }
         else {
             return controller

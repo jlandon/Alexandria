@@ -36,7 +36,7 @@ extension UIGestureRecognizer {
     private class GestureAction {
         var action: (UIGestureRecognizer) -> Void
         
-        init(action: (UIGestureRecognizer) -> Void) {
+        init(action: @escaping (UIGestureRecognizer) -> Void) {
             self.action = action
         }
     }
@@ -50,7 +50,6 @@ extension UIGestureRecognizer {
         get { return objc_getAssociatedObject(self, &AssociatedKeys.ActionName) as? GestureAction }
     }
     
-    
     /**
      Convenience initializer, associating an action closure with the gesture recognizer (instead of the more traditional target/action).
      
@@ -58,13 +57,13 @@ extension UIGestureRecognizer {
      
      - returns: The UIGestureRecognizer.
      */
-    public convenience init(action: (UIGestureRecognizer) -> Void) {
+    public convenience init(action: @escaping (UIGestureRecognizer) -> Void) {
         self.init()
         gestureAction = GestureAction(action: action)
-        addTarget(self, action: #selector(UIGestureRecognizer.handleAction(_:)))
+        addTarget(self, action: #selector(handleAction(_:)))
     }
     
-    dynamic private func handleAction(recognizer: UIGestureRecognizer) {
+    dynamic private func handleAction(_ recognizer: UIGestureRecognizer) {
         gestureAction?.action(recognizer)
     }
 }

@@ -112,7 +112,7 @@ public extension UIImage {
      - returns: The lightened image, or nil if error.
      */
     public func applyLightEffect() -> UIImage? {
-        return applyBlurWithRadius(30, tintColor: UIColor(white: 1.0, alpha: 0.3), saturationDeltaFactor: 1.8)
+        return applyBlur(withRadius: 30, tintColor: UIColor(white: 1.0, alpha: 0.3), saturationDeltaFactor: 1.0)
     }
     
     
@@ -122,9 +122,9 @@ public extension UIImage {
      - returns: The extra lightened image, or nil if error.
      */
     public func applyExtraLightEffect() -> UIImage? {
-        return applyBlurWithRadius(20, tintColor: UIColor(white: 0.97, alpha: 0.82), saturationDeltaFactor: 1.8)
+        return applyBlur(withRadius: 20, tintColor: UIColor(white: 0.97, alpha: 0.82), saturationDeltaFactor: 1.8)
     }
-
+    
     
     /**
      Applies a darkening (blur) effect to the image.
@@ -132,9 +132,9 @@ public extension UIImage {
      - returns: The darkened image, or nil if error.
      */
     public func applyDarkEffect() -> UIImage? {
-        return applyBlurWithRadius(20, tintColor: UIColor(white: 0.11, alpha: 0.73), saturationDeltaFactor: 1.8)
+        return applyBlur(withRadius: 20, tintColor: UIColor(white: 0.11, alpha: 0.73), saturationDeltaFactor: 1.8)
     }
-
+    
     
     /**
      Tints the image with the given color.
@@ -143,11 +143,11 @@ public extension UIImage {
      
      - returns: The tinted image, or nil if error.
      */
-    public func applyTintEffectWithColor(tintColor: UIColor) -> UIImage? {
+    public func applyTintEffect(withColor tintColor: UIColor) -> UIImage? {
         let effectColorAlpha: CGFloat = 0.6
         var effectColor = tintColor
         
-        let componentCount = CGColorGetNumberOfComponents(tintColor.CGColor)
+        let componentCount = tintColor.cgColor.numberOfComponents
         
         if componentCount == 2 {
             var b: CGFloat = 0
@@ -164,7 +164,7 @@ public extension UIImage {
             }
         }
         
-        return applyBlurWithRadius(10, tintColor: effectColor, saturationDeltaFactor: -1.0, maskImage: nil)
+        return applyBlur(withRadius: 10, tintColor: effectColor, saturationDeltaFactor: -1.0, maskImage: nil)
     }
     
     
@@ -178,62 +178,57 @@ public extension UIImage {
      
      - returns: The adjusted image, or nil if error.
      */
-    public func applyBlurWithRadius(blurRadius: CGFloat, tintColor: UIColor?, saturationDeltaFactor: CGFloat, maskImage: UIImage? = nil) -> UIImage? {
+    public func applyBlur(withRadius blurRadius: CGFloat, tintColor: UIColor?, saturationDeltaFactor: CGFloat, maskImage: UIImage? = nil) -> UIImage? {
         // Check pre-conditions.
-        if (size.width < 1 || size.height < 1) {
+        
+        guard size.width >= 1 && size.height >= 1 else {
             print("*** error: invalid size: \(size.width) x \(size.height). Both dimensions must be >= 1: \(self)")
             return nil
         }
-        if self.CGImage == nil {
+        guard let cgImage = self.cgImage else {
             print("*** error: image must be backed by a CGImage: \(self)")
             return nil
         }
-        if maskImage != nil && maskImage!.CGImage == nil {
+        if maskImage != nil && maskImage!.cgImage == nil {
             print("*** error: maskImage must be backed by a CGImage: \(maskImage)")
             return nil
         }
-
-        let __FLT_EPSILON__ = CGFloat(FLT_EPSILON)
-        let screenScale = UIScreen.mainScreen().scale
-        let imageRect = CGRect(origin: CGPointZero, size: size)
-        var effectImage = self
-
-        let hasBlur = blurRadius > __FLT_EPSILON__
-        let hasSaturationChange = fabs(saturationDeltaFactor - 1.0) > __FLT_EPSILON__
-
+        
+        defer { UIGraphicsEndImageContext() }
+        
+        let epsilon = CGFloat(FLT_EPSILON)
+        let screenScale = UIScreen.main.scale
+        let imageRect = CGRect(origin: .zero, size: size)
+        var effectImage: UIImage? = self
+        
+        let hasBlur = blurRadius > epsilon
+        let hasSaturationChange = fabs(saturationDeltaFactor - 1.0) > epsilon
+        
         if hasBlur || hasSaturationChange {
-            func createEffectBuffer(context: CGContext) -> vImage_Buffer {
-                let data = CGBitmapContextGetData(context)
-                let width = CGBitmapContextGetWidth(context)
-                let height = CGBitmapContextGetHeight(context)
-                let rowBytes = CGBitmapContextGetBytesPerRow(context)
+            func createEffectBuffer(_ context: CGContext) -> vImage_Buffer {
+                let data = context.data
+                let width = context.width
+                let height = context.height
+                let rowBytes = context.bytesPerRow
                 
                 return vImage_Buffer(data: data, height: UInt(height), width: UInt(width), rowBytes: rowBytes)
             }
             
             UIGraphicsBeginImageContextWithOptions(size, false, screenScale)
             
-            guard let effectInContext = UIGraphicsGetCurrentContext() else {
-                UIGraphicsEndImageContext()
-                return self
-            }
+            guard let effectInContext = UIGraphicsGetCurrentContext() else { return self }
             
-            CGContextScaleCTM(effectInContext, 1.0, -1.0)
-            CGContextTranslateCTM(effectInContext, 0, -size.height)
-            CGContextDrawImage(effectInContext, imageRect, self.CGImage)
+            effectInContext.scaleBy(x: 1, y: -1)
+            effectInContext.translateBy(x: 0, y: -size.height)
+            effectInContext.draw(cgImage, in: imageRect)
             
             var effectInBuffer = createEffectBuffer(effectInContext)
-
             
             UIGraphicsBeginImageContextWithOptions(size, false, screenScale)
             
-            guard let effectOutContext = UIGraphicsGetCurrentContext() else {
-                UIGraphicsEndImageContext()
-                return self
-            }
+            guard let effectOutContext = UIGraphicsGetCurrentContext() else { return self }
             
             var effectOutBuffer = createEffectBuffer(effectOutContext)
-            
             
             if hasBlur {
                 // A description of how to compute the box kernel width from the Gaussian
@@ -248,13 +243,14 @@ public extension UIImage {
                 //
                 // ... if d is odd, use three box-blurs of size 'd', centered on the output pixel.
                 //
-
+                
                 let inputRadius = blurRadius * screenScale
-                var radius = UInt32(floor(inputRadius * 3.0 * CGFloat(sqrt(2 * M_PI)) / 4 + 0.5))
+                let input = inputRadius * 3 * sqrt(2 * .pi) / 4 + 0.5
+                var radius = UInt32(floor(input))
                 if radius % 2 != 1 {
                     radius += 1 // force radius to be odd so that the three box-blur methodology works.
                 }
-
+                
                 let imageEdgeExtendFlags = vImage_Flags(kvImageEdgeExtend)
                 
                 vImageBoxConvolve_ARGB8888(&effectInBuffer, &effectOutBuffer, nil, 0, 0, radius, radius, nil, imageEdgeExtendFlags)
@@ -274,12 +270,7 @@ public extension UIImage {
                 ]
                 
                 let divisor: CGFloat = 256
-                let matrixSize = floatingPointSaturationMatrix.count
-                var saturationMatrix = [Int16](count: matrixSize, repeatedValue: 0)
-
-                for i in 0..<matrixSize {
-                    saturationMatrix[i] = Int16(round(floatingPointSaturationMatrix[i] * divisor))
-                }
+                let saturationMatrix = floatingPointSaturationMatrix.map { Int16(round($0) * divisor) }
                 
                 if hasBlur {
                     vImageMatrixMultiply_ARGB8888(&effectOutBuffer, &effectInBuffer, saturationMatrix, Int32(divisor), nil, nil, vImage_Flags(kvImageNoFlags))
@@ -305,34 +296,31 @@ public extension UIImage {
         // Set up output context.
         UIGraphicsBeginImageContextWithOptions(size, false, screenScale)
         let outputContext = UIGraphicsGetCurrentContext()
-        CGContextScaleCTM(outputContext, 1.0, -1.0)
-        CGContextTranslateCTM(outputContext, 0, -size.height)
+        outputContext?.scaleBy(x: 1, y: -1)
+        outputContext?.translateBy(x: 0, y: -size.height)
         
         // Draw base image.
-        CGContextDrawImage(outputContext, imageRect, self.CGImage)
+        outputContext?.draw(cgImage, in: imageRect)
         
         // Draw effect image.
-        if hasBlur {
-            CGContextSaveGState(outputContext)
-            if let image = maskImage {
-                CGContextClipToMask(outputContext, imageRect, image.CGImage);
+        if let effectImage = effectImage?.cgImage, hasBlur {
+            outputContext?.saveGState()
+            if let image = maskImage?.cgImage {
+                outputContext?.clip(to: imageRect, mask: image)
             }
-            CGContextDrawImage(outputContext, imageRect, effectImage.CGImage)
-            CGContextRestoreGState(outputContext)
+            outputContext?.draw(effectImage, in: imageRect)
+            outputContext?.restoreGState()
         }
         
         // Add in color tint.
         if let color = tintColor {
-            CGContextSaveGState(outputContext)
-            CGContextSetFillColorWithColor(outputContext, color.CGColor)
-            CGContextFillRect(outputContext, imageRect)
-            CGContextRestoreGState(outputContext)
+            outputContext?.saveGState()
+            outputContext?.setFillColor(color.cgColor)
+            outputContext?.fill(imageRect)
+            outputContext?.restoreGState()
         }
-
-        // Output image is ready.
-        let outputImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
         
-        return outputImage
+        // Output image is ready.
+        return UIGraphicsGetImageFromCurrentImageContext()
     }
 }

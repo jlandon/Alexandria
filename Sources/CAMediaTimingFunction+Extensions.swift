@@ -36,16 +36,16 @@ import UIKit
 extension CAMediaTimingFunction {
     
     /// A media timing function for ease-in
-    @nonobjc public static let EaseIn = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn)
+    @nonobjc public static let easeIn = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn)
     
     /// A media timing function for ease-in and ease-out
-    @nonobjc public static let EaseInEaseOut = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+    @nonobjc public static let easeInEaseOut = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
     
     /// A media timing function for ease-out.
-    @nonobjc public static let EaseOut = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
+    @nonobjc public static let easeOut = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
     
     /// A linear media timing function.
-    @nonobjc public static let Linear = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
+    @nonobjc public static let linear = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
     
     /**
      Create a CAMediaTimingFunction from the specified control points.
@@ -57,7 +57,7 @@ extension CAMediaTimingFunction {
      
      - returns: A CAMediaTimingFunction with the specified control points.
      */
-    public static func controlPoints(x1: Float, _ y1: Float, _ x2: Float, _ y2: Float) -> CAMediaTimingFunction {
+    public static func controlPoints(_ x1: Float, _ y1: Float, _ x2: Float, _ y2: Float) -> CAMediaTimingFunction {
         return .init(controlPoints: x1, y1, x2, y2)
     }
 }

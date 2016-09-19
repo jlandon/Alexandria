@@ -49,8 +49,8 @@ extension UICollectionView {
      collectionView.registerCell(CustomCell)
      ```
      */
-    public func registerCell<T: UICollectionViewCell>(type: T.Type, reuseIdentifier: String? = nil) {
-        registerClass(T.self, forCellWithReuseIdentifier: reuseIdentifier ?? T.className)
+    public func registerCell<T: UICollectionViewCell>(_ type: T.Type, withIdentifier reuseIdentifier: String = String(describing: T.self)) {
+        register(T.self, forCellWithReuseIdentifier: reuseIdentifier)
     }
     
     /**
@@ -74,8 +74,14 @@ extension UICollectionView {
      let cell = collectionView.dequeueReusableCell(CustomCell.self, forIndexPath: indexPath)
      ```
      */
-    public func dequeueReusableCell<T: UICollectionViewCell>(type: T.Type, forIndexPath indexPath: NSIndexPath, reuseIdentifier: String = T.className) -> T {
-        return dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! T
+    public func dequeueCell<T: UICollectionViewCell>(_ type: T.Type = T.self,
+                             withIdentifier reuseIdentifier: String = String(describing: T.self),
+                                              for indexPath: IndexPath) -> T
+    {
+        guard let cell = dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? T else {
+            fatalError("Unknown cell type (\(T.self)) for reuse identifier: \(reuseIdentifier)")
+        }
+        return cell
     }
     
     // MARK: Headers
@@ -98,8 +104,8 @@ extension UICollectionView {
      collectionView.registerHeader(CustomHeader)
      ```
      */
-    public func registerHeader<T: UICollectionReusableView>(type: T.Type, reuseIdentifier: String = T.className) {
-        registerClass(T.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: reuseIdentifier)
+    public func registerHeader<T: UICollectionReusableView>(_ type: T.Type, withIdentifier reuseIdentifier: String = String(describing: T.self)) {
+        register(T.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: reuseIdentifier)
     }
     
     /**
@@ -123,8 +129,14 @@ extension UICollectionView {
      let footerView = collectionView.dequeueReusableHeader(CustomHeader.self, forIndexPath: indexPath)
      ```
      */
-    public func dequeueReusableHeader<T: UICollectionReusableView>(type: T.Type, forIndexPath indexPath: NSIndexPath, reuseIdentifier: String = T.className) -> T {
-        return dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: reuseIdentifier, forIndexPath: indexPath) as! T
+    public func dequeueHeader<T: UICollectionReusableView>(_ type: T.Type = T.self,
+                                   withIdentifier reuseIdentifier: String = String(describing: T.self),
+                                                    for indexPath: IndexPath) -> T
+    {
+        guard let header = dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: reuseIdentifier, for: indexPath) as? T else {
+            fatalError("Unknown header type (\(T.self)) for reuse identifier: \(reuseIdentifier)")
+        }
+        return header
     }
     
     // MARK: Footers
@@ -147,8 +159,8 @@ extension UICollectionView {
      collectionView.registerFooter(CustomFooter)
      ```
      */
-    public func registerFooter<T: UICollectionReusableView>(type: T.Type, reuseIdentifier: String = T.className) {
-        registerClass(T.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: reuseIdentifier)
+    public func registerFooter<T: UICollectionReusableView>(_ type: T.Type, withIdentifier reuseIdentifier: String = String(describing: T.self)) {
+        register(T.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: reuseIdentifier)
     }
     
     /**
@@ -172,8 +184,14 @@ extension UICollectionView {
      let footerView = collectionView.dequeueReusableFooter(CustomFooter.self, forIndexPath: indexPath)
      ```
      */
-    public func dequeueReusableFooter<T: UICollectionReusableView>(type: T.Type, forIndexPath indexPath: NSIndexPath, reuseIdentifier: String = T.className) -> T {
-        return dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionFooter, withReuseIdentifier: reuseIdentifier, forIndexPath: indexPath) as! T
+    public func dequeueFooter<T: UICollectionReusableView>(_ type: T.Type = T.self,
+                                   withIdentifier reuseIdentifier: String = String(describing: T.self),
+                                                    for indexPath: IndexPath) -> T
+    {
+        guard let footer = dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter, withReuseIdentifier: reuseIdentifier, for: indexPath) as? T else {
+            fatalError("Unknown footer type (\(T.self)) for reuse identifier: \(reuseIdentifier)")
+        }
+        return footer
     }
     
     /**
@@ -183,9 +201,11 @@ extension UICollectionView {
      - parameter section: The section in which to insert the rows (optional, defaults to 0).
      - parameter completion: The completion handler, called after the rows have been inserted (optional).
      */
-    public func insert(indices: [Int], section: Int = 0, completion: (Bool) -> Void = { _ in }) {
-        let indexPaths = indices.map { NSIndexPath(forRow: $0, inSection: section) }
-        performBatchUpdates({ self.insertItemsAtIndexPaths(indexPaths) }, completion: completion)
+    public func insert(_ indices: [Int], section: Int = 0, completion: @escaping (Bool) -> Void = { _ in }) {
+        guard !indices.isEmpty else { return }
+        
+        let indexPaths = indices.map { IndexPath(row: $0, section: section) }
+        performBatchUpdates({ self.insertItems(at: indexPaths) }, completion: completion)
     }
     
     /**
@@ -195,9 +215,11 @@ extension UICollectionView {
      - parameter section: The section in which to delete the rows (optional, defaults to 0).
      - parameter completion: The completion handler, called after the rows have been deleted (optional).
      */
-    public func delete(indices: [Int], section: Int = 0, completion: (Bool) -> Void = { _ in }) {
-        let indexPaths = indices.map { NSIndexPath(forRow: $0, inSection: section) }
-        performBatchUpdates({ self.deleteItemsAtIndexPaths(indexPaths) }, completion: completion)
+    public func delete(_ indices: [Int], section: Int = 0, completion: @escaping (Bool) -> Void = { _ in }) {
+        guard !indices.isEmpty else { return }
+        
+        let indexPaths = indices.map { IndexPath(row: $0, section: section) }
+        performBatchUpdates({ self.deleteItems(at: indexPaths) }, completion: completion)
     }
     
     /**
@@ -207,9 +229,11 @@ extension UICollectionView {
      - parameter section: The section in which to reload the rows (optional, defaults to 0).
      - parameter completion: The completion handler, called after the rows have been reloaded (optional).
      */
-    public func reload(indices: [Int], section: Int = 0, completion: (Bool) -> Void = { _ in }) {
-        let indexPaths = indices.map { NSIndexPath(forRow: $0, inSection: section) }
-        performBatchUpdates({ self.reloadItemsAtIndexPaths(indexPaths) }, completion: completion)
+    public func reload(_ indices: [Int], section: Int = 0, completion: @escaping (Bool) -> Void = { _ in }) {
+        guard !indices.isEmpty else { return }
+        
+        let indexPaths = indices.map { IndexPath(row: $0, section: section) }
+        performBatchUpdates({ self.reloadItems(at: indexPaths) }, completion: completion)
     }
 }
 
@@ -218,71 +242,79 @@ extension UICollectionView {
 
 extension UICollectionView {
     
-    /// The minimum ("starting") `NSIndexPath` for traversing a `UICollectionView` "sequentially".
-    public var minimumIndexPath: NSIndexPath {
-        return NSIndexPath(forItem: 0, inSection: 0)
+    /// The minimum ("starting") `IndexPath` for traversing a `UICollectionView` "sequentially".
+    public var minimumIndexPath: IndexPath {
+        return IndexPath(item: 0, section: 0)
     }
 
-    /// The maximum ("ending") `NSIndexPath` for traversing a `UICollectionView` "sequentially".
-    public var maximumIndexPath: NSIndexPath {
-        let lastSection = max(0, numberOfSections() - 1)
-        let lastItem = max(0, numberOfItemsInSection(lastSection) - 1)
-        return NSIndexPath(forItem: lastItem, inSection: lastSection)
+    /// The maximum ("ending") `IndexPath` for traversing a `UICollectionView` "sequentially".
+    public var maximumIndexPath: IndexPath {
+        let lastSection = max(0, numberOfSections - 1)
+        let lastItem = max(0, numberOfItems(inSection: lastSection) - 1)
+        return IndexPath(item: lastItem, section: lastSection)
     }
     
     
     /**
-     When "sequentially" traversing a `UICollectionView`, what's the next `NSIndexPath` after the given `NSIndexPath`.
+     When "sequentially" traversing a `UICollectionView`, what's the next `IndexPath` after the given `IndexPath`.
      
      - parameter indexPath: The current indexPath; the path we want to find what comes after.
      
      - returns: The next indexPath, or nil if we're at the maximumIndexPath
      - SeeAlso: `var maximumIndexpath`
      */
-    public func nextIndexPathForIndexPath(indexPath: NSIndexPath) -> NSIndexPath? {
+    public func indexPath(after indexPath: IndexPath) -> IndexPath? {
         if indexPath == maximumIndexPath {
             return nil
         }
         
-        assertIsValidIndexPath(indexPath)
+        assertIsValid(indexPath: indexPath)
         
-        let lastItem = numberOfItemsInSection(indexPath.section)
+        let lastItem = numberOfItems(inSection: indexPath.section)
         if indexPath.item == lastItem  {
-            return NSIndexPath(forItem: 0, inSection: indexPath.section + 1)
+            return IndexPath(item: 0, section: indexPath.section + 1)
         } else {
-            return NSIndexPath(forItem: indexPath.item + 1, inSection: indexPath.section)
+            return IndexPath(item: indexPath.item + 1, section: indexPath.section)
         }
     }
     
     /**
-     When "sequentially" traversing a `UICollectionView`, what's the previous `NSIndexPath` before the given `NSIndexPath`.
+     When "sequentially" traversing a `UICollectionView`, what's the previous `IndexPath` before the given `IndexPath`.
      
      - parameter indexPath: The current indexPath; the path we want to find what comes before.
      
      - returns: The prior indexPath, or nil if we're at the minimumIndexPath
      - SeeAlso: `var minimumIndexPath`
      */
-    public func previousIndexPathForIndexPath(indexPath: NSIndexPath) -> NSIndexPath? {
+    public func indexPath(before indexPath: IndexPath) -> IndexPath? {
         if indexPath == minimumIndexPath {
             return nil
         }
         
-        assertIsValidIndexPath(indexPath)
+        assertIsValid(indexPath: indexPath)
         
         if indexPath.item == 0 {
-            let lastItem = numberOfItemsInSection(indexPath.section - 1)
-            return NSIndexPath(forItem: lastItem, inSection: indexPath.section - 1)
+            let lastItem = numberOfItems(inSection: indexPath.section - 1)
+            return IndexPath(item: lastItem, section: indexPath.section - 1)
         } else {
-            return NSIndexPath(forItem: indexPath.item - 1, inSection: indexPath.section)
+            return IndexPath(item: indexPath.item - 1, section: indexPath.section)
         }
     }
     
-    private func assertIsValidIndexPath(indexPath: NSIndexPath, file: StaticString = #file, line: UInt = #line) {
+    private func assertIsValid(indexPath: IndexPath, file: StaticString = #file, line: UInt = #line) {
         let maxPath = maximumIndexPath
-        assert(indexPath.section <= maxPath.section && indexPath.section >= 0,
-            "Index path \(indexPath) is outside the bounds set by the minimum (\(minimumIndexPath)) and maximum (\(maxPath)) index path", file: file, line: line)
-        let itemCount = numberOfItemsInSection(indexPath.section)
-        assert(indexPath.item < itemCount && indexPath.item >= 0,
-            "Index path \(indexPath) item index is outside the bounds of the items (\(itemCount)) in the indexPath's section", file: file, line: line)
+        assert(
+            indexPath.section <= maxPath.section && indexPath.section >= 0,
+            "Index path \(indexPath) is outside the bounds set by the minimum (\(minimumIndexPath)) and maximum (\(maxPath)) index path",
+            file: file,
+            line: line
+        )
+        let itemCount = numberOfItems(inSection: indexPath.section)
+        assert(
+            indexPath.item < itemCount && indexPath.item >= 0,
+            "Index path \(indexPath) item index is outside the bounds of the items (\(itemCount)) in the indexPath's section",
+            file: file,
+            line: line
+        )
     }
 }

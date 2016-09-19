@@ -35,9 +35,9 @@ extension Comparable {
      
      - returns: The current value bounded between a minimum and maximum value
     */
-    public func limit(min min: Self, max: Self) -> Self {
+    public func limited(min: Self, max: Self) -> Self {
         var value = self
-        value.limitInPlace(min: min, max: max)
+        value.limit(min: min, max: max)
         return value
     }
     
@@ -49,8 +49,8 @@ extension Comparable {
      
      - returns: The current value bounded between a minimum and maximum value
      */
-    public func limit(min: Self, _ max: Self) -> Self {
-        return limit(min: min, max: max)
+    public func limited(_ min: Self, _ max: Self) -> Self {
+        return limited(min: min, max: max)
     }
     
     /**
@@ -59,7 +59,7 @@ extension Comparable {
      - parameter min: The minimum possible value
      - parameter max: The maximum possible value
      */
-    public mutating func limitInPlace(min min: Self, max: Self) {
+    public mutating func limit(min: Self, max: Self) {
         self = Swift.max(Swift.min(self, max), min)
     }
 }

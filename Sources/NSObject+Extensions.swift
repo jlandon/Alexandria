@@ -34,7 +34,7 @@ extension NSObject {
      Determines the class name of the object's dynamic type.
      */
     public var className: String {
-        return self.dynamicType.className
+        return type(of: self).className
     }
     
     /**
@@ -47,6 +47,6 @@ extension NSObject {
     }
 }
 
-private func stringFromClass(type: AnyClass) -> String {
-    return NSStringFromClass(type).componentsSeparatedByString(".").last!
+private func stringFromClass(_ type: AnyClass) -> String {
+    return NSStringFromClass(type).components(separatedBy: ".").last!
 }

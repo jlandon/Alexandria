@@ -25,11 +25,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-private struct AssociatedKeys {
-    static var ActionName = "action"
-}
-
 extension UIControl {
+    
+    private final class Action {
+        var action: () -> Void
+        
+        init(action: @escaping () -> Void) {
+            self.action = action
+        }
+    }
+    
+    private struct AssociatedKeys {
+        static var ActionName = "action"
+    }
     
     private var action: Action? {
         set { objc_setAssociatedObject(self, &AssociatedKeys.ActionName, newValue, .OBJC_ASSOCIATION_RETAIN) }
@@ -43,10 +51,10 @@ extension UIControl {
      
      - returns: An initialized UIControl.
      */
-    public convenience init(actionClosure: () -> Void) {
+    public convenience init(actionClosure: @escaping () -> Void) {
         self.init()
         action = Action(action: actionClosure)
-        addTarget(self, action: #selector(handleAction), forControlEvents: .TouchUpInside)
+        addTarget(self, action: #selector(handleAction), for: .touchUpInside)
     }
     
     
@@ -58,10 +66,10 @@ extension UIControl {
      
      - returns: An initialized UIControl.
      */
-    public convenience init(frame: CGRect, actionClosure: () -> Void) {
+    public convenience init(frame: CGRect, actionClosure: @escaping () -> Void) {
         self.init(frame: frame)
         action = Action(action: actionClosure)
-        addTarget(self, action: #selector(handleAction), forControlEvents: .TouchUpInside)
+        addTarget(self, action: #selector(handleAction), for: .touchUpInside)
     }
     
     
@@ -71,22 +79,12 @@ extension UIControl {
      - parameter controlEvents: The UIControlEvents upon which to execute this action.
      - parameter action:        The action closure to execute.
      */
-    public func addTarget(controlEvents controlEvents: UIControlEvents, actionClosure: () -> Void) {
+    public func addTarget(for controlEvents: UIControlEvents, actionClosure: @escaping () -> Void) {
         action = Action(action: actionClosure)
-        addTarget(self, action: #selector(handleAction), forControlEvents: controlEvents)
+        addTarget(self, action: #selector(handleAction), for: controlEvents)
     }
     
     public func handleAction() {
-        assert(self.action != nil, "Action caught but action closure missing for control: \(self.dynamicType)")
-        guard let action = self.action else { return }
-        action.action()
-    }
-}
-
-public class Action {
-    var action: () -> Void
-    
-    init(action: () -> Void) {
-        self.action = action
+        action?.action()
     }
 }

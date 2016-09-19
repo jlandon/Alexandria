@@ -27,7 +27,7 @@
 
 import Foundation
 
-extension CollectionType where Self.Index == Int {
+extension Collection where Self.Index == Self.Indices.Iterator.Element {
     /**
      Returns an optional element. If the `index` does not exist in the collection, the subscript returns nil.
      
@@ -35,8 +35,8 @@ extension CollectionType where Self.Index == Int {
      
      - returns: An optional element from the collection at the specified index.
      */
-    public subscript (safe index: Int) -> Self.Generator.Element? {
-        return at(index)
+    public subscript(safe i: Index) -> Self.Iterator.Element? {
+        return at(i)
     }
     
     /**
@@ -46,12 +46,12 @@ extension CollectionType where Self.Index == Int {
      
      - returns: An optional element from the collection at the specified index.
      */
-    public func at(index: Int) -> Self.Generator.Element? {
-        return indices.contains(index) ? self[index] : nil
+    public func at(_ i: Index) -> Self.Iterator.Element? {
+        return indices.contains(i) ? self[i] : nil
     }
 }
 
-public extension CollectionType {
+public extension Collection {
     
     /**
      Creats a shuffled version of this array using the Fisher-Yates (fast and uniform) shuffle.
@@ -59,23 +59,23 @@ public extension CollectionType {
      
      - returns: A shuffled version of this array.
      */
-    public func shuffle() -> [Generator.Element] {
+    public func shuffled() -> [Generator.Element] {
         var list = Array(self)
-        list.shuffleInPlace()
+        list.shuffle()
         return list
     }
 }
 
-public extension MutableCollectionType where Index == Int {
+public extension MutableCollection where Index == Int, IndexDistance == Int {
     /**
      Shuffle the array using the Fisher-Yates (fast and uniform) shuffle. Mutating.
      From http://stackoverflow.com/a/24029847/194869
      */
-    public mutating func shuffleInPlace() {
+    public mutating func shuffle() {
         // Empty and single-element collections don't shuffle.
         guard count > 1 else { return }
         
-        for i in 0..<(count - 1) {
+        for i in 0 ..< (count - 1) {
             let j = Int(arc4random_uniform(UInt32(count - i))) + i
             guard i != j else { continue }
             swap(&self[i], &self[j])
@@ -87,7 +87,7 @@ public extension MutableCollectionType where Index == Int {
      
      - returns: A random element from the collection.
      */
-    public func randomElement() -> Generator.Element {
+    public func random() -> Generator.Element {        
         let index = Int(arc4random_uniform(UInt32(count)))
         return self[index]
     }

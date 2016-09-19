@@ -35,31 +35,31 @@ extension UIImage {
      - parameter tintColor: The UIColor to tint by.
      - returns: A copy of self, tinted by the tintColor.
      */
-    public func tinted(tintColor: UIColor) -> UIImage {
-        UIGraphicsBeginImageContextWithOptions(size, false, UIScreen.mainScreen().scale)
+    public func tinted(_ tintColor: UIColor) -> UIImage {
+        guard let cgImage = cgImage else { return self }
+        
+        UIGraphicsBeginImageContextWithOptions(size, false, UIScreen.main.scale)
 
+        defer { UIGraphicsEndImageContext() }
+        
         let context = UIGraphicsGetCurrentContext()
-        CGContextSaveGState(context)
+        context?.saveGState()
 
         tintColor.setFill()
 
-        CGContextTranslateCTM(context, 0.0, size.height)
-        CGContextScaleCTM(context, 1.0, -1.0)
+        context?.translateBy(x: 0, y: size.height)
+        context?.scaleBy(x: 1, y: -1)
+        context?.setBlendMode(.normal)
+        
+        let rect = CGRect(origin: .zero, size: size)
+        context?.draw(cgImage, in: rect)
+        
+        context?.clip(to: rect, mask: cgImage)
+        context?.addRect(rect)
+        context?.drawPath(using: .fill)
+        context?.restoreGState()
 
-        CGContextSetBlendMode(context, .Normal)
-        let rect = CGRectMake(0.0, 0.0, size.width, size.height)
-        CGContextDrawImage(context, rect, CGImage)
-
-        CGContextClipToMask(context, rect, CGImage)
-        CGContextAddRect(context, rect)
-        CGContextDrawPath(context, .Fill)
-
-        let coloredImage = UIGraphicsGetImageFromCurrentImageContext()
-
-        CGContextRestoreGState(context)
-        UIGraphicsEndImageContext()
-
-        return coloredImage
+        return UIGraphicsGetImageFromCurrentImageContext() ?? self
     }
     
     /**
@@ -68,18 +68,55 @@ extension UIImage {
      Example:
      ```
      let image = UIImage(named: <image_name>) // image size = (width: 200, height: 100)
-     image?.scaledBy(0.25) // image size = (width: 50, height: 25)
-     image?.scaledBy(2)    // image size = (width: 400, height: 200)
+     image?.resized(width: 50, height: 50) // image size = (width: 50, height: 50)
+     image?.resized(width: 50, height: 50, maintainAspectRatio: true) // image size = (width: 50, height: 25)
+     ```
+     
+     - parameter width: The width to which to resize the image.
+     - parameter height: The height to which to resize the image.
+     - parameter maintainAspectRatio: A Boolean flag indicating whether or not to maintain the image's aspect ratio when resizing (optional, defaults to `false`).
+     - returns: A copy of self, resized to a specified width and heigh (with an option to maintain the original aspect ratio).
+     */
+    public func resized(width: CGFloat, height: CGFloat, maintainAspectRatio: Bool = false) -> UIImage? {
+        
+        let inputSize = CGSize(width: width, height: height)
+        let newSize: CGSize
+        
+        if maintainAspectRatio {
+            let ratio = min(inputSize.width / size.width, inputSize.height / size.height)
+            newSize = CGSize(width: size.width * ratio, height: size.height * ratio)
+        }
+        else {
+            newSize = inputSize
+        }
+        
+        UIGraphicsBeginImageContextWithOptions(newSize, false, UIScreen.main.scale)
+        
+        defer { UIGraphicsEndImageContext() }
+        
+        draw(in: CGRect(origin: .zero, size: newSize))
+        
+        return UIGraphicsGetImageFromCurrentImageContext()
+    }
+    
+    /**
+     Returns a copy of self, scaled by a specified scale factor (with an optional image orientation).
+     
+     Example:
+     ```
+     let image = UIImage(named: <image_name>) // image size = (width: 200, height: 100)
+     image?.scaled(by: 0.25) // image size = (width: 50, height: 25)
+     image?.scaled(by: 2)    // image size = (width: 400, height: 200)
      ```
      
      - parameter scaleFactor: The factor at which to scale this image.
      - parameter orientiation: The orientation to use for the scaled image (optional, defaults to the image's `imageOrientation` property).
      - returns: A copy of self, scaled by the scaleFactor (with an optional image orientation).
      */
-    public func scaledBy(scaleFactor: CGFloat, withOrientation orientation: UIImageOrientation? = nil) -> UIImage? {
-        guard let coreImage = CGImage else { return nil }
+    public func scaled(by scaleFactor: CGFloat, withOrientation orientation: UIImageOrientation? = nil) -> UIImage? {
+        guard let coreImage = cgImage else { return nil }
         
-        return UIImage(CGImage: coreImage, scale: 1/scaleFactor, orientation: orientation ?? imageOrientation)
+        return UIImage(cgImage: coreImage, scale: 1/scaleFactor, orientation: orientation ?? imageOrientation)
     }
 
     /**
@@ -87,13 +124,13 @@ extension UIImage {
 
     Example:
 
-        let image = UIImage(size: CGSizeMake(12, 24)) {
+        let image = UIImage(size: CGSize(width: 12, height: 24)) {
             let path = UIBezierPath()
-            path.moveToPoint(...)
-            path.addLineToPoint(...)
-            path.addLineToPoint(...)
+            path.move(to: ...)
+            path.addLine(to: ...)
+            path.addLine(to: ...)
             path.lineWidth = 2
-            UIColor.whiteColor().setStroke()
+            UIColor.white.setStroke()
             path.stroke()
         }
 
@@ -105,14 +142,11 @@ extension UIImage {
         UIGraphicsBeginImageContextWithOptions(size, false, 0)
         commands()
 
-        defer {
-            UIGraphicsEndImageContext()
-        }
-        if let image = UIGraphicsGetImageFromCurrentImageContext().CGImage {
-            self.init(CGImage: image)
-            return
-        }
-        return nil
+        defer { UIGraphicsEndImageContext() }
+        
+        guard let image = UIGraphicsGetImageFromCurrentImageContext()?.cgImage else { return nil }
+        
+        self.init(cgImage: image)
     }
 
     /**
@@ -123,19 +157,16 @@ extension UIImage {
     */
     public convenience init?(color: UIColor) {
         let size = CGSize(width: 1, height: 1)
-        let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+        let rect = CGRect(origin: .zero, size: size)
         UIGraphicsBeginImageContextWithOptions(size, false, 0)
 
         color.setFill()
         UIRectFill(rect)
 
-        defer {
-            UIGraphicsEndImageContext()
-        }
-        if let image = UIGraphicsGetImageFromCurrentImageContext().CGImage {
-            self.init(CGImage: image)
-            return
-        }
-        return nil
+        defer { UIGraphicsEndImageContext() }
+        
+        guard let image = UIGraphicsGetImageFromCurrentImageContext()?.cgImage else { return nil }
+        
+        self.init(cgImage: image)
     }
 }

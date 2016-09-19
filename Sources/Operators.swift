@@ -25,7 +25,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-postfix operator % {}
+postfix operator %
 
 public postfix func %(value: CGFloat) -> CGFloat {
     return value / 100

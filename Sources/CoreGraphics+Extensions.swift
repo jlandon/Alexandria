@@ -29,49 +29,74 @@
 
 import UIKit
 
+// MARK: - CGContext
+
 extension CGContext {
     /// The current graphics context
-    public static func currentContext() -> CGContext? {
+    public static var current: CGContext? {
         return UIGraphicsGetCurrentContext()
     }
 }
 
-@available(iOS 9.0, *)
-extension CGColorSpace {
-    
-    /// CGColorSpace for the generic CMYK color space.
-    public static let GenericCMYK = CGColorSpaceCreateWithName(kCGColorSpaceGenericCMYK)
-    
-    /// CGColorSpace for the Adobe RGB (1998) color space.
-    public static let AdobeRGB1998 = CGColorSpaceCreateWithName(kCGColorSpaceAdobeRGB1998)
-    
-    /// CGColorSpace for the SRGB color space.
-    public static let SRGB = CGColorSpaceCreateWithName(kCGColorSpaceSRGB)
-    
-    /// CGColorSpace for the generic gray color space with a gamma value of 2.2.
-    public static let GenericGrayGamma2_2 = CGColorSpaceCreateWithName(kCGColorSpaceGenericGrayGamma2_2)
-    
-    /// CGColorSpace for the generic gray color space.
-    public static let GenericGray = CGColorSpaceCreateWithName(kCGColorSpaceGenericGray)
-    
-    /// CGColorSpace for the generic RGB color space.
-    public static let GenericRGB = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB)
-    
-    /// CGColorSpace for the generic linear RGB color space.
-    public static let GenericRGBLinear = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGBLinear)
-    
-    /// CGColorSpace for the generic XYZ color space.
-    public static let GenericXYZ = CGColorSpaceCreateWithName(kCGColorSpaceGenericXYZ)
-    
-    /// CGColorSpace for the linear ACESCG color space.
-    public static let ACESCGLinear = CGColorSpaceCreateWithName(kCGColorSpaceACESCGLinear)
-    
-    /// CGColorSpace for the ITUR_709 color space.
-    public static let ITUR_709 = CGColorSpaceCreateWithName(kCGColorSpaceITUR_709)
-    
-    /// CGColorSpace for the ITUR_2020 color space.
-    public static let ITUR_2020 = CGColorSpaceCreateWithName(kCGColorSpaceITUR_2020)
-    
-    /// CGColorSpace for the ROMMRGB color space.
-    public static let ROMMRGB = CGColorSpaceCreateWithName(kCGColorSpaceROMMRGB)
+// MARK: - CGRect
+
+extension CGRect {
+    /**
+     Returns a CGRect value initialized with an origin at (0,0) and the provided width and height
+     
+     - parameter width: The width
+     - parameter height: The height
+     
+     - returns: A CGRect value initialized with an origin at (0,0) and the provided width and height
+     */
+    public init(width: CGFloat, height: CGFloat) {
+        self.init(x: 0, y: 0, width: width, height: height)
+    }
+}
+
+// MARK: - CGPoint
+
+extension CGPoint {
+    /**
+     Returns the distance between two points.
+     
+     - parameter point: The point to which to calculate the distance.
+     
+     - returns: The distance between self and another point.
+     */
+    public func distance(to point: CGPoint) -> CGFloat {
+        return sqrt(pow(point.x - x, 2) + pow(point.y - y, 2))
+    }
+}
+
+public func +(lhs: CGPoint, rhs: CGPoint) -> CGPoint {
+    return CGPoint(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
+}
+
+public func +=(lhs: inout CGPoint, rhs: CGPoint) {
+    lhs = lhs + rhs
+}
+
+public func -(lhs: CGPoint, rhs: CGPoint) -> CGPoint {
+    return CGPoint(x: lhs.x - rhs.x, y: lhs.y - rhs.y)
+}
+
+public func -=(lhs: inout CGPoint, rhs: CGPoint) {
+    lhs = lhs - rhs
+}
+
+public func *(lhs: CGPoint, rhs: CGPoint) -> CGPoint {
+    return CGPoint(x: lhs.x * rhs.x, y: lhs.y * rhs.y)
+}
+
+public func *=(lhs: inout CGPoint, rhs: CGPoint) {
+    lhs = lhs * rhs
+}
+
+public func /(lhs: CGPoint, rhs: CGPoint) -> CGPoint {
+    return CGPoint(x: lhs.x / rhs.x, y: lhs.y / rhs.y)
+}
+
+public func /=(lhs: inout CGPoint, rhs: CGPoint) {
+    lhs = lhs / rhs
 }

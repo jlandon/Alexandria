@@ -31,7 +31,7 @@ extension Optional {
      
      - parameter block: The closure to execute if a value is found
      */
-    public func unwrap(@noescape block: (Wrapped) throws -> ()) rethrows {
+    public func unwrap(_ block: (Wrapped) throws -> Void) rethrows {
         if let value = self {
             try block(value)
         }

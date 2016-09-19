@@ -39,14 +39,12 @@ extension SKProduct {
     - SeeAlso: Listing 2-3 @ https://developer.apple.com/library/mac/documentation/NetworkingInternet/Conceptual/StoreKitGuide/Chapters/ShowUI.html#//apple_ref/doc/uid/TP40008267-CH3-SW10
     */
     public var localizedPrice : String {
-        let numberFormatter = NSNumberFormatter()
-        numberFormatter.formatterBehavior = .Behavior10_4
-        numberFormatter.numberStyle = .CurrencyStyle
+        let numberFormatter = NumberFormatter()
+        numberFormatter.formatterBehavior = .behavior10_4
+        numberFormatter.numberStyle = .currency
         numberFormatter.locale = priceLocale
-        if let formattedString = numberFormatter.stringFromNumber(price) {
-            return formattedString
-        }
-        return ""
+        
+        return numberFormatter.string(from: price) ?? ""
     }
 
 }

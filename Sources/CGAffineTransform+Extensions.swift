@@ -40,30 +40,8 @@ extension CGAffineTransform {
     
     - returns: A transform scaled by `(sx, sy)`.
     */
-    public static func Scale(sx: CGFloat, _ sy: CGFloat) -> CGAffineTransform {
-        return CGAffineTransformMakeScale(sx, sy)
-    }
-    
-    /**
-     Returns a transform which scales `self` by `(sx, sy)`. Equivalent to `CGAffineTransformScale(self, sx, sy)`.
-     
-     - parameter sx: The `x` scale.
-     - parameter sy: The `y` scale.
-     
-     - returns: A transform of `self` scaled by `(sx, sy)`.
-     */
-    public func Scale(sx: CGFloat, _ sy: CGFloat) -> CGAffineTransform {
-        return CGAffineTransformScale(self, sx, sy)
-    }
-    
-    /**
-     Scales `self` by `(sx, sy)`, in place.
-     
-     - parameter sx: The `x` scale.
-     - parameter sy: The `y` scale.
-     */
-    public mutating func ScaleInPlace(sx: CGFloat, _ sy: CGFloat) {
-        self = CGAffineTransformScale(self, sx, sy)
+    public static func scale(_ sx: CGFloat, _ sy: CGFloat) -> CGAffineTransform {
+        return CGAffineTransform(scaleX: sx, y: sy)
     }
     
     // MARK: Translate
@@ -76,30 +54,8 @@ extension CGAffineTransform {
     
     - returns: A transform translated by `(tx, ty)`.
     */
-    public static func Translate(tx: CGFloat, _ ty: CGFloat) -> CGAffineTransform {
-        return CGAffineTransformMakeTranslation(tx, ty)
-    }
-    
-    /**
-     Returns a transform which translates `self` by `(tx, ty)`. Equivalent to `CGAffineTransformTranslate(self, tx, ty)`.
-     
-     - parameter tx: The `x` translation.
-     - parameter ty: The `y` translation.
-     
-     - returns: A transform of `self` translated by `(tx, ty)`.
-     */
-    public func Translate(tx: CGFloat, _ ty: CGFloat) -> CGAffineTransform {
-        return CGAffineTransformTranslate(self, tx, ty)
-    }
-    
-    /**
-     Translates `self` by `(tx, ty)`, in place.
-     
-     - parameter tx: The `x` translation.
-     - parameter ty: The `y` translation.
-     */
-    public mutating func TranslateInPlace(tx: CGFloat, _ ty: CGFloat) {
-        self = CGAffineTransformTranslate(self, tx, ty)
+    public static func translate(_ tx: CGFloat, _ ty: CGFloat) -> CGAffineTransform {
+        return CGAffineTransform(translationX: tx, y: ty)
     }
     
     // MARK: Rotate
@@ -111,28 +67,8 @@ extension CGAffineTransform {
     
     - returns: A transform rotated by `angle` radians.
     */
-    public static func Rotate(angle: CGFloat) -> CGAffineTransform {
-        return CGAffineTransformMakeRotation(angle)
-    }
-    
-    /**
-     Returns a transform which rotates `self` by `angle` radians. Equivalent to `CGAffineTransformRotate(self, angle)`.
-     
-     - parameter angle: The rotation angle in radians.
-     
-     - returns: A transform of `self` rotated by `angle` radians.
-     */
-    public func Rotate(angle: CGFloat) -> CGAffineTransform {
-        return CGAffineTransformRotate(self, angle)
-    }
-    
-    /**
-     Rotates `self` by `angle` radians, in place.
-     
-     - parameter angle: The rotation angle in radians.
-     */
-    public mutating func RotateInPlace(angle: CGFloat) {
-        self = CGAffineTransformRotate(self, angle)
+    public static func rotate(_ angle: CGFloat) -> CGAffineTransform {
+        return CGAffineTransform(rotationAngle: angle)
     }
     
     // MARK: Invert
@@ -144,39 +80,8 @@ extension CGAffineTransform {
     
     - returns: An inverted transform.
     */
-    public static func Invert(transform: CGAffineTransform) -> CGAffineTransform {
-        return CGAffineTransformInvert(transform)
-    }
-    
-    /**
-     Returns a transform which inverts `self`. Equivalent to `CGAffineTransformInvert(self)`.
-     
-     - returns: The inverse transform of `self`.
-     */
-    public func Invert() -> CGAffineTransform {
-        return CGAffineTransformInvert(self)
-    }
-    
-    /// Inverts `self`, in place.
-    public mutating func InvertInPlace() {
-        self = CGAffineTransformInvert(self)
-    }
-    
-    // MARK: Identity
-    
-    /// Returns an identity transform. Equivalent to `CGAffineTransformIdentity`.
-    public static func Identity() -> CGAffineTransform {
-        return CGAffineTransformIdentity
-    }
-    
-    /// Returns an identity transform. Equivalent to `CGAffineTransformIdentity`.
-    public func Identity() -> CGAffineTransform {
-        return CGAffineTransformIdentity
-    }
-    
-    /// Performs an identity transform on `self`, in place.
-    public mutating func IdentityInPlace() {
-        self = CGAffineTransformIdentity
+    public static func invert(_ transform: CGAffineTransform) -> CGAffineTransform {
+        return transform.inverted()
     }
     
     // MARK: Concat
@@ -188,22 +93,23 @@ extension CGAffineTransform {
     
     - returns: A concatenation of the array of transforms.
     */
-    public static func Concat(transforms: CGAffineTransform...) -> CGAffineTransform {
-        var transform = CGAffineTransformIdentity
-        transforms.forEach { transform = CGAffineTransformConcat(transform, $0) }
+    public static func concat(_ transforms: CGAffineTransform...) -> CGAffineTransform {
+        var transform: CGAffineTransform = .identity
+        transforms.forEach { transform = transform.concatenating($0) }
         
         return transform
     }
-}
+    
+    /**
+     Concatenates two CGAffineTransforms and returns the result. Equivalent to `CGAffineTransformConcat(lhs, rhs)`.
+     
+     - parameter lhs: The first transform.
+     - parameter rhs: The second transform.
+     
+     - returns: The concatentation of the two transforms.
+     */
+    public static func *(lhs: CGAffineTransform, rhs: CGAffineTransform) -> CGAffineTransform {
+        return .concat(lhs, rhs)
+    }
 
-/**
- Concatenates two CGAffineTransforms and returns the result. Equivalent to `CGAffineTransformConcat(lhs, rhs)`.
- 
- - parameter lhs: The first transform.
- - parameter rhs: The second transform.
- 
- - returns: The concatentation of the two transforms.
- */
-public func *(lhs: CGAffineTransform, rhs: CGAffineTransform) -> CGAffineTransform {
-    return .Concat(lhs, rhs)
 }
