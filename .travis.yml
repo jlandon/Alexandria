@@ -1,6 +1,6 @@
 language: objective-c
 osx_image: xcode8
-rvm: 2.2.1
+rvm: 2.2.2
 install:
 - gem install activesupport --no-rdoc --no-ri --no-document
 - gem install jazzy --no-rdoc --no-ri --no-document
