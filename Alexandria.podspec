@@ -45,6 +45,7 @@ Pod::Spec.new do |s|
   s.social_media_url    = 'https://twitter.com/ovenbitsmobile'
   s.platform            = :ios, "8.0"
   s.requires_arc        = true
+  s.pod_target_xcconfig = { 'SWIFT_VERSION' => '3.0' }
   s.documentation_url   = 'https://ovenbits.github.io/Alexandria'
   s.source              = { :git => "https://github.com/ovenbits/Alexandria.git", :tag => "v#{s.version}" }
   s.frameworks          = *%w(Foundation UIKit)
