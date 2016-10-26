@@ -28,16 +28,19 @@
 import Foundation
 
 extension URL: ExpressibleByStringLiteral {
+    /// Creates a URL initialized to the given string value.
     public init(stringLiteral value: StringLiteralType) {
         guard let url = URL(string: value) else { fatalError("Could not create URL from: \(value)") }
         self = url
     }
     
+    /// Creates a URL initialized to the given value.
     public init(extendedGraphemeClusterLiteral value: StringLiteralType) {
         guard let url = URL(string: value) else { fatalError("Could not create URL from: \(value)") }
         self = url
     }
     
+    /// Creates a URL initialized to the given value.
     public init(unicodeScalarLiteral value: StringLiteralType) {
         guard let url = URL(string: value) else { fatalError("Could not create URL from: \(value)") }
         self = url

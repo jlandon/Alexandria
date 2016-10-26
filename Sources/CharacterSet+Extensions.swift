@@ -56,14 +56,17 @@ public extension CharacterSet {
 
 extension CharacterSet: ExpressibleByStringLiteral {
     
+    /// Creates a CharacterSet initialized to the given string value.
     public init(stringLiteral value: StringLiteralType) {
         self.init(charactersIn: value)
     }
     
+    /// Creates a CharacterSet initialized to the given value.
     public init(extendedGraphemeClusterLiteral value: StringLiteralType) {
         self.init(charactersIn: value)
     }
     
+    /// Creates a CharacterSet initialized to the given value.
     public init(unicodeScalarLiteral value: StringLiteralType) {
         self.init(charactersIn: value)
     }
