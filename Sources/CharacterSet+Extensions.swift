@@ -54,6 +54,21 @@ public extension CharacterSet {
     }
 }
 
+extension CharacterSet: ExpressibleByStringLiteral {
+    
+    public init(stringLiteral value: StringLiteralType) {
+        self.init(charactersIn: value)
+    }
+    
+    public init(extendedGraphemeClusterLiteral value: StringLiteralType) {
+        self.init(charactersIn: value)
+    }
+    
+    public init(unicodeScalarLiteral value: StringLiteralType) {
+        self.init(charactersIn: value)
+    }
+}
+
 
 /**
  Extensions to NSMutableCharacterSet
