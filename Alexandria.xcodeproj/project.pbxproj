@@ -51,6 +51,8 @@
 		814C71FA1B69DD0900BB4DBD /* Alexandria.h in Headers */ = {isa = PBXBuildFile; fileRef = 814C71F91B69DD0900BB4DBD /* Alexandria.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		81A87FD61D1828CD00F43B74 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A87FD51D1828CD00F43B74 /* Operators.swift */; };
 		81A87FD81D182E0800F43B74 /* CGFloatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A87FD71D182E0800F43B74 /* CGFloatTests.swift */; };
+		81E694981DC0E893002A4EB5 /* URLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E694971DC0E893002A4EB5 /* URLTests.swift */; };
+		81E6949A1DC0EA2B002A4EB5 /* CharacterSetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E694991DC0EA2B002A4EB5 /* CharacterSetTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -112,6 +114,8 @@
 		814C72061B69DD0900BB4DBD /* AlexandriaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlexandriaTests.swift; sourceTree = "<group>"; };
 		81A87FD51D1828CD00F43B74 /* Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
 		81A87FD71D182E0800F43B74 /* CGFloatTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGFloatTests.swift; sourceTree = "<group>"; };
+		81E694971DC0E893002A4EB5 /* URLTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLTests.swift; sourceTree = "<group>"; };
+		81E694991DC0EA2B002A4EB5 /* CharacterSetTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharacterSetTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -238,6 +242,8 @@
 				81253BE11C69B2A20054D52C /* DateTests.swift */,
 				79B152491D01C5FC009E850E /* IntTests.swift */,
 				81A87FD71D182E0800F43B74 /* CGFloatTests.swift */,
+				81E694971DC0E893002A4EB5 /* URLTests.swift */,
+				81E694991DC0EA2B002A4EB5 /* CharacterSetTests.swift */,
 				814C72041B69DD0900BB4DBD /* Supporting Files */,
 			);
 			path = AlexandriaTests;
@@ -360,11 +366,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				81E694981DC0E893002A4EB5 /* URLTests.swift in Sources */,
 				79B1524A1D01C5FC009E850E /* IntTests.swift in Sources */,
 				796510A31C6F4F2F00E01F89 /* DateTests.swift in Sources */,
 				796510A01C6F4F2F00E01F89 /* StringTests.swift in Sources */,
 				796510A21C6F4F2F00E01F89 /* ColorTests.swift in Sources */,
 				81A87FD81D182E0800F43B74 /* CGFloatTests.swift in Sources */,
+				81E6949A1DC0EA2B002A4EB5 /* CharacterSetTests.swift in Sources */,
 				796510A11C6F4F2F00E01F89 /* CollectionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
