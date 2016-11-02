@@ -1,12 +1,32 @@
 //
 //  UIAlertController+Extensions.swift
-//  Alexandria
 //
 //  Created by Jonathan Landon on 11/1/16.
 //
+// The MIT License (MIT)
 //
+// Copyright (c) 2014-2016 Oven Bits, LLC
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
 
 import Foundation
+import UIKit
 
 extension UIAlertController {
     
@@ -31,7 +51,7 @@ extension UIAlertController {
      - parameter title: The title for the controller (optional, defaults to `nil`).
      - parameter message: The message for the controller (optional, defaults to `nil`).
      
-     - returns: A UIAlertController instances, styled as an action sheet.
+     - returns: A UIAlertController instance, styled as an action sheet.
      */
     public static func actionSheet(title: String? = nil, message: String? = nil) -> UIAlertController {
         return UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
@@ -43,7 +63,7 @@ extension UIAlertController {
      - parameter title: The title for the controller (optional, defaults to `nil`).
      - parameter message: The message for the controller (optional, defaults to `nil`).
      
-     - returns: A UIAlertController instances, styled as an alert.
+     - returns: A UIAlertController instance, styled as an alert.
      */
     public static func alert(title: String? = nil, message: String? = nil) -> UIAlertController {
         return UIAlertController(title: title, message: message, preferredStyle: .alert)
