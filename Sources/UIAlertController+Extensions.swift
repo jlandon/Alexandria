@@ -35,12 +35,12 @@ extension UIAlertController {
      
      - parameter title: The text to use for the action title.
      - parameter style: The style to use for the action (optional, defaults to `.default`).
-     - parameter handler: A closure to execute when the user selects the action (optional, defaults to empty closure).
+     - parameter handler: A closure to execute when the user selects the action (optional, defaults to `nil`).
      
      - returns: self
      */
     @discardableResult
-    public func addAction(title: String?, style: UIAlertActionStyle = .default, handler: @escaping (UIAlertAction) -> Void = { _ in }) -> Self {
+    public func addAction(title: String?, style: UIAlertActionStyle = .default, handler: ((UIAlertAction) -> Void)? = nil) -> Self {
         addAction(UIAlertAction(title: title, style: style, handler: handler))
         return self
     }
@@ -74,9 +74,9 @@ extension UIAlertController {
      
      - parameter controller: The controller in which to present the alert controller (optional, defaults to `.current`).
      - parameter animated: Pass `true` to animate the presentation; otherwise, pass `false` (optional, defaults to `true`).
-     - parameter completion: The closure to execute after the presentation finishes (optional, defaults to an empty closure).
+     - parameter completion: The closure to execute after the presentation finishes (optional, defaults to `nil`).
      */
-    public func present(in controller: UIViewController? = .current, animated: Bool = true, completion: @escaping () -> Void = {}) {
+    public func present(in controller: UIViewController? = .current, animated: Bool = true, completion: (() -> Void)? = nil) {
         controller?.present(self, animated: animated, completion: completion)
     }
 }
