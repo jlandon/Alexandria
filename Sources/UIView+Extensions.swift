@@ -825,6 +825,7 @@ extension UIView {
      - returns: self
      */
     @nonobjc
+    @discardableResult
     public func pinLeft(to support: UILayoutSupport,
                            _ attribute: NSLayoutAttribute = .left,
                              relation: NSLayoutRelation = .equal,
@@ -849,6 +850,7 @@ extension UIView {
      - returns: self
      */
     @nonobjc
+    @discardableResult
     public func pinRight(to support: UILayoutSupport,
                             _ attribute: NSLayoutAttribute = .right,
                               relation: NSLayoutRelation = .equal,
@@ -873,6 +875,7 @@ extension UIView {
      - returns: self
      */
     @nonobjc
+    @discardableResult
     public func pinTop(to support: UILayoutSupport,
                           _ attribute: NSLayoutAttribute = .top,
                             relation: NSLayoutRelation = .equal,
@@ -897,6 +900,7 @@ extension UIView {
      - returns: self
      */
     @nonobjc
+    @discardableResult
     public func pinBottom(to support: UILayoutSupport,
                              _ attribute: NSLayoutAttribute = .bottom,
                                relation: NSLayoutRelation = .equal,
@@ -921,6 +925,7 @@ extension UIView {
      - returns: self
      */
     @nonobjc
+    @discardableResult
     public func pinLeading(to support: UILayoutSupport,
                               _ attribute: NSLayoutAttribute = .leading,
                                 relation: NSLayoutRelation = .equal,
@@ -945,6 +950,7 @@ extension UIView {
      - returns: self
      */
     @nonobjc
+    @discardableResult
     public func pinTrailing(to support: UILayoutSupport,
                                _ attribute: NSLayoutAttribute = .trailing,
                                  relation: NSLayoutRelation = .equal,
@@ -969,6 +975,7 @@ extension UIView {
      - returns: self
      */
     @nonobjc
+    @discardableResult
     public func pinCenterX(to support: UILayoutSupport,
                               _ attribute: NSLayoutAttribute = .centerX,
                                 relation: NSLayoutRelation = .equal,
@@ -993,6 +1000,7 @@ extension UIView {
      - returns: self
      */
     @nonobjc
+    @discardableResult
     public func pinCenterY(to support: UILayoutSupport,
                               _ attribute: NSLayoutAttribute = .centerY,
                                 relation: NSLayoutRelation = .equal,
