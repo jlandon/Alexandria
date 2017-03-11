@@ -29,6 +29,11 @@ import Foundation
 
 extension UICollectionView {
     
+    /// Returns a UICollectionView with the specified layout.
+    public convenience init(layout: UICollectionViewFlowLayout) {
+        self.init(frame: .zero, collectionViewLayout: layout)
+    }
+    
     // MARK: Cells
     
     /**
