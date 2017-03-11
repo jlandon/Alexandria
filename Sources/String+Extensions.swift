@@ -34,6 +34,16 @@ extension String {
         return utf8.map { $0 }
     }
     
+    /// Converts self to an NSMutableAttributedString.
+    public var attributed: NSMutableAttributedString {
+        return NSMutableAttributedString(string: self)
+    }
+    
+    /// Converts self to an NSString.
+    public var ns: NSString {
+        return self as NSString
+    }
+    
     /**
      Converts string to camel-case.
 
