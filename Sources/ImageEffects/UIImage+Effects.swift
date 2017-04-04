@@ -190,13 +190,13 @@ public extension UIImage {
             return nil
         }
         if maskImage != nil && maskImage!.cgImage == nil {
-            print("*** error: maskImage must be backed by a CGImage: \(maskImage)")
+            print("*** error: maskImage must be backed by a CGImage: \(String(describing: maskImage))")
             return nil
         }
         
         defer { UIGraphicsEndImageContext() }
         
-        let epsilon = CGFloat(FLT_EPSILON)
+        let epsilon = CGFloat(Float.ulpOfOne)
         let screenScale = UIScreen.main.scale
         let imageRect = CGRect(origin: .zero, size: size)
         var effectImage: UIImage? = self

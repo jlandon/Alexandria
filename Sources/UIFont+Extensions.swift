@@ -72,7 +72,7 @@ extension UIFont {
         
         if let errorRef = error?.takeRetainedValue() {
             let errorDescription = CFErrorCopyDescription(errorRef)
-            print("Failed to load font: \(errorDescription) (\(name).\(fileExtension.type))")
+            print("Failed to load font: \(String(describing: errorDescription)) (\(name).\(fileExtension.type))")
         }
 
         error?.release()

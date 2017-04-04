@@ -1,5 +1,5 @@
 language: objective-c
-osx_image: xcode8
+osx_image: xcode8.3
 rvm: 2.2.2
 install:
 - gem install activesupport --no-rdoc --no-ri --no-document
@@ -10,9 +10,10 @@ notifications:
   - jlandon@me.com
   - ben.kreeger@icloud.com
 script:
-- xcodebuild -project Alexandria.xcodeproj -scheme Alexandria -sdk iphonesimulator10.0 -destination 'platform=iOS Simulator,name=iPhone 6,OS=10.0' test
+- xcodebuild -project Alexandria.xcodeproj -scheme Alexandria -sdk iphonesimulator10.3
+  -destination 'platform=iOS Simulator,name=iPhone 6,OS=10.3' test
 after_success:
 - ./Support/create_docs.sh
 env:
   global:
-    secure: rXlDuY/rnCxgnPmSl2n1RubCvlATIH5pJMB39V5IW1WA7JrCTqCekKWGp5sSik1tu7xdkOENVHJz+a65KEeVHEDxU4KAv8ECRwulKQEO99mDSRmc5X+v5psBr3u3RQwNBZpRMHXKpvyKzuwp1tesjKoMHHppbCmlwQBv+17drMFlnuwnHLZ/NoYAVhB62qLGTtEoOtHKFgSLD9lzaTZL92J3XXTPXU+Wi46Lt6epTMg0ySyDOb49JsysL5edsnyixGw8ub1J2CrT6L0Hrxz1HNkv2i+AMrmCKsI7ZAJrdFHciUB/ARB8TPWOVMmIYtl25YjKFzS5i3K4mRoqsfHsAVbVuFY0ClOveze0VYC9mPNmTrgnObcn/AXkg3LxziJp5QdoRnR5PzbJvkE5l42zLBx3QThPcPB5ggZ5qn7wAiSVZaQT+cil14S2KqRdYp6t2xRUJwdEJ8okmmhBOVqsjRbzhg8+iXeTdqwGV7oHdijFFbwjJnI4weeA73ghP14OVkK6gi/E1Gqcxnil06y0Da3m4Z5B0kWdWyDAdSPVz3QnrV69sRdlFVd+v3yl701ikSOSdzbZf4sj+8HUdl5wWjGoQytAhqbuZd4YHPXHESh0GNYkUZV0y4aSrB1LZdR1NQX1n7Ws418AInm8BXH51/kX2efFjaZhfqprM2ezVxQ=
+    secure: fzCDfD7VhIzbBa0HOAaVODUHI6zbNPolcEbpT1nwYQa44nx/2o0bfLyQmr2WemeRhCZGPCwRMVOO/FTcnQs9iXbxPXmodBbWdJh6KJiu+uy7iI/Az/mf5VBuom0/z5GBn1FKIWs2kUhMp8ZIucG6/of+xfXIGtK6iOSOTOOscBWUQxOwKCMY9UkFdxRUs4QVVMXfp6N9Oo2M8azEcZFeA6G65MwC9xbTS2OEeInzvC96JAbZh7g+EhCG5QBJw/vOglPITjQ7RqM62tgC7TmYF+z+ZGwx1TnaKwmwAyEjvBAbwPdDvVeJ46AksNwV2oDtL4GMynzyEgssQxVHpUNwfkWMeZhI3S4Tk5+o9l6JD014LfWskxkPjFKVA2oVmu8s0M8uQp+xA6awc76ibd6d7lxJoidOKcK03TJb1beVpnsumXH3Y+YRKOsYU10Bl7NFt4A4Jd0Ac2iI/oUt4uEaU3sUz8c24sTTMEY9yBITyW59Y6LTfafx/VH07bBBKtLHmeUrd0roQzxiB2xv2rvMQ9euqh4K3UxTTOqdy+YtnhefBDhl/FEMmdS4f97XDaduOV6bltmW0+Ss8zQSMU1jB9DbAFbNsW2H29lLjaYnoYVBKLjzBAwFu545S3vysOOe7S8sCA4/e/h1QBWyNdi0qfnSexk5iSE9QfZpU+SzdqE=
