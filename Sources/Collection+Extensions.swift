@@ -27,7 +27,7 @@
 
 import Foundation
 
-extension Collection where Self.Index == Self.Indices.Iterator.Element {
+extension Collection {
     /**
      Returns an optional element. If the `index` does not exist in the collection, the subscript returns nil.
      
@@ -49,9 +49,6 @@ extension Collection where Self.Index == Self.Indices.Iterator.Element {
     public func at(_ i: Index) -> Self.Iterator.Element? {
         return indices.contains(i) ? self[i] : nil
     }
-}
-
-public extension Collection {
     
     /**
      Creats a shuffled version of this array using the Fisher-Yates (fast and uniform) shuffle.
@@ -59,7 +56,7 @@ public extension Collection {
      
      - returns: A shuffled version of this array.
      */
-    public func shuffled() -> [Generator.Element] {
+    public func shuffled() -> [Iterator.Element] {
         var list = Array(self)
         list.shuffle()
         return list
@@ -78,7 +75,7 @@ public extension MutableCollection where Index == Int, IndexDistance == Int {
         for i in 0 ..< (count - 1) {
             let j = Int(arc4random_uniform(UInt32(count - i))) + i
             guard i != j else { continue }
-            swap(&self[i], &self[j])
+            swapAt(i, j)
         }
     }
     
@@ -87,7 +84,7 @@ public extension MutableCollection where Index == Int, IndexDistance == Int {
      
      - returns: A random element from the collection.
      */
-    public func random() -> Generator.Element {        
+    public func random() -> Iterator.Element {        
         let index = Int(arc4random_uniform(UInt32(count)))
         return self[index]
     }

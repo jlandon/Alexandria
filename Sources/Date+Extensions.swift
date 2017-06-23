@@ -138,37 +138,37 @@ extension Date {
     }
     
     /// The current year
-    @available(*, deprecated: 2.0, message: "use Date().year")
+    @available(*, unavailable, message: "use Date().year")
     public static var currentYear: Int {
         return Date().year
     }
     
     /// The current month
-    @available(*, deprecated: 2.0, message: "use Date().month")
+    @available(*, unavailable, message: "use Date().month")
     public static var currentMonth: Int {
         return Date().month
     }
     
     /// The current day
-    @available(*, deprecated: 2.0, message: "use Date().day")
+    @available(*, unavailable, message: "use Date().day")
     public static var currentDay: Int {
         return Date().day
     }
     
     /// The current hour
-    @available(*, deprecated: 2.0, message: "use Date().hour")
+    @available(*, unavailable, message: "use Date().hour")
     public static var currentHour: Int {
         return Date().hour
     }
     
     /// The current minute
-    @available(*, deprecated: 2.0, message: "use Date().minute")
+    @available(*, unavailable, message: "use Date().minute")
     public static var currentMinute: Int {
         return Date().minute
     }
     
     /// The current second
-    @available(*, deprecated: 2.0, message: "use Date().second")
+    @available(*, unavailable, message: "use Date().second")
     public static var currentSecond: Int {
         return Date().second
     }
@@ -277,7 +277,7 @@ extension Date {
 
 extension Date {
     
-    fileprivate var allCalendarComponents: Set<Calendar.Component> {
+    private var allCalendarComponents: Set<Calendar.Component> {
         return [
             .era,
             .year,
@@ -298,7 +298,7 @@ extension Date {
         ]
     }
     
-    fileprivate var components: DateComponents {
+    private var components: DateComponents {
         return Calendar.autoupdatingCurrent.dateComponents(allCalendarComponents, from: self)
     }
 }

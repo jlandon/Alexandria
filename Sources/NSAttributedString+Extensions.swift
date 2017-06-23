@@ -77,12 +77,13 @@ extension NSMutableAttributedString {
 
 extension NSMutableAttributedString {
     
-    fileprivate var range: NSRange {
+    private var range: NSRange {
         return NSRange(location: 0, length: length)
     }
     
-    fileprivate var paragraphStyle: NSMutableParagraphStyle? {
-        return attributes(at: 0, effectiveRange: nil)[NSParagraphStyleAttributeName] as? NSMutableParagraphStyle
+    private var paragraphStyle: NSMutableParagraphStyle {
+        let style = attributes(at: 0, effectiveRange: nil)[.paragraphStyle] as? NSMutableParagraphStyle
+        return style ?? NSMutableParagraphStyle()
     }
     
 }
@@ -97,7 +98,9 @@ extension NSMutableAttributedString {
      */
     @discardableResult
     public func font(_ font: UIFont) -> Self {
-        addAttribute(NSFontAttributeName, value: font, range: range)
+        if length > 0 {
+            addAttribute(.font, value: font, range: range)
+        }
         return self
     }
     
@@ -111,7 +114,9 @@ extension NSMutableAttributedString {
      */
     @discardableResult
     public func font(name: String, size: CGFloat) -> Self {
-        addAttribute(NSFontAttributeName, value: UIFont(name: name, size: size) ?? .systemFont(ofSize: size), range: range)
+        if length > 0 {
+            addAttribute(.font, value: UIFont(name: name, size: size) ?? .systemFont(ofSize: size), range: range)
+        }
         return self
     }
 }
@@ -127,10 +132,12 @@ extension NSMutableAttributedString {
      */
     @discardableResult
     public func alignment(_ alignment: NSTextAlignment) -> Self {
-        let paragraphStyle = self.paragraphStyle ?? NSMutableParagraphStyle()
-        paragraphStyle.alignment = alignment
-        
-        addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: range)
+        if length > 0 {
+            let paragraphStyle = self.paragraphStyle
+            paragraphStyle.alignment = alignment
+            
+            addAttribute(.paragraphStyle, value: paragraphStyle, range: range)
+        }
         
         return self
     }
@@ -142,10 +149,12 @@ extension NSMutableAttributedString {
      */
     @discardableResult
     public func lineSpacing(_ lineSpacing: CGFloat) -> Self {
-        let paragraphStyle = self.paragraphStyle ?? NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = lineSpacing
-        
-        addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: range)
+        if length > 0 {
+            let paragraphStyle = self.paragraphStyle
+            paragraphStyle.lineSpacing = lineSpacing
+            
+            addAttribute(.paragraphStyle, value: paragraphStyle, range: range)
+        }
         
         return self
     }
@@ -157,10 +166,12 @@ extension NSMutableAttributedString {
      */
     @discardableResult
     public func paragraphSpacing(_ paragraphSpacing: CGFloat) -> Self {
-        let paragraphStyle = self.paragraphStyle ?? NSMutableParagraphStyle()
-        paragraphStyle.paragraphSpacing = paragraphSpacing
-        
-        addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: range)
+        if length > 0 {
+            let paragraphStyle = self.paragraphStyle
+            paragraphStyle.paragraphSpacing = paragraphSpacing
+            
+            addAttribute(.paragraphStyle, value: paragraphStyle, range: range)
+        }
         
         return self
     }
@@ -172,10 +183,12 @@ extension NSMutableAttributedString {
      */
     @discardableResult
     public func lineBreak(_ mode: NSLineBreakMode) -> Self {
-        let paragraphStyle = self.paragraphStyle ?? NSMutableParagraphStyle()
-        paragraphStyle.lineBreakMode = mode
-        
-        addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: range)
+        if length > 0 {
+            let paragraphStyle = self.paragraphStyle
+            paragraphStyle.lineBreakMode = mode
+            
+            addAttribute(.paragraphStyle, value: paragraphStyle, range: range)
+        }
         
         return self
     }
@@ -187,10 +200,12 @@ extension NSMutableAttributedString {
      */
     @discardableResult
     public func lineHeight(multiple: CGFloat) -> Self {
-        let paragraphStyle = self.paragraphStyle ?? NSMutableParagraphStyle()
-        paragraphStyle.lineHeightMultiple = multiple
-        
-        addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: range)
+        if length > 0 {
+            let paragraphStyle = self.paragraphStyle
+            paragraphStyle.lineHeightMultiple = multiple
+            
+            addAttribute(.paragraphStyle, value: paragraphStyle, range: range)
+        }
         
         return self
     }
@@ -202,10 +217,12 @@ extension NSMutableAttributedString {
      */
     @discardableResult
     public func firstLineHeadIndent(_ indent: CGFloat) -> Self {
-        let paragraphStyle = self.paragraphStyle ?? NSMutableParagraphStyle()
-        paragraphStyle.firstLineHeadIndent = indent
-        
-        addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: range)
+        if length > 0 {
+            let paragraphStyle = self.paragraphStyle
+            paragraphStyle.firstLineHeadIndent = indent
+            
+            addAttribute(.paragraphStyle, value: paragraphStyle, range: range)
+        }
         
         return self
     }
@@ -217,10 +234,12 @@ extension NSMutableAttributedString {
      */
     @discardableResult
     public func headIndent(_ indent: CGFloat) -> Self {
-        let paragraphStyle = self.paragraphStyle ?? NSMutableParagraphStyle()
-        paragraphStyle.headIndent = indent
-        
-        addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: range)
+        if length > 0 {
+            let paragraphStyle = self.paragraphStyle
+            paragraphStyle.headIndent = indent
+            
+            addAttribute(.paragraphStyle, value: paragraphStyle, range: range)
+        }
         
         return self
     }
@@ -232,10 +251,12 @@ extension NSMutableAttributedString {
      */
     @discardableResult
     public func tailIndent(_ indent: CGFloat) -> Self {
-        let paragraphStyle = self.paragraphStyle ?? NSMutableParagraphStyle()
-        paragraphStyle.tailIndent = indent
-        
-        addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: range)
+        if length > 0 {
+            let paragraphStyle = self.paragraphStyle
+            paragraphStyle.tailIndent = indent
+            
+            addAttribute(.paragraphStyle, value: paragraphStyle, range: range)
+        }
         
         return self
     }
@@ -247,10 +268,12 @@ extension NSMutableAttributedString {
      */
     @discardableResult
     public func minimumLineHeight(_ height: CGFloat) -> Self {
-        let paragraphStyle = self.paragraphStyle ?? NSMutableParagraphStyle()
-        paragraphStyle.minimumLineHeight = height
-        
-        addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: range)
+        if length > 0 {
+            let paragraphStyle = self.paragraphStyle
+            paragraphStyle.minimumLineHeight = height
+            
+            addAttribute(.paragraphStyle, value: paragraphStyle, range: range)
+        }
         
         return self
     }
@@ -262,10 +285,12 @@ extension NSMutableAttributedString {
      */
     @discardableResult
     public func maximumLineHeight(_ height: CGFloat) -> Self {
-        let paragraphStyle = self.paragraphStyle ?? NSMutableParagraphStyle()
-        paragraphStyle.maximumLineHeight = height
-        
-        addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: range)
+        if length > 0 {
+            let paragraphStyle = self.paragraphStyle
+            paragraphStyle.maximumLineHeight = height
+            
+            addAttribute(.paragraphStyle, value: paragraphStyle, range: range)
+        }
         
         return self
     }
@@ -277,10 +302,12 @@ extension NSMutableAttributedString {
      */
     @discardableResult
     public func baseWritingDirection(_ direction: NSWritingDirection) -> Self {
-        let paragraphStyle = self.paragraphStyle ?? NSMutableParagraphStyle()
-        paragraphStyle.baseWritingDirection = direction
-        
-        addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: range)
+        if length > 0 {
+            let paragraphStyle = self.paragraphStyle
+            paragraphStyle.baseWritingDirection = direction
+            
+            addAttribute(.paragraphStyle, value: paragraphStyle, range: range)
+        }
         
         return self
     }
@@ -292,10 +319,12 @@ extension NSMutableAttributedString {
      */
     @discardableResult
     public func paragraphSpacingBefore(_ spacing: CGFloat) -> Self {
-        let paragraphStyle = self.paragraphStyle ?? NSMutableParagraphStyle()
-        paragraphStyle.paragraphSpacingBefore = spacing
-        
-        addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: range)
+        if length > 0 {
+            let paragraphStyle = self.paragraphStyle
+            paragraphStyle.paragraphSpacingBefore = spacing
+            
+            addAttribute(.paragraphStyle, value: paragraphStyle, range: range)
+        }
         
         return self
     }
@@ -311,7 +340,9 @@ extension NSMutableAttributedString {
      */
     @discardableResult @nonobjc
     public func color(_ color: UIColor, alpha: CGFloat = 1) -> Self {
-        addAttribute(NSForegroundColorAttributeName, value: color.alpha(alpha), range: range)
+        if length > 0 {
+            addAttribute(.foregroundColor, value: color.alpha(alpha), range: range)
+        }
         return self
     }
     
@@ -322,7 +353,9 @@ extension NSMutableAttributedString {
      */
     @discardableResult
     public func color(red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat = 1) -> Self {
-        addAttribute(NSForegroundColorAttributeName, value: UIColor(red: red, green: green, blue: blue, alpha: alpha), range: range)
+        if length > 0 {
+            addAttribute(.foregroundColor, value: UIColor(red: red, green: green, blue: blue, alpha: alpha), range: range)
+        }
         return self
     }
     
@@ -333,7 +366,9 @@ extension NSMutableAttributedString {
      */
     @discardableResult
     public func color(white: CGFloat, alpha: CGFloat = 1) -> Self {
-        addAttribute(NSForegroundColorAttributeName, value: UIColor(white: white, alpha: alpha), range: range)
+        if length > 0 {
+            addAttribute(.foregroundColor, value: UIColor(white: white, alpha: alpha), range: range)
+        }
         return self
     }
     
@@ -344,7 +379,9 @@ extension NSMutableAttributedString {
      */
     @discardableResult @nonobjc
     public func color(_ hex: UInt32, alpha: CGFloat = 1) -> Self {
-        addAttribute(NSForegroundColorAttributeName, value: UIColor(hex: hex, alpha: alpha), range: range)
+        if length > 0 {
+            addAttribute(.foregroundColor, value: UIColor(hex: hex, alpha: alpha), range: range)
+        }
         return self
     }
 }
@@ -359,10 +396,12 @@ extension NSMutableAttributedString {
      */
     @discardableResult
     public func underline(style: NSUnderlineStyle = .styleSingle, color: UIColor? = nil) -> Self {
-        addAttribute(NSUnderlineStyleAttributeName, value: style.rawValue, range: range)
-        
-        if let color = color {
-            addAttribute(NSUnderlineColorAttributeName, value: color, range: range)
+        if length > 0 {
+            addAttribute(.underlineStyle, value: style.rawValue, range: range)
+            
+            if let color = color {
+                addAttribute(.underlineColor, value: color, range: range)
+            }
         }
         
         return self
@@ -375,7 +414,9 @@ extension NSMutableAttributedString {
      */
     @discardableResult
     public func kern(_ value: CGFloat) -> Self {
-        addAttribute(NSKernAttributeName, value: value, range: range)
+        if length > 0 {
+            addAttribute(.kern, value: value, range: range)
+        }
         return self
     }
     
@@ -387,10 +428,12 @@ extension NSMutableAttributedString {
      */
     @discardableResult
     public func strikethrough(style: NSUnderlineStyle = .styleSingle, color: UIColor? = nil) -> Self {
-        addAttribute(NSStrikethroughStyleAttributeName, value: style.rawValue, range: range)
-        
-        if let color = color {
-            addAttribute(NSStrikethroughColorAttributeName, value: color, range: range)
+        if length > 0 {
+            addAttribute(.strikethroughStyle, value: style.rawValue, range: range)
+            
+            if let color = color {
+                addAttribute(.strikethroughColor, value: color, range: range)
+            }
         }
         
         return self
@@ -404,10 +447,12 @@ extension NSMutableAttributedString {
      */
     @discardableResult
     public func stroke(color: UIColor, width: CGFloat) -> Self {
-        addAttributes([
-            NSStrokeColorAttributeName : color,
-            NSStrokeWidthAttributeName : width
-        ], range: range)
+        if length > 0 {
+            addAttributes([
+                .strokeColor : color,
+                .strokeWidth : width
+            ], range: range)
+        }
         
         return self
     }
@@ -421,12 +466,14 @@ extension NSMutableAttributedString {
      */
     @discardableResult
     public func shadow(color: UIColor, radius: CGFloat, offset: CGSize) -> Self {
-        let shadow = NSShadow()
-        shadow.shadowColor = color
-        shadow.shadowBlurRadius = radius
-        shadow.shadowOffset = offset
-        
-        addAttribute(NSShadowAttributeName, value: shadow, range: range)
+        if length > 0 {
+            let shadow = NSShadow()
+            shadow.shadowColor = color
+            shadow.shadowBlurRadius = radius
+            shadow.shadowOffset = offset
+            
+            addAttribute(.shadow, value: shadow, range: range)
+        }
         
         return self
     }
@@ -444,7 +491,9 @@ extension NSMutableAttributedString {
      */
     @discardableResult @nonobjc
     public func backgroundColor(_ color: UIColor, alpha: CGFloat = 1) -> Self {
-        addAttribute(NSBackgroundColorAttributeName, value: color.alpha(alpha), range: range)
+        if length > 0 {
+            addAttribute(.backgroundColor, value: color.alpha(alpha), range: range)
+        }
         return self
     }
     
@@ -458,7 +507,9 @@ extension NSMutableAttributedString {
      */
     @discardableResult
     public func backgroundColor(red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat = 1) -> Self {
-        addAttribute(NSBackgroundColorAttributeName, value: UIColor(red: red, green: green, blue: blue, alpha: alpha), range: range)
+        if length > 0 {
+            addAttribute(.backgroundColor, value: UIColor(red: red, green: green, blue: blue, alpha: alpha), range: range)
+        }
         return self
     }
     
@@ -470,7 +521,9 @@ extension NSMutableAttributedString {
      */
     @discardableResult
     public func backgroundColor(white: CGFloat, alpha: CGFloat = 1) -> Self {
-        addAttribute(NSBackgroundColorAttributeName, value: UIColor(white: white, alpha: alpha), range: range)
+        if length > 0 {
+            addAttribute(.backgroundColor, value: UIColor(white: white, alpha: alpha), range: range)
+        }
         return self
     }
     
@@ -482,7 +535,9 @@ extension NSMutableAttributedString {
      */
     @discardableResult @nonobjc
     public func backgroundColor(_ hex: UInt32, alpha: CGFloat = 1) -> Self {
-        addAttribute(NSBackgroundColorAttributeName, value: UIColor(hex: hex, alpha: alpha), range: range)
+        if length > 0 {
+            addAttribute(.backgroundColor, value: UIColor(hex: hex, alpha: alpha), range: range)
+        }
         return self
     }
 }
@@ -496,7 +551,9 @@ extension NSMutableAttributedString {
      */
     @discardableResult
     public func baselineOffset(_ offset: Float) -> Self {
-        addAttribute(NSBaselineOffsetAttributeName, value: NSNumber(value: offset), range: range)
+        if length > 0 {
+            addAttribute(.baselineOffset, value: NSNumber(value: offset), range: range)
+        }
         return self
     }
 }

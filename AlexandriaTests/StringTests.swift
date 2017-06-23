@@ -100,7 +100,7 @@ class StringTests: XCTestCase {
         do {
             let regex = try NSRegularExpression(pattern: regexStr, options: .caseInsensitive)
             for match in regex.matches(in: content, options: [], range: NSRange(location: 0, length: content.characters.count)).reversed() {
-                let reference = content.substring(with: content.range(from: match.rangeAt(1))!)
+                let reference = content.substring(with: content.range(from: match.range(at: 1))!)
                 content = content.replacingCharacters(in: content.range(from: match.range)!, with: "<a class=\"link\" href=\"http://www.\(reference).com\">\(reference)</a>")
             }
             XCTAssertEqual(content, "This library was created by <a class=\"link\" href=\"http://www.ovenbits.com\">ovenbits</a> and can be found on <a class=\"link\" href=\"http://www.github.com\">github</a>", "Repeated regex should have been handled")

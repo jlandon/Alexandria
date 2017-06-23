@@ -84,7 +84,7 @@ extension UIControl {
         addTarget(self, action: #selector(handleAction), for: controlEvents)
     }
     
-    public func handleAction() {
+    @objc public func handleAction() {
         action?.action()
     }
 }

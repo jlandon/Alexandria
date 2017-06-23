@@ -63,7 +63,7 @@ extension UIGestureRecognizer {
         addTarget(self, action: #selector(handleAction(_:)))
     }
     
-    dynamic private func handleAction(_ recognizer: UIGestureRecognizer) {
+    @objc dynamic private func handleAction(_ recognizer: UIGestureRecognizer) {
         gestureAction?.action(recognizer)
     }
 }

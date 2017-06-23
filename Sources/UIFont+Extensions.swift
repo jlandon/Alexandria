@@ -62,10 +62,9 @@ extension UIFont {
             return
         }
         
-        let font = CGFont(provider)
-        
         var error: Unmanaged<CFError>?
-        guard !CTFontManagerRegisterGraphicsFont(font, &error) else {
+        
+        if let font = CGFont(provider), CTFontManagerRegisterGraphicsFont(font, &error) {
             error?.release()
             return
         }
