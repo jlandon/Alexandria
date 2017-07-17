@@ -105,7 +105,7 @@ extension UIFont {
      - returns: A font object of the specified font file path and size.
      
      */
-    public static func getCustomFont(filePath: String, ofSize fontSize: CGFloat) -> UIFont? {
+    public static func customFont(filePath: String, ofSize fontSize: CGFloat) -> UIFont? {
         let url = NSURL(fileURLWithPath: filePath)
         guard let provider = CGDataProvider(url: url as CFURL) else {
             return nil
