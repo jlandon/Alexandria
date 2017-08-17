@@ -46,35 +46,84 @@ extension UIFont {
     }
     
     /**
-    Registers a font for use in the app
-
-    - parameter name: The name of the font family.
-    - parameter fileExtension: The extension of the font file.
-    - parameter bundle: The bundle in which the font file is located.
-    */
-    public static func register(name: String, fileExtension: Extension, in bundle: Bundle) {
-        guard
-            let path = bundle.path(forResource: name, ofType: fileExtension.type),
-            let fontData = try? Data(contentsOf: URL(fileURLWithPath: path)),
-            let provider = CGDataProvider(data: fontData as CFData)
-        else {
+     Registers a font for use in the app.
+     
+     - parameter name: The name of the font family.
+     - parameter fileExtension: The extension of the font file.
+     - parameter bundle: The bundle in which the font file is located.
+     
+     - returns: Returns true if registering font is successful.
+     
+     */
+    @discardableResult
+    public static func register(name: String, fileExtension: Extension, in bundle: Bundle) -> Bool {
+        guard let path = bundle.path(forResource: name, ofType: fileExtension.type) else {
             print("Error registering font: \(name).\(fileExtension.type)")
-            return
+            return false
+        }
+        
+        return register(filePath: path)
+    }
+    
+    /**
+     Registers a font for use in the app.
+     
+     - parameter filePath: The file path of font.
+     
+     - returns: Returns true if registering a font is successful.
+     
+     */
+    @discardableResult
+    public static func register(filePath: String) -> Bool {
+        let url = NSURL(fileURLWithPath: filePath)
+        guard let provider = CGDataProvider(url: url as CFURL) else {
+            print("Error registering font: \(filePath)")
+            return false
         }
         
         let font = CGFont(provider)
         
         var error: Unmanaged<CFError>?
-        guard !CTFontManagerRegisterGraphicsFont(font, &error) else {
-            error?.release()
-            return
-        }
+        let result = CTFontManagerRegisterGraphicsFont(font, &error)
         
         if let errorRef = error?.takeRetainedValue() {
             let errorDescription = CFErrorCopyDescription(errorRef)
-            print("Failed to load font: \(String(describing: errorDescription)) (\(name).\(fileExtension.type))")
+            print("Failed to load font: \(String(describing: errorDescription)) (\(filePath))")
         }
-
+        
         error?.release()
+        
+        return result
+    }
+
+    /**
+     Gets a custom font after registering if needed.
+     
+     - parameter filePath: The file path of font.
+     - ofSize: The size (in points) to which the font is scaled. This value must be greater than 0.0.
+     
+     - returns: A font object of the specified font file path and size.
+     
+     */
+    public static func customFont(filePath: String, ofSize fontSize: CGFloat) -> UIFont? {
+        let url = NSURL(fileURLWithPath: filePath)
+        guard let provider = CGDataProvider(url: url as CFURL) else {
+            return nil
+        }
+        
+        let cgFont = CGFont(provider)
+        guard let postScriptName = cgFont.postScriptName else {
+            return nil
+        }
+        
+        let fontName = postScriptName as String
+        
+        var font = UIFont(name: fontName, size: fontSize)
+        
+        if font == nil && register(filePath: filePath) == true {
+            font = UIFont(name: fontName, size: fontSize)
+        }
+        
+        return font
     }
 }
