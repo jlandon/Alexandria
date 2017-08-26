@@ -218,12 +218,30 @@ extension String {
 
     /// Substring for range
     public subscript(r: Range<Int>) -> String {
-        return substring(with: index(startIndex, offsetBy: r.lowerBound) ..< index(startIndex, offsetBy: r.upperBound))
+        return self[r.lowerBound ... (r.upperBound - 1)]
     }
     
     /// Substring for closed range
     public subscript(r: ClosedRange<Int>) -> String {
-        return substring(with: index(startIndex, offsetBy: r.lowerBound) ..< index(startIndex, offsetBy: r.upperBound + 1))
+        let startIndex = String.Index(encodedOffset: r.lowerBound.limited(0, .max))
+        let endIndex = String.Index(encodedOffset: r.upperBound.limited(0, .max))
+        
+        return String(self[startIndex ... endIndex])
+    }
+    
+    /// Substring for countable partial range
+    public subscript(r: CountablePartialRangeFrom<Int>) -> String {
+        return String(self[String.Index(encodedOffset: r.lowerBound)...])
+    }
+    
+    /// Substring for partial range through upper bound
+    public subscript(r: PartialRangeThrough<Int>) -> String {
+        return String(self[...String.Index(encodedOffset: r.upperBound)])
+    }
+    
+    /// Substring for partial range up to upper bound
+    public subscript(r: PartialRangeUpTo<Int>) -> String {
+        return String(self[..<String.Index(encodedOffset: r.upperBound)])
     }
     
     /**
@@ -245,7 +263,7 @@ extension String {
     */
     public func truncated(to length: Int, trailing: String = "") -> String {
         guard !characters.isEmpty && characters.count > length else { return self }
-        return self.substring(to: index(startIndex, offsetBy: length)) + trailing
+        return self[..<length] + trailing
     }
     
     public mutating func truncate(to length: Int, trailing: String = "") {
@@ -288,20 +306,13 @@ extension String {
      - returns: The Range, if it was possible to convert. Otherwise nil.
      */
     public func range(from nsRange: NSRange) -> Range<String.Index>? {
-        guard
-            let from16 = utf16.index(utf16.startIndex, offsetBy: nsRange.location, limitedBy: utf16.endIndex),
-            let to16 = utf16.index(from16, offsetBy: nsRange.length, limitedBy: utf16.endIndex),
-            let from = String.Index(from16, within: self),
-            let to = String.Index(to16, within: self)
-        else { return nil }
-        
-        return from ..< to
+        return Range(nsRange, in: self)
     }
     
     /**
      Convert a Range to an NSRange. There is still a mismatch between the regular expression libraries
      and NSString/String. This makes it easier to convert between the two. Using this allows complex
-     strings (including emoji, regonial indicattors, etc.) to be manipulated without having to resort
+     strings (including emoji, regonial indicators, etc.) to be manipulated without having to resort
      to NSString instances.
      
      Taken from:
@@ -312,9 +323,7 @@ extension String {
      - returns: The NSRange converted from the input. This will always succeed.
      */
     public func nsRange(from range: Range<String.Index>) -> NSRange {
-        let from = String.UTF16View.Index(range.lowerBound, within: utf16)
-        let to = String.UTF16View.Index(range.upperBound, within: utf16)
-        return NSRange(location: utf16.distance(from: utf16.startIndex, to: from), length: utf16.distance(from: from, to: to))
+        return NSRange(range, in: self)
     }
 
 }

@@ -43,7 +43,7 @@ extension Array {
      - returns: The array created by applying the transform to this array.
      */
     public func mapWithIndex<T>(_ fn: (Int, Element) throws -> T) rethrows -> [T] {
-        return try zip(startIndex ..< endIndex, self).map { try fn($0.0, $0.1) }
+        return try zip(startIndex ..< endIndex, self).map(fn)
     }
 
     /**
