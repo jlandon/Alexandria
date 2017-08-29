@@ -213,9 +213,12 @@ extension String {
 
     /// Substring at index
     public subscript(i: Int) -> String {
-        return String(self[index(startIndex, offsetBy: i)])
+        let index = safeIndex(offset: i)
+        let contains = index.flatMap(indices.contains) ?? false
+        
+        return contains ? String(self[index!]) : ""
     }
-
+    
     /// Substring for range
     public subscript(r: Range<Int>) -> String {
         return self[r.lowerBound ... (r.upperBound - 1)]
@@ -223,25 +226,42 @@ extension String {
     
     /// Substring for closed range
     public subscript(r: ClosedRange<Int>) -> String {
-        let startIndex = String.Index(encodedOffset: r.lowerBound.limited(0, .max))
-        let endIndex = String.Index(encodedOffset: r.upperBound.limited(0, .max))
+        let startIndex = safeIndex(offset: r.lowerBound)
+        let endIndex = safeIndex(offset: r.upperBound)
         
-        return String(self[startIndex ... endIndex])
+        let containsStart = startIndex.flatMap(indices.contains) ?? false
+        let containsEnd = endIndex.flatMap(indices.contains) ?? false
+        
+        switch (containsStart, containsEnd) {
+        case (true, true):   return String(self[startIndex! ... endIndex!])
+        case (true, false):  return String(self[startIndex!...])
+        case (false, true):  return String(self[...endIndex!])
+        case (false, false): return ""
+        }
     }
     
     /// Substring for countable partial range
     public subscript(r: CountablePartialRangeFrom<Int>) -> String {
-        return String(self[String.Index(encodedOffset: r.lowerBound)...])
+        let index = safeIndex(offset: r.lowerBound)
+        let contains = index.flatMap(indices.contains) ?? false
+        
+        return contains ? String(self[index!...]) : ""
     }
     
     /// Substring for partial range through upper bound
     public subscript(r: PartialRangeThrough<Int>) -> String {
-        return String(self[...String.Index(encodedOffset: r.upperBound)])
+        let index = safeIndex(offset: r.upperBound)
+        let contains = index.flatMap(indices.contains) ?? false
+        
+        return contains ? String(self[...index!]) : ""
     }
     
     /// Substring for partial range up to upper bound
     public subscript(r: PartialRangeUpTo<Int>) -> String {
-        return String(self[..<String.Index(encodedOffset: r.upperBound)])
+        let index = safeIndex(offset: r.upperBound)
+        let contains = index.flatMap(indices.contains) ?? false
+        
+        return contains ? String(self[..<index!]) : ""
     }
     
     /**
@@ -326,4 +346,12 @@ extension String {
         return NSRange(range, in: self)
     }
 
+}
+
+private extension String {
+    
+    func safeIndex(offset: Int) -> String.Index? {
+        return index(startIndex, offsetBy: offset.limited(0, .max), limitedBy: endIndex)
+    }
+    
 }

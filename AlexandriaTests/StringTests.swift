@@ -65,6 +65,10 @@ class StringTests: XCTestCase {
     
     func testRanges() {
         XCTAssertEqual("swift"[0...1], "sw", "String ranges are not equal")
+        XCTAssertEqual("swift"[0..<1], "s", "String ranges are not equal")
+        XCTAssertEqual("swift"[...3], "swif", "String ranges are not equal")
+        XCTAssertEqual("swift"[..<2], "sw", "String ranges are not equal")
+        XCTAssertEqual("swift"[3...], "ft", "String ranges are not equal")
     }
     
     func testTruncate() {
