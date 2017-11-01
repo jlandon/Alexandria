@@ -1013,3 +1013,15 @@ extension UIView {
     }
     
 }
+
+extension UILayoutPriority {
+    
+    public static func +(lhs: UILayoutPriority, rhs: Float) -> UILayoutPriority {
+        return UILayoutPriority(lhs.rawValue + rhs)
+    }
+    
+    public static func -(lhs: UILayoutPriority, rhs: Float) -> UILayoutPriority {
+        return UILayoutPriority(lhs.rawValue - rhs)
+    }
+    
+}
