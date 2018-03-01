@@ -249,6 +249,7 @@ extension UIView {
      - parameter otherView: The other view to be constrained to.
      - parameter otherAttribute: The layout attribute for the other view.
      - parameter multiplier: The multiplier to use for the constraint (optional, defaults to 1).
+     - parameter constant: The constant to use for the constraint (optional, defaults to 0).
      - parameter priority: The priority for the constraint (optional, defaults to `.required`).
      - parameter identifier: The identifier for the constraint (optional).
      
@@ -290,6 +291,7 @@ extension UIView {
      - parameter support: The support to be constrained to.
      - parameter otherAttribute: The layout attribute for the support.
      - parameter multiplier: The multiplier to use for the constraint (optional, defaults to 1).
+     - parameter constant: The constant to use for the constraint (optional, defaults to 0).
      - parameter priority: The priority for the constraint (optional, defaults to `.required`).
      - parameter identifier: The identifier for the constraint (optional).
      
@@ -331,6 +333,7 @@ extension UIView {
      - parameter guide: The guide to be constrained to.
      - parameter otherAttribute: The layout attribute for the support.
      - parameter multiplier: The multiplier to use for the constraint (optional, defaults to 1).
+     - parameter constant: The constant to use for the constraint (optional, defaults to 0).
      - parameter priority: The priority for the constraint (optional, defaults to `.required`).
      - parameter identifier: The identifier for the constraint (optional).
      
@@ -370,6 +373,7 @@ extension UIView {
      - parameter attribute: The layout attribute of self to constrain.
      - parameter relation: The layout relation of self (optional, defaults to .Equal).
      - parameter constant: The constant to use for the constraint (optional, defaults to 0).
+     - parameter multiplier: The multiplier to use for the constraint (optional, defaults to 1).
      - parameter priority: The priority for the constraint (optional, defaults to `.required`).
      - parameter identifier: The identifier for the constraint (optional).
      
@@ -1264,6 +1268,75 @@ extension UIView {
     {
         constrain(.centerY, relation, toGuide: guide, attribute, times: multiplier, plus: constant, atPriority: priority)
         return self
+    }
+    
+}
+
+extension UIView {
+    
+    /**
+     Constrain the current view to the `safeAreaLayoutGuide` of another view.
+     
+     Note: If the target iOS version is less than 11.0, the view will be constrained directly to the other view, not that view's `safeAreaLayoutGuide`.
+     
+     - parameter attribute: The layout attribute of self to constrain.
+     - parameter relation: The layout relation of self (optional, defaults to .Equal).
+     - parameter otherView: The other view to be constrained to.
+     - parameter otherAttribute: The layout attribute for the other view.
+     - parameter multiplier: The multiplier to use for the constraint (optional, defaults to 1).
+     - parameter constant: The constant to use for the constraint (optional, defaults to 0).
+     - parameter priority: The priority for the constraint (optional, defaults to `.required`).
+     - parameter identifier: The identifier for the constraint (optional).
+     
+     - returns: self
+     */
+    @discardableResult
+    public func pinSafely(
+        _ attribute: NSLayoutAttribute,
+        _ relation: NSLayoutRelation = .equal,
+        to otherView: UIView,
+        _ otherAttribute: NSLayoutAttribute? = nil,
+        times multiplier: CGFloat = 1,
+        plus constant: CGFloat = 0,
+        atPriority priority: UILayoutPriority = .required,
+        identifier: String? = nil) -> Self
+    {
+        constrainSafely(attribute, relation, to: otherView, otherAttribute, times: multiplier, plus: constant, atPriority: priority, identifier: identifier)
+        return self
+    }
+    
+    /**
+     Constrain the current view to the `safeAreaLayoutGuide` of another view.
+     
+     Note: If the target iOS version is less than 11.0, the view will be constrained directly to the other view, not that view's `safeAreaLayoutGuide`.
+     
+     - parameter attribute: The layout attribute of self to constrain.
+     - parameter relation: The layout relation of self (optional, defaults to .Equal).
+     - parameter otherView: The other view to be constrained to.
+     - parameter otherAttribute: The layout attribute for the other view.
+     - parameter multiplier: The multiplier to use for the constraint (optional, defaults to 1).
+     - parameter constant: The constant to use for the constraint (optional, defaults to 0).
+     - parameter priority: The priority for the constraint (optional, defaults to `.required`).
+     - parameter identifier: The identifier for the constraint (optional).
+     
+     - returns: The created constraint for self.
+     */
+    @discardableResult
+    public func constrainSafely(_ attribute: NSLayoutAttribute,
+                         _ relation: NSLayoutRelation = .equal,
+                         to otherView: UIView,
+                         _ otherAttribute: NSLayoutAttribute? = nil,
+                         times multiplier: CGFloat = 1,
+                         plus constant: CGFloat = 0,
+                         atPriority priority: UILayoutPriority = .required,
+                         identifier: String? = nil) -> NSLayoutConstraint
+    {
+        if #available(iOS 11, *) {
+            return constrain(attribute, relation, toGuide: otherView.safeAreaLayoutGuide, otherAttribute ?? attribute, times: multiplier, plus: constant, atPriority: priority, identifier: identifier)
+        }
+        else {
+            return constrain(attribute, relation, to: otherView, otherAttribute ?? attribute, times: multiplier, plus: constant, atPriority: priority, identifier: identifier)
+        }
     }
     
 }

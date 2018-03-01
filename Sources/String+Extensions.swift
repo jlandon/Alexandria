@@ -56,16 +56,16 @@ extension String {
      ```
      */
     public var camelCased: String {
-        guard !characters.isEmpty else { return self }
+        guard !isEmpty else { return self }
         
-        if characters.contains(" ") {
+        if contains(" ") {
             let first = self[0].lowercased()
             let cammel = capitalized.replacingOccurrences(of: " ", with: "")
-            let rest = String(cammel.characters.dropFirst())
+            let rest = String(cammel.dropFirst())
             return first + rest
         } else {
             let first = self[0].lowercased()
-            let rest = String(characters.dropFirst())
+            let rest = String(dropFirst())
             return first + rest
         }
     }
@@ -110,7 +110,7 @@ extension String {
     public mutating func formRegex(_ pattern: String, _ replacement: String) {
         do {
             let expression = try NSRegularExpression(pattern: pattern, options: [])
-            let range = NSRange(location: 0, length: characters.count)
+            let range = NSRange(location: 0, length: count)
             self = expression.stringByReplacingMatches(in: self, options: [], range: range, withTemplate: replacement)
         }
         catch { return }
@@ -158,7 +158,7 @@ extension String {
             return
         }
 
-        let range = NSMakeRange(0, self.characters.count)
+        let range = NSMakeRange(0, self.count)
 
         var startOffset = 0
 
@@ -181,7 +181,7 @@ extension String {
 
                 self.replaceSubrange(replacementRange, with: replacement)
 
-                endOffset += replacement.characters.count - resultRange.length
+                endOffset += replacement.count - resultRange.length
             }
 
             startOffset = endOffset
@@ -282,7 +282,7 @@ extension String {
 
     */
     public func truncated(to length: Int, trailing: String = "") -> String {
-        guard !characters.isEmpty && characters.count > length else { return self }
+        guard !isEmpty && count > length else { return self }
         return self[..<length] + trailing
     }
     
