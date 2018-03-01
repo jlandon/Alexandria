@@ -29,9 +29,11 @@ extension UIControl {
     
     private final class Action {
         var action: () -> Void
+        var events: UIControlEvents
         
-        init(action: @escaping () -> Void) {
+        init(action: @escaping () -> Void, events: UIControlEvents) {
             self.action = action
+            self.events = events
         }
     }
     
@@ -39,9 +41,9 @@ extension UIControl {
         static var ActionName = "action"
     }
     
-    private var action: Action? {
+    private var actions: [Action] {
         set { objc_setAssociatedObject(self, &AssociatedKeys.ActionName, newValue, .OBJC_ASSOCIATION_RETAIN) }
-        get { return objc_getAssociatedObject(self, &AssociatedKeys.ActionName) as? Action }
+        get { return (objc_getAssociatedObject(self, &AssociatedKeys.ActionName) as? [Action]) ?? [] }
     }
     
     /**
@@ -53,8 +55,7 @@ extension UIControl {
      */
     public convenience init(actionClosure: @escaping () -> Void) {
         self.init()
-        action = Action(action: actionClosure)
-        addTarget(self, action: #selector(handleAction), for: .touchUpInside)
+        addTarget(for: .touchUpInside, actionClosure: actionClosure)
     }
     
     
@@ -68,8 +69,7 @@ extension UIControl {
      */
     public convenience init(frame: CGRect, actionClosure: @escaping () -> Void) {
         self.init(frame: frame)
-        action = Action(action: actionClosure)
-        addTarget(self, action: #selector(handleAction), for: .touchUpInside)
+        addTarget(for: .touchUpInside, actionClosure: actionClosure)
     }
     
     
@@ -80,11 +80,121 @@ extension UIControl {
      - parameter action:        The action closure to execute.
      */
     public func addTarget(for controlEvents: UIControlEvents, actionClosure: @escaping () -> Void) {
-        action = Action(action: actionClosure)
-        addTarget(self, action: #selector(handleAction), for: controlEvents)
+        
+        actions.append(Action(action: actionClosure, events: controlEvents))
+        
+        controlEvents.contains(.touchDown)           ? addTarget(self, action: #selector(touchDown),           for: .touchDown)           : ()
+        controlEvents.contains(.touchDownRepeat)     ? addTarget(self, action: #selector(touchDownRepeat),     for: .touchDownRepeat)     : ()
+        controlEvents.contains(.touchDragInside)     ? addTarget(self, action: #selector(touchDragInside),     for: .touchDragInside)     : ()
+        controlEvents.contains(.touchDragOutside)    ? addTarget(self, action: #selector(touchDragOutside),    for: .touchDragOutside)    : ()
+        controlEvents.contains(.touchDragEnter)      ? addTarget(self, action: #selector(touchDragEnter),      for: .touchDragEnter)      : ()
+        controlEvents.contains(.touchDragExit)       ? addTarget(self, action: #selector(touchDragExit),       for: .touchDragExit)       : ()
+        controlEvents.contains(.touchUpInside)       ? addTarget(self, action: #selector(touchUpInside),       for: .touchUpInside)       : ()
+        controlEvents.contains(.touchUpOutside)      ? addTarget(self, action: #selector(touchUpOutside),      for: .touchUpOutside)      : ()
+        controlEvents.contains(.touchCancel)         ? addTarget(self, action: #selector(touchCancel),         for: .touchCancel)         : ()
+        controlEvents.contains(.valueChanged)        ? addTarget(self, action: #selector(valueChanged),        for: .valueChanged)        : ()
+        controlEvents.contains(.editingDidBegin)     ? addTarget(self, action: #selector(editingDidBegin),     for: .editingDidBegin)     : ()
+        controlEvents.contains(.editingChanged)      ? addTarget(self, action: #selector(editingChanged),      for: .editingChanged)      : ()
+        controlEvents.contains(.editingDidEnd)       ? addTarget(self, action: #selector(editingDidEnd),       for: .editingDidEnd)       : ()
+        controlEvents.contains(.editingDidEndOnExit) ? addTarget(self, action: #selector(editingDidEndOnExit), for: .editingDidEndOnExit) : ()
+        controlEvents.contains(.allTouchEvents)      ? addTarget(self, action: #selector(allTouchEvents),      for: .allTouchEvents)      : ()
+        controlEvents.contains(.allEditingEvents)    ? addTarget(self, action: #selector(allEditingEvents),    for: .allEditingEvents)    : ()
+        controlEvents.contains(.applicationReserved) ? addTarget(self, action: #selector(applicationReserved), for: .applicationReserved) : ()
+        controlEvents.contains(.systemReserved)      ? addTarget(self, action: #selector(systemReserved),      for: .systemReserved)      : ()
+        controlEvents.contains(.allEvents)           ? addTarget(self, action: #selector(allEvents),           for: .allEvents)           : ()
+        
+        if #available(iOS 9.0, *) {
+            controlEvents.contains(.primaryActionTriggered) ? addTarget(self, action: #selector(primaryActionTriggered), for: .primaryActionTriggered) : ()
+        }
     }
     
-    @objc public func handleAction() {
-        action?.action()
+}
+
+extension UIControl {
+    
+    private func triggerAction(forEvents events: UIControlEvents) {
+        actions.filter { $0.events.contains(events) }.forEach { $0.action() }
+    }
+    
+    @objc dynamic private func touchDown() {
+        triggerAction(forEvents: .touchDown)
+    }
+    
+    @objc dynamic private func touchDownRepeat() {
+        triggerAction(forEvents: .touchDownRepeat)
+    }
+    
+    @objc dynamic private func touchDragInside() {
+        triggerAction(forEvents: .touchDragInside)
+    }
+    
+    @objc dynamic private func touchDragOutside() {
+        triggerAction(forEvents: .touchDragOutside)
+    }
+    
+    @objc dynamic private func touchDragEnter() {
+        triggerAction(forEvents: .touchDragEnter)
+    }
+    
+    @objc dynamic private func touchDragExit() {
+        triggerAction(forEvents: .touchDragExit)
+    }
+    
+    @objc dynamic private func touchUpInside() {
+        triggerAction(forEvents: .touchUpInside)
+    }
+    
+    @objc dynamic private func touchUpOutside() {
+        triggerAction(forEvents: .touchUpOutside)
+    }
+    
+    @objc dynamic private func touchCancel() {
+        triggerAction(forEvents: .touchCancel)
+    }
+    
+    @objc dynamic private func valueChanged() {
+        triggerAction(forEvents: .valueChanged)
+    }
+    
+    @objc dynamic private func primaryActionTriggered() {
+        if #available(iOS 9.0, *) {
+            triggerAction(forEvents: .primaryActionTriggered)
+        }
+    }
+    
+    @objc dynamic private func editingDidBegin() {
+        triggerAction(forEvents: .editingDidBegin)
+    }
+    
+    @objc dynamic private func editingChanged() {
+        triggerAction(forEvents: .editingChanged)
+    }
+    
+    @objc dynamic private func editingDidEnd() {
+        triggerAction(forEvents: .editingDidEnd)
+    }
+    
+    @objc dynamic private func editingDidEndOnExit() {
+        triggerAction(forEvents: .editingDidEndOnExit)
+    }
+    
+    @objc dynamic private func allTouchEvents() {
+        triggerAction(forEvents: .allTouchEvents)
+    }
+    
+    @objc dynamic private func allEditingEvents() {
+        triggerAction(forEvents: .allEditingEvents)
+    }
+    
+    @objc dynamic private func applicationReserved() {
+        triggerAction(forEvents: .applicationReserved)
+    }
+    
+    @objc dynamic private func systemReserved() {
+        triggerAction(forEvents: .systemReserved)
+    }
+    
+    @objc dynamic private func allEvents() {
+        triggerAction(forEvents: .allEvents)
     }
 }
