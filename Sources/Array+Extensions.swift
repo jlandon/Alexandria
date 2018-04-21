@@ -42,8 +42,8 @@ extension Array {
      
      - returns: The array created by applying the transform to this array.
      */
-    public func mapWithIndex<T> (_ f: (Int, Element) -> T) -> [T] {
-        return zip(startIndex ..< endIndex, self).map(f)
+    public func mapWithIndex<T>(_ fn: (Int, Element) throws -> T) rethrows -> [T] {
+        return try zip(startIndex ..< endIndex, self).map(fn)
     }
 
     /**
@@ -91,6 +91,7 @@ extension Array where Element: Equatable {
      - parameter element: The element to remove from the array
      - returns: The removed element or nil, if the element was not found
      */
+    @discardableResult
     public mutating func remove(_ element: Element) -> Element? {
         guard let index = index(of: element) else { return nil }
         return remove(at: index)

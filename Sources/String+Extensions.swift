@@ -56,16 +56,16 @@ extension String {
      ```
      */
     public var camelCased: String {
-        guard !characters.isEmpty else { return self }
+        guard !isEmpty else { return self }
         
-        if characters.contains(" ") {
+        if contains(" ") {
             let first = self[0].lowercased()
             let cammel = capitalized.replacingOccurrences(of: " ", with: "")
-            let rest = String(cammel.characters.dropFirst())
+            let rest = String(cammel.dropFirst())
             return first + rest
         } else {
             let first = self[0].lowercased()
-            let rest = String(characters.dropFirst())
+            let rest = String(dropFirst())
             return first + rest
         }
     }
@@ -110,7 +110,7 @@ extension String {
     public mutating func formRegex(_ pattern: String, _ replacement: String) {
         do {
             let expression = try NSRegularExpression(pattern: pattern, options: [])
-            let range = NSRange(location: 0, length: characters.count)
+            let range = NSRange(location: 0, length: count)
             self = expression.stringByReplacingMatches(in: self, options: [], range: range, withTemplate: replacement)
         }
         catch { return }
@@ -158,7 +158,7 @@ extension String {
             return
         }
 
-        let range = NSMakeRange(0, self.characters.count)
+        let range = NSMakeRange(0, self.count)
 
         var startOffset = 0
 
@@ -181,7 +181,7 @@ extension String {
 
                 self.replaceSubrange(replacementRange, with: replacement)
 
-                endOffset += replacement.characters.count - resultRange.length
+                endOffset += replacement.count - resultRange.length
             }
 
             startOffset = endOffset
@@ -213,17 +213,55 @@ extension String {
 
     /// Substring at index
     public subscript(i: Int) -> String {
-        return String(self[index(startIndex, offsetBy: i)])
+        let index = safeIndex(offset: i)
+        let contains = index.flatMap(indices.contains) ?? false
+        
+        return contains ? String(self[index!]) : ""
     }
-
+    
     /// Substring for range
     public subscript(r: Range<Int>) -> String {
-        return substring(with: index(startIndex, offsetBy: r.lowerBound) ..< index(startIndex, offsetBy: r.upperBound))
+        return self[r.lowerBound ... (r.upperBound - 1)]
     }
     
     /// Substring for closed range
     public subscript(r: ClosedRange<Int>) -> String {
-        return substring(with: index(startIndex, offsetBy: r.lowerBound) ..< index(startIndex, offsetBy: r.upperBound + 1))
+        let startIndex = safeIndex(offset: r.lowerBound)
+        let endIndex = safeIndex(offset: r.upperBound)
+        
+        let containsStart = startIndex.flatMap(indices.contains) ?? false
+        let containsEnd = endIndex.flatMap(indices.contains) ?? false
+        
+        switch (containsStart, containsEnd) {
+        case (true, true):   return String(self[startIndex! ... endIndex!])
+        case (true, false):  return String(self[startIndex!...])
+        case (false, true):  return String(self[...endIndex!])
+        case (false, false): return ""
+        }
+    }
+    
+    /// Substring for countable partial range
+    public subscript(r: CountablePartialRangeFrom<Int>) -> String {
+        let index = safeIndex(offset: r.lowerBound)
+        let contains = index.flatMap(indices.contains) ?? false
+        
+        return contains ? String(self[index!...]) : ""
+    }
+    
+    /// Substring for partial range through upper bound
+    public subscript(r: PartialRangeThrough<Int>) -> String {
+        let index = safeIndex(offset: r.upperBound)
+        let contains = index.flatMap(indices.contains) ?? false
+        
+        return contains ? String(self[...index!]) : ""
+    }
+    
+    /// Substring for partial range up to upper bound
+    public subscript(r: PartialRangeUpTo<Int>) -> String {
+        let index = safeIndex(offset: r.upperBound)
+        let contains = index.flatMap(indices.contains) ?? false
+        
+        return contains ? String(self[..<index!]) : ""
     }
     
     /**
@@ -244,8 +282,8 @@ extension String {
 
     */
     public func truncated(to length: Int, trailing: String = "") -> String {
-        guard !characters.isEmpty && characters.count > length else { return self }
-        return self.substring(to: index(startIndex, offsetBy: length)) + trailing
+        guard !isEmpty && count > length else { return self }
+        return self[..<length] + trailing
     }
     
     public mutating func truncate(to length: Int, trailing: String = "") {
@@ -288,20 +326,13 @@ extension String {
      - returns: The Range, if it was possible to convert. Otherwise nil.
      */
     public func range(from nsRange: NSRange) -> Range<String.Index>? {
-        guard
-            let from16 = utf16.index(utf16.startIndex, offsetBy: nsRange.location, limitedBy: utf16.endIndex),
-            let to16 = utf16.index(from16, offsetBy: nsRange.length, limitedBy: utf16.endIndex),
-            let from = String.Index(from16, within: self),
-            let to = String.Index(to16, within: self)
-        else { return nil }
-        
-        return from ..< to
+        return Range(nsRange, in: self)
     }
     
     /**
      Convert a Range to an NSRange. There is still a mismatch between the regular expression libraries
      and NSString/String. This makes it easier to convert between the two. Using this allows complex
-     strings (including emoji, regonial indicattors, etc.) to be manipulated without having to resort
+     strings (including emoji, regonial indicators, etc.) to be manipulated without having to resort
      to NSString instances.
      
      Taken from:
@@ -312,9 +343,15 @@ extension String {
      - returns: The NSRange converted from the input. This will always succeed.
      */
     public func nsRange(from range: Range<String.Index>) -> NSRange {
-        let from = String.UTF16View.Index(range.lowerBound, within: utf16)
-        let to = String.UTF16View.Index(range.upperBound, within: utf16)
-        return NSRange(location: utf16.distance(from: utf16.startIndex, to: from), length: utf16.distance(from: from, to: to))
+        return NSRange(range, in: self)
     }
 
+}
+
+private extension String {
+    
+    func safeIndex(offset: Int) -> String.Index? {
+        return index(startIndex, offsetBy: offset.limited(0, .max), limitedBy: endIndex)
+    }
+    
 }

@@ -20,7 +20,7 @@ Pod::Spec.new do |s|
   }
   s.platform            = :ios, "8.0"
   s.requires_arc        = true
-  s.pod_target_xcconfig = { 'SWIFT_VERSION' => '3.1' }
+  s.pod_target_xcconfig = { 'SWIFT_VERSION' => '4.0' }
   s.documentation_url   = 'https://jlandon.github.io/Alexandria'
   s.source              = { :git => "https://github.com/jlandon/Alexandria.git", :tag => "v#{s.version}" }
   s.frameworks          = *%w(Foundation UIKit)

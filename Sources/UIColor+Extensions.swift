@@ -89,7 +89,7 @@ extension UIColor {
     public convenience init(hexString: String, alpha: CGFloat = 1) {
         var hexString = hexString
         if hexString.hasPrefix("#") {
-            hexString = hexString.substring(from: hexString.index(after: hexString.startIndex))
+            hexString = hexString[1...]
         }
         let scanner = Scanner(string: hexString)
         var hexEquivalent: UInt32 = 0

@@ -76,12 +76,13 @@ extension UIFont {
     @discardableResult
     public static func register(filePath: String) -> Bool {
         let url = NSURL(fileURLWithPath: filePath)
-        guard let provider = CGDataProvider(url: url as CFURL) else {
+        guard
+            let provider = CGDataProvider(url: url as CFURL),
+            let font = CGFont(provider)
+        else {
             print("Error registering font: \(filePath)")
             return false
         }
-        
-        let font = CGFont(provider)
         
         var error: Unmanaged<CFError>?
         let result = CTFontManagerRegisterGraphicsFont(font, &error)
@@ -107,12 +108,12 @@ extension UIFont {
      */
     public static func customFont(filePath: String, ofSize fontSize: CGFloat) -> UIFont? {
         let url = NSURL(fileURLWithPath: filePath)
-        guard let provider = CGDataProvider(url: url as CFURL) else {
-            return nil
-        }
         
-        let cgFont = CGFont(provider)
-        guard let postScriptName = cgFont.postScriptName else {
+        guard
+            let provider = CGDataProvider(url: url as CFURL),
+            let cgFont = CGFont(provider),
+            let postScriptName = cgFont.postScriptName
+        else {
             return nil
         }
         
