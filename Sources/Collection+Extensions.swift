@@ -63,7 +63,7 @@ extension Collection {
     }
 }
 
-public extension MutableCollection where Index == Int, IndexDistance == Int {
+public extension MutableCollection where Index == Int {
     /**
      Shuffle the array using the Fisher-Yates (fast and uniform) shuffle. Mutating.
      From http://stackoverflow.com/a/24029847/194869

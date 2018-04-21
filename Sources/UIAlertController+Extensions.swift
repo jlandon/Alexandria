@@ -76,6 +76,7 @@ extension UIAlertController {
      - parameter animated: Pass `true` to animate the presentation; otherwise, pass `false` (optional, defaults to `true`).
      - parameter completion: The closure to execute after the presentation finishes (optional, defaults to `nil`).
      */
+    @available(iOSApplicationExtension, unavailable)
     public func present(in controller: UIViewController? = .current, animated: Bool = true, completion: (() -> Void)? = nil) {
         controller?.present(self, animated: animated, completion: completion)
     }

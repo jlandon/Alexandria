@@ -849,7 +849,7 @@ extension UIView {
      - author: Richard Turton http://commandshift.co.uk/blog/2016/03/13/better-snapshots/
      */
     @nonobjc public func addSnapshot(of views: [UIView], afterUpdates: Bool = false) -> [UIView] {
-        return views.flatMap { addSnapshot(of: $0, afterUpdates: afterUpdates) }
+        return views.compactMap { addSnapshot(of: $0, afterUpdates: afterUpdates) }
     }
 
 }
