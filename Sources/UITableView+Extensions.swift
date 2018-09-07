@@ -112,7 +112,7 @@ extension UITableView {
      - parameter section: The section in which to insert the rows (optional, defaults to 0).
      - parameter animation: The animation to use for the row insertion (optional, defaults to `.Automatic`).
      */
-    public func insert(_ indices: [Int], section: Int = 0, animation: UITableViewRowAnimation = .automatic) {
+    public func insert(_ indices: [Int], section: Int = 0, animation: UITableView.RowAnimation = .automatic) {
         guard !indices.isEmpty else { return }
         
         let indexPaths = indices.map { IndexPath(row: $0, section: section) }
@@ -129,7 +129,7 @@ extension UITableView {
      - parameter section: The section in which to delete the rows (optional, defaults to 0).
      - parameter animation: The animation to use for the row deletion (optional, defaults to `.Automatic`).
      */
-    public func delete(_ indices: [Int], section: Int = 0, animation: UITableViewRowAnimation = .automatic) {
+    public func delete(_ indices: [Int], section: Int = 0, animation: UITableView.RowAnimation = .automatic) {
         guard !indices.isEmpty else { return }
         
         let indexPaths = indices.map { IndexPath(row: $0, section: section) }
@@ -146,7 +146,7 @@ extension UITableView {
      - parameter section: The section in which to reload the rows (optional, defaults to 0).
      - parameter animation: The animation to use for reloading the rows (optional, defaults to `.Automatic`).
      */
-    public func reload(_ indices: [Int], section: Int = 0, animation: UITableViewRowAnimation = .automatic) {
+    public func reload(_ indices: [Int], section: Int = 0, animation: UITableView.RowAnimation = .automatic) {
         guard !indices.isEmpty else { return }
         
         let indexPaths = indices.map { IndexPath(row: $0, section: section) }

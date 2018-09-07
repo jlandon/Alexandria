@@ -40,7 +40,7 @@ extension UIAlertController {
      - returns: self
      */
     @discardableResult
-    public func addAction(title: String?, style: UIAlertActionStyle = .default, handler: ((UIAlertAction) -> Void)? = nil) -> Self {
+    public func addAction(title: String?, style: UIAlertAction.Style = .default, handler: ((UIAlertAction) -> Void)? = nil) -> Self {
         addAction(UIAlertAction(title: title, style: style, handler: handler))
         return self
     }

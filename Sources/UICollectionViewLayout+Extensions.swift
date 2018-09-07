@@ -21,7 +21,7 @@ extension UICollectionViewFlowLayout {
      - returns: A UICollectionViewFlowLayout initialized with the provided scroll direction, item spacing, line spacing, and section inset.
      */
     public convenience init(
-        scrollDirection: UICollectionViewScrollDirection,
+        scrollDirection: UICollectionView.ScrollDirection,
         itemSpacing: CGFloat = 10,
         lineSpacing: CGFloat = 10,
         sectionInset: UIEdgeInsets = .zero)

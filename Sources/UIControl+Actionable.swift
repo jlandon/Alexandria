@@ -29,9 +29,9 @@ extension UIControl {
     
     private final class Action {
         var action: () -> Void
-        var events: UIControlEvents
+        var events: UIControl.Event
         
-        init(action: @escaping () -> Void, events: UIControlEvents) {
+        init(action: @escaping () -> Void, events: UIControl.Event) {
             self.action = action
             self.events = events
         }
@@ -79,7 +79,7 @@ extension UIControl {
      - parameter controlEvents: The UIControlEvents upon which to execute this action.
      - parameter action:        The action closure to execute.
      */
-    public func addTarget(for controlEvents: UIControlEvents, actionClosure: @escaping () -> Void) {
+    public func addTarget(for controlEvents: UIControl.Event, actionClosure: @escaping () -> Void) {
         
         actions.append(Action(action: actionClosure, events: controlEvents))
         
@@ -112,7 +112,7 @@ extension UIControl {
 
 extension UIControl {
     
-    private func triggerAction(forEvents events: UIControlEvents) {
+    private func triggerAction(forEvents events: UIControl.Event) {
         actions.filter { $0.events.contains(events) }.forEach { $0.action() }
     }
     
