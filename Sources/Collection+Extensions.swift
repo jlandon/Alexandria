@@ -52,7 +52,7 @@ extension Collection {
     
 }
 
-public extension MutableCollection where Index == Int {
+extension MutableCollection where Index == Int {
     
     /**
      Returns a random element from the collection.

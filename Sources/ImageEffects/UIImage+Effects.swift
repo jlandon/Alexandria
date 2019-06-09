@@ -104,7 +104,7 @@ EA1002
 import UIKit
 import Accelerate
 
-public extension UIImage {
+extension UIImage {
     
     /**
      Applies a lightening (blur) effect to the image

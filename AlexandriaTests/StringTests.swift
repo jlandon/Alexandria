@@ -103,7 +103,7 @@ class StringTests: XCTestCase {
         let regexStr = "<link id=\"(.*?)\" type=\"ahref\"/>"
         do {
             let regex = try NSRegularExpression(pattern: regexStr, options: .caseInsensitive)
-            for match in regex.matches(in: content, options: [], range: NSRange(location: 0, length: content.characters.count)).reversed() {
+            for match in regex.matches(in: content, options: [], range: NSRange(location: 0, length: content.count)).reversed() {
                 let reference = String(content[content.range(from: match.range(at: 1))!])
                 content = content.replacingCharacters(in: content.range(from: match.range)!, with: "<a class=\"link\" href=\"http://www.\(reference).com\">\(reference)</a>")
             }
