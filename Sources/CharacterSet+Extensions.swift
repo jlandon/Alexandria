@@ -31,7 +31,7 @@ import Foundation
 /** 
  Extensions to CharacterSet
 */
-public extension CharacterSet {
+extension CharacterSet {
     
     /**
     
@@ -76,7 +76,7 @@ extension CharacterSet: ExpressibleByStringLiteral {
 /**
  Extensions to NSMutableCharacterSet
  */
-public extension NSMutableCharacterSet {
+extension NSMutableCharacterSet {
     
     /**
      

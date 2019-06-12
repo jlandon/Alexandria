@@ -113,7 +113,7 @@ extension UIImage {
      - parameter orientiation: The orientation to use for the scaled image (optional, defaults to the image's `imageOrientation` property).
      - returns: A copy of self, scaled by the scaleFactor (with an optional image orientation).
      */
-    public func scaled(by scaleFactor: CGFloat, withOrientation orientation: UIImageOrientation? = nil) -> UIImage? {
+    public func scaled(by scaleFactor: CGFloat, withOrientation orientation: UIImage.Orientation? = nil) -> UIImage? {
         guard let coreImage = cgImage else { return nil }
         
         return UIImage(cgImage: coreImage, scale: 1/scaleFactor, orientation: orientation ?? imageOrientation)

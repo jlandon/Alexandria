@@ -110,7 +110,7 @@ extension UICollectionView {
      ```
      */
     public func registerHeader<T: UICollectionReusableView>(_ type: T.Type, withIdentifier reuseIdentifier: String = String(describing: T.self)) {
-        register(T.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: reuseIdentifier)
+        register(T.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: reuseIdentifier)
     }
     
     /**
@@ -138,7 +138,7 @@ extension UICollectionView {
                                    withIdentifier reuseIdentifier: String = String(describing: T.self),
                                                     for indexPath: IndexPath) -> T
     {
-        guard let header = dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: reuseIdentifier, for: indexPath) as? T else {
+        guard let header = dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: reuseIdentifier, for: indexPath) as? T else {
             fatalError("Unknown header type (\(T.self)) for reuse identifier: \(reuseIdentifier)")
         }
         return header
@@ -165,7 +165,7 @@ extension UICollectionView {
      ```
      */
     public func registerFooter<T: UICollectionReusableView>(_ type: T.Type, withIdentifier reuseIdentifier: String = String(describing: T.self)) {
-        register(T.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: reuseIdentifier)
+        register(T.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: reuseIdentifier)
     }
     
     /**
@@ -193,7 +193,7 @@ extension UICollectionView {
                                    withIdentifier reuseIdentifier: String = String(describing: T.self),
                                                     for indexPath: IndexPath) -> T
     {
-        guard let footer = dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter, withReuseIdentifier: reuseIdentifier, for: indexPath) as? T else {
+        guard let footer = dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: reuseIdentifier, for: indexPath) as? T else {
             fatalError("Unknown footer type (\(T.self)) for reuse identifier: \(reuseIdentifier)")
         }
         return footer

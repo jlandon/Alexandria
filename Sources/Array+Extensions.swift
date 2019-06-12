@@ -93,7 +93,7 @@ extension Array where Element: Equatable {
      */
     @discardableResult
     public mutating func remove(_ element: Element) -> Element? {
-        guard let index = index(of: element) else { return nil }
+        guard let index = firstIndex(of: element) else { return nil }
         return remove(at: index)
     }
     
@@ -114,7 +114,7 @@ extension Array where Element: Equatable {
     public func before(_ element: Element) -> Element? {
         guard !isEmpty else { return nil }
 
-        if let index = index(of: element) {
+        if let index = firstIndex(of: element) {
             return at(self.index(before: index))
         }
         return nil
@@ -137,7 +137,7 @@ extension Array where Element: Equatable {
     public func after(_ element: Element) -> Element? {
         guard !isEmpty else { return nil }
         
-        if let index = index(of: element) {
+        if let index = firstIndex(of: element) {
             return at(self.index(after: index))
         }
         return nil

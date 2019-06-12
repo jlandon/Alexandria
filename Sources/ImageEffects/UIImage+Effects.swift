@@ -104,7 +104,7 @@ EA1002
 import UIKit
 import Accelerate
 
-public extension UIImage {
+extension UIImage {
     
     /**
      Applies a lightening (blur) effect to the image
@@ -202,7 +202,7 @@ public extension UIImage {
         var effectImage: UIImage? = self
         
         let hasBlur = blurRadius > epsilon
-        let hasSaturationChange = fabs(saturationDeltaFactor - 1.0) > epsilon
+        let hasSaturationChange = abs(saturationDeltaFactor - 1.0) > epsilon
         
         if hasBlur || hasSaturationChange {
             func createEffectBuffer(_ context: CGContext) -> vImage_Buffer {

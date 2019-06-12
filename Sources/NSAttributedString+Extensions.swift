@@ -395,7 +395,7 @@ extension NSMutableAttributedString {
      - parameter style: The `NSUnderlineStyle` to apply. Defaults to `.styleSingle`.
      */
     @discardableResult
-    public func underline(style: NSUnderlineStyle = .styleSingle, color: UIColor? = nil) -> Self {
+    public func underline(style: NSUnderlineStyle = .single, color: UIColor? = nil) -> Self {
         if length > 0 {
             addAttribute(.underlineStyle, value: style.rawValue, range: range)
             
@@ -427,7 +427,7 @@ extension NSMutableAttributedString {
      - parameter color: The underline color. Defaults to the color of the text.
      */
     @discardableResult
-    public func strikethrough(style: NSUnderlineStyle = .styleSingle, color: UIColor? = nil) -> Self {
+    public func strikethrough(style: NSUnderlineStyle = .single, color: UIColor? = nil) -> Self {
         if length > 0 {
             addAttribute(.strikethroughStyle, value: style.rawValue, range: range)
             
