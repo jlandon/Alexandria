@@ -1,7 +1,7 @@
 //
-//  Float+Extensions.swift
+//  UIScrollView+Extensions.swift
 //
-//  Created by Jonathan Landon on 2/9/16.
+//  Created by hsoi on 5/28/15.
 //
 // The MIT License (MIT)
 //
@@ -25,14 +25,18 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-extension Float {
-    /// Generate a random Float bounded by a closed interval range.
-    public static func random(_ range: ClosedRange<Float>) -> Float {
-        return Float(arc4random()) / Float(UInt64(UINT32_MAX)) * (range.upperBound - range.lowerBound) + range.lowerBound
+import UIKit
+
+/** OBExtensions Extends UIScrollView
+
+*/
+extension UIScrollView {
+    
+    /// Immediately stops the scrollview scrolling.
+    public func stopScrolling() {
+        // http://stackoverflow.com/questions/3410777/how-can-i-programmatically-force-stop-scrolling-in-a-uiscrollview
+        let offset = contentOffset
+        setContentOffset(offset, animated: false)
     }
     
-    /// Generate a random Float bounded by a range from min to max.
-    public static func random(min: Float, max: Float) -> Float {
-        return random(min...max)
-    }
 }

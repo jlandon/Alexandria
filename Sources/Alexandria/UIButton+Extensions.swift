@@ -1,7 +1,7 @@
 //
-//  UISplitViewController+Extensions.swift
+//  UIButton+Extensions.swift
 //
-//  Created by hsoi on 9/22/15.
+//  Created by Jonathan Landon on 9/22/15.
 //
 // The MIT License (MIT)
 //
@@ -25,24 +25,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import Foundation
+import UIKit
 
-/**
-Oven Bits UISplitViewController extensions
-
-*/
-extension UISplitViewController {
-    
-    /// Obtain the master/primary UIViewController.
-    public var masterViewController: UIViewController {
-        return viewControllers[0]   // Hsoi 2015-09-22 - AFAIK, there should ALWAYS be this one ViewController.
+extension UIButton {
+    /**
+     Sets the background color to use for the specified button state.
+     
+     - parameter color: The background color to use for the specified state.
+     - parameter state: The state that uses the specified image.
+     */
+    public func setBackgroundColor(_ color: UIColor, for state: UIControl.State) {
+        setBackgroundImage(UIImage(color: color), for: state)
     }
-
-    
-    /// Obtain the detail/secondary UIViewController, if present.
-    public var detailViewController: UIViewController? {
-        guard viewControllers.count > 1 else { return nil }
-        return viewControllers[1]
-    }
-    
 }

@@ -1,7 +1,7 @@
 //
-//  Double+Extensions.swift
+//  Operators.swift
 //
-//  Created by Jonathan Landon on 12/6/15.
+//  Created by Jonathan Landon on 6/20/16.
 //
 // The MIT License (MIT)
 //
@@ -25,14 +25,18 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-extension Double {
-    /// Generate a random Double bounded by a closed interval range.
-    public static func random(_ range: ClosedRange<Double>) -> Double {
-        return Double(arc4random()) / Double(UInt64(UINT32_MAX)) * (range.upperBound - range.lowerBound) + range.lowerBound
-    }
-    
-    /// Generate a random Double bounded by a range from min to max.
-    public static func random(min: Double, max: Double) -> Double {
-        return random(min...max)
-    }
+import UIKit
+
+postfix operator %
+
+public postfix func %(value: CGFloat) -> CGFloat {
+    return value / 100
+}
+
+public postfix func %(value: Float) -> Float {
+    return value / 100
+}
+
+public postfix func %(value: Double) -> Double {
+    return value / 100
 }

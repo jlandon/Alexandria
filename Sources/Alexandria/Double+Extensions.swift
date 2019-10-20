@@ -1,7 +1,7 @@
 //
-//  UIButton+Extensions.swift
+//  Double+Extensions.swift
 //
-//  Created by Jonathan Landon on 9/22/15.
+//  Created by Jonathan Landon on 12/6/15.
 //
 // The MIT License (MIT)
 //
@@ -27,14 +27,14 @@
 
 import Foundation
 
-extension UIButton {
-    /**
-     Sets the background color to use for the specified button state.
-     
-     - parameter color: The background color to use for the specified state.
-     - parameter state: The state that uses the specified image.
-     */
-    public func setBackgroundColor(_ color: UIColor, for state: UIControl.State) {
-        setBackgroundImage(UIImage(color: color), for: state)
+extension Double {
+    /// Generate a random Double bounded by a closed interval range.
+    public static func random(_ range: ClosedRange<Double>) -> Double {
+        return Double(arc4random()) / Double(UInt64(UINT32_MAX)) * (range.upperBound - range.lowerBound) + range.lowerBound
+    }
+    
+    /// Generate a random Double bounded by a range from min to max.
+    public static func random(min: Double, max: Double) -> Double {
+        return random(min...max)
     }
 }

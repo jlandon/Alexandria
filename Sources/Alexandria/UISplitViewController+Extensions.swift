@@ -1,7 +1,7 @@
 //
-//  UIScrollView+Extensions.swift
+//  UISplitViewController+Extensions.swift
 //
-//  Created by hsoi on 5/28/15.
+//  Created by hsoi on 9/22/15.
 //
 // The MIT License (MIT)
 //
@@ -25,18 +25,24 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import Foundation
+import UIKit
 
-/** OBExtensions Extends UIScrollView
+/**
+Oven Bits UISplitViewController extensions
 
 */
-extension UIScrollView {
+extension UISplitViewController {
     
-    /// Immediately stops the scrollview scrolling.
-    public func stopScrolling() {
-        // http://stackoverflow.com/questions/3410777/how-can-i-programmatically-force-stop-scrolling-in-a-uiscrollview
-        let offset = contentOffset
-        setContentOffset(offset, animated: false)
+    /// Obtain the master/primary UIViewController.
+    public var masterViewController: UIViewController {
+        return viewControllers[0]   // Hsoi 2015-09-22 - AFAIK, there should ALWAYS be this one ViewController.
+    }
+
+    
+    /// Obtain the detail/secondary UIViewController, if present.
+    public var detailViewController: UIViewController? {
+        guard viewControllers.count > 1 else { return nil }
+        return viewControllers[1]
     }
     
 }

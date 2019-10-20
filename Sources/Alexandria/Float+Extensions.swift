@@ -1,7 +1,7 @@
 //
-//  Operators.swift
+//  Float+Extensions.swift
 //
-//  Created by Jonathan Landon on 6/20/16.
+//  Created by Jonathan Landon on 2/9/16.
 //
 // The MIT License (MIT)
 //
@@ -25,16 +25,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-postfix operator %
+import Foundation
 
-public postfix func %(value: CGFloat) -> CGFloat {
-    return value / 100
-}
-
-public postfix func %(value: Float) -> Float {
-    return value / 100
-}
-
-public postfix func %(value: Double) -> Double {
-    return value / 100
+extension Float {
+    /// Generate a random Float bounded by a closed interval range.
+    public static func random(_ range: ClosedRange<Float>) -> Float {
+        return Float(arc4random()) / Float(UInt64(UINT32_MAX)) * (range.upperBound - range.lowerBound) + range.lowerBound
+    }
+    
+    /// Generate a random Float bounded by a range from min to max.
+    public static func random(min: Float, max: Float) -> Float {
+        return random(min...max)
+    }
 }

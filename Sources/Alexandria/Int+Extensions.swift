@@ -25,6 +25,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+import UIKit
+
 extension Int {
     /// Determine if self is even (equivalent to `self % 2 == 0`)
     public var isEven: Bool {
