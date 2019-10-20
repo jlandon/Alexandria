@@ -1,0 +1,8 @@
+author: Jonathan Landon
+author_url: https://ovenbits.com
+github_url: https://github.com/jlandon/Alexandria
+root_url: https://jlandon.github.io/Alexandria
+module: Alexandria
+output: docs
+theme: apple
+xcodebuild_arguments: [-workspace, 'Alexandria.xcworkspace', -scheme, 'Alexandria']

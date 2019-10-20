@@ -1,0 +1,152 @@
+{
+  "warnings": [
+    {
+      "file": "/Users/jlandon/Projects/Alexandria/Sources/Alexandria/CoreGraphics+Extensions.swift",
+      "line": 72,
+      "symbol": "+(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.free",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jlandon/Projects/Alexandria/Sources/Alexandria/CoreGraphics+Extensions.swift",
+      "line": 76,
+      "symbol": "+=(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.free",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jlandon/Projects/Alexandria/Sources/Alexandria/CoreGraphics+Extensions.swift",
+      "line": 80,
+      "symbol": "-(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.free",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jlandon/Projects/Alexandria/Sources/Alexandria/CoreGraphics+Extensions.swift",
+      "line": 84,
+      "symbol": "-=(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.free",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jlandon/Projects/Alexandria/Sources/Alexandria/CoreGraphics+Extensions.swift",
+      "line": 88,
+      "symbol": "*(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.free",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jlandon/Projects/Alexandria/Sources/Alexandria/CoreGraphics+Extensions.swift",
+      "line": 92,
+      "symbol": "*=(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.free",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jlandon/Projects/Alexandria/Sources/Alexandria/CoreGraphics+Extensions.swift",
+      "line": 96,
+      "symbol": "/(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.free",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jlandon/Projects/Alexandria/Sources/Alexandria/CoreGraphics+Extensions.swift",
+      "line": 100,
+      "symbol": "/=(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.free",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jlandon/Projects/Alexandria/Sources/Alexandria/NSAttributedString+Extensions.swift",
+      "line": 561,
+      "symbol": "+(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.free",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jlandon/Projects/Alexandria/Sources/Alexandria/NSAttributedString+Extensions.swift",
+      "line": 567,
+      "symbol": "+=(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.free",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jlandon/Projects/Alexandria/Sources/Alexandria/Operators.swift",
+      "line": 32,
+      "symbol": "%(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.free",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jlandon/Projects/Alexandria/Sources/Alexandria/Operators.swift",
+      "line": 36,
+      "symbol": "%(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.free",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jlandon/Projects/Alexandria/Sources/Alexandria/Operators.swift",
+      "line": 40,
+      "symbol": "%(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.free",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jlandon/Projects/Alexandria/Sources/Alexandria/String+Extensions.swift",
+      "line": 289,
+      "symbol": "String.truncate(to:trailing:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jlandon/Projects/Alexandria/Sources/Alexandria/UIFont+Extensions.swift",
+      "line": 32,
+      "symbol": "UIFont.Extension",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jlandon/Projects/Alexandria/Sources/Alexandria/UIFont+Extensions.swift",
+      "line": 33,
+      "symbol": "UIFont.Extension.otf",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jlandon/Projects/Alexandria/Sources/Alexandria/UIFont+Extensions.swift",
+      "line": 34,
+      "symbol": "UIFont.Extension.ttf",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jlandon/Projects/Alexandria/Sources/Alexandria/UIFont+Extensions.swift",
+      "line": 35,
+      "symbol": "UIFont.Extension.woff",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jlandon/Projects/Alexandria/Sources/Alexandria/UIFont+Extensions.swift",
+      "line": 36,
+      "symbol": "UIFont.Extension.custom(_:)",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jlandon/Projects/Alexandria/Sources/Alexandria/UIView+Extensions.swift",
+      "line": 1346,
+      "symbol": "UILayoutPriority.+(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jlandon/Projects/Alexandria/Sources/Alexandria/UIView+Extensions.swift",
+      "line": 1350,
+      "symbol": "UILayoutPriority.-(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    }
+  ],
+  "source_directory": "/Users/jlandon/Projects/Alexandria"
+}

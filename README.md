@@ -1,4 +1,4 @@
-![Alexandria](https://raw.githubusercontent.com/jlandon/Alexandria/assets/logo.png)
+![Alexandria](https://raw.githubusercontent.com/jlandon/Alexandria/master/alexandria.png)
 
 
 # Alexandria
